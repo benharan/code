@@ -7,12 +7,12 @@ define([
     "jquery",
     "Backbone",
     "utils",
-    "../../models/enemy/enemy"
+    "../enemy/enemy"
 ], function (_, $, Backbone, Utils, Enemy) {
     return Backbone.Model.extend({
 
-        _enemies: null,
         _size: 0,
+        _enemies: null,
 
         initialize: function (size) {
             var EnemyCollection = Backbone.Collection.extend({
@@ -32,7 +32,6 @@ define([
 
             Utils.addToBody("OK!");
             Utils.addToBody(Utils.rand(6, 10));
-
         }
     })
 });

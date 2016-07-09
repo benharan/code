@@ -1,3 +1,3 @@
-requirejs(["app/require_config"], function() {
-    requirejs(["../app/main"])
+requirejs(["libs/app/require_config"], function() {
+    requirejs(["app/main"])
 });

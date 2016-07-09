@@ -6,8 +6,9 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "./models/enemies/enemies"
-], function (_, $, BB, Enemies) {
+    "./models/battleBoard/battleBoard",
+    "./models/enemy/enemy"
+], function (_, $, Backbone, BattleBoard, Enemy) {
 
 
 //     var Goblin = new Enemy({ name: "Goblin" }),
@@ -20,12 +21,17 @@ define([
 //     ForestArea.add(Troll);
 //
 //     enemiesTableElem
-    
-    return {
+    var game = Backbone.Model.extend({
         start: function () {
-            var enemyGroup = new Enemies(3);
+            var battleBoard = new BattleBoard(),
+                enemy = new Enemy("goblin");
 
-            enemyGroup.generateEnemies();
+            battleBoard.render();
+            
+            $("body").append(battleBoard.$el);
+            
+            battleBoard.loadEnemy(enemy);
         }
-    }
+    });
+    return new game()
 });

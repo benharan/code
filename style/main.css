@@ -1,4 +1,9 @@
-body{
+body {
     background-color: #1a1a1a;
     color: #F1F1F1;
+}
+
+.battleBoard_wrapper {
+    text-align: center;
+    margin-top: 10px;
 }
