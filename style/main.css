@@ -7,3 +7,7 @@ body {
     text-align: center;
     margin-top: 10px;
 }
+
+.wrapper div {
+    display: inline-block;
+}
