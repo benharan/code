@@ -5,10 +5,9 @@
 define([
     "underscore",
     "jquery",
-    "Backbone",
-    "utils"
-], function (_, $, Backbone, Utils) {
-    return Backbone.Model.extend({
+    "Backbone"
+], function (_, $, Backbone) {
+    return Backbone.View.extend({
 
         _dom: null,
         _markupTemplate: null,
@@ -17,8 +16,16 @@ define([
             this._markupTemplate = _.template(this._markup);
         },
 
-        render: function (templateData) {
+        render: function (templateData, scheme) {
             this.$el = $(this._markupTemplate(templateData || {}));
+
+            this.delegateEvents();
+
+            if (scheme) {
+                this._cacheDom(scheme);
+            }
+            
+            return this.$el;
         },
         
         _cacheDom: function (scheme) {

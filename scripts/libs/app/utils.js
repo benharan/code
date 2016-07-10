@@ -7,13 +7,18 @@ define([
     "jquery"
 ], function (_, $) {
     var enemiesById = {
-        goblin: {
-            _type: "Goblinoid",
-            _attack: 2,
-            _armorClass: 10,
-            _damage: "1d6"
-        }
+            goblin: {
+                _type: "Goblinoid",
+                _attack: 2,
+                _armorClass: 10,
+                _damage: "1d6"
+            }
+        };
+    
+    $.p = function (func, context, params) {
+        return params ? func.bind(context, params) : func.bind(context);
     }
+    
     return {
         rand: function (a, b) {
             var rndVal = Math.random(),
