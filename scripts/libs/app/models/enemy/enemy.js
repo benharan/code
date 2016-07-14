@@ -7,12 +7,11 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "utils"
-], function (_, $, Backbone, Displayable, Utils) {
+    "utils",
+    "text!../enemy/enemy.html",
+    "text!../enemy/enemy.css"
+], function (_, $, Backbone, Displayable, Utils, html, css) {
     return Displayable.extend({
-
-        _markup: '<div class="enemy_wrapper"><h3><div class="enemy_type"><%=type%></div></h3>' +
-        '<div class="wrapper">Armor Class: <div class="enemy_armorClass"><%=armorClass%></div></div></div>',
         
         _name: null,
         _type: null,
@@ -22,7 +21,7 @@ define([
 
         initialize: function (enemy_id) {
             var enemy;
-            Displayable.prototype.initialize.call(this);
+            Displayable.prototype.initialize.call(this, html, css);
 
             enemy = Utils.getEnemyById(enemy_id);
             _.extend(this, enemy);

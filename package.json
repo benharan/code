@@ -1,0 +1,29 @@
+{
+  "name": "enigma",
+  "version": "1.0.0",
+  "description": "Code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benharan/code.git"
+  },
+  "keywords": [
+    "Backbone",
+    "Require",
+    "Coke",
+    "and",
+    "Beygale"
+  ],
+  "author": "Ben Haran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benharan/code/issues"
+  },
+  "homepage": "https://github.com/benharan/code#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

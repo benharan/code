@@ -20,10 +20,6 @@ body {
     display: inline-block;
 }
 
-.battleBoard_main {
-    width: 400px;
-    margin: 5px auto;
-}
 
 .button {
     border: white 1px solid;

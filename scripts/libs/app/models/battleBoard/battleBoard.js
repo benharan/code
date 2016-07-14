@@ -8,8 +8,10 @@ define([
     "Backbone",
     "Displayable",
     "utils",
-    "../battleControls/battleControls"
-], function (_, $, Backbone, Displayable, Utils, BattleControls) {
+    "../battleControls/battleControls",
+    "text!../battleBoard/battleBoard.html",
+    "text!../battleBoard/battleBoard.css"
+], function (_, $, Backbone, Displayable, Utils, BattleControls, html, css) {
     return Displayable.extend({
 
         _player: null,
@@ -20,23 +22,9 @@ define([
             "glt": ".battleBoard_glt", 
             "playerTotal": ".battleBoard_playerTotal" 
         },
-        _markup: '' +
-        '<div class="battleBoard_wrapper"><h3>Battle:</h3>' +
-            '<div class="battleBoard_main">' +
-                '<div class="wrapper flexRowWrap">' +
-                    '<div class="battleBoard_enemyWrapper flex1"></div>' +
-                    '<div class="battleBoard_battleControlsWrapper flex1"></div>' +
-                '</div>' +
-                '<div class="wrapper flexRowWrap">' +
-                    '<div class="battleBoard_foeTotal flex1"></div>' +
-                    '<div class="battleBoard_glt flex1"></div>' +
-                    '<div class="battleBoard_playerTotal flex1"></div>' +
-                '</div> ' +
-            '</div>' +
-        '</div>',
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this);
+            Displayable.prototype.initialize.call(this, html, css);
             
             this._battleControls = new BattleControls();
 

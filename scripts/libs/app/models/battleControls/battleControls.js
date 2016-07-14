@@ -7,17 +7,14 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "utils"
-], function (_, $, Backbone, Displayable, Utils) {
+    "utils",
+    "text!../battleControls/battleControls.html",
+    "text!../battleControls/battleControls.css"
+], function (_, $, Backbone, Displayable, Utils, html, css) {
     return Displayable.extend({
 
-        _markup: '<div class="battleControls_wrapper"><h3><%=player_name%></h3>' +
-        '<div class="wrapper">Attack: <div class="battleControls_attack"><%=player_attack %></div> </div>' +
-        '<div class="wrapper">Attack Bonus: <div class="battleControls_roll button">Roll</div> </div>' +
-        '</div>',
-
         initialize: function () {
-            Displayable.prototype.initialize.call(this);
+            Displayable.prototype.initialize.call(this, html, css);
             
         },
         

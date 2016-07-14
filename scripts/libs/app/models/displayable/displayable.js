@@ -12,11 +12,14 @@ define([
         _dom: null,
         _markupTemplate: null,
 
-        initialize: function () {
-            this._markupTemplate = _.template(this._markup);
+        initialize: function (html, css) {
+            this._markupTemplate = _.template(html || "");
+            this._cssElement = $("<style/>").text(css || "");
         },
 
         render: function (templateData, scheme) {
+            $("head").append(this._cssElement);
+            
             this.$el = $(this._markupTemplate(templateData || {}));
 
             this.delegateEvents();
