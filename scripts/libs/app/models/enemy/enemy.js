@@ -18,12 +18,13 @@ define([
         _attack: null,
         _armorClass: null,
         _damage: null,
+        _level: null,
 
         initialize: function (enemy_id) {
             var enemy;
             Displayable.prototype.initialize.call(this, html, css);
 
-            enemy = Utils.getEnemyById(enemy_id);
+            enemy = enemy_id ? Utils.getEnemyById(enemy_id) : Utils.getRandomEnemy();
             _.extend(this, enemy);
         },
 
@@ -35,18 +36,21 @@ define([
                 armorClass: this._armorClass,
                 damage: this._damage,
             });
-            this._cacheDom({
-                type: ".enemy_type",
-                attack: ".enemy_attack",
-                armorClass: ".enemy_armorClass",
-                damage: ".enemy_damage"
-            })
             
             return this.$el;
         },
         
         getStat: function (stat) {
             return this["_" + stat]; // "_"
+        },
+
+        remove: function () {
+            Displayable.prototype.remove.call(this);
+            console.log("Removed")
+        },
+        
+        calculateXP: function (playerLevel) {
+            return this._level / playerLevel * 10;
         }
     })
 });

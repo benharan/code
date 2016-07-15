@@ -20,7 +20,8 @@ define([
             "total": ".battleBoard_total", 
             "foeTotal": ".battleBoard_foeTotal", 
             "glt": ".battleBoard_glt", 
-            "playerTotal": ".battleBoard_playerTotal" 
+            "playerTotal": ".battleBoard_playerTotal",
+            "enemyWrap": ".battleBoard_enemyWrapper"
         },
 
         initialize: function () {
@@ -40,7 +41,13 @@ define([
             })
             
             this.$el.find(".battleBoard_battleControlsWrapper").html(this._battleControls.render());
-            this.$el.find(".battleBoard_enemyWrapper").html(this._enemy.render());
+            
+            this._renderAndInjectEnemy();
+        },
+        
+        resetEnemy: function(enemy) {
+            this.setEnemy(enemy); 
+            this._renderAndInjectEnemy();
         },
         
         setEnemy: function (enemy) {
@@ -55,15 +62,27 @@ define([
             return this;
         },
 
+        _renderAndInjectEnemy: function (enemy) {
+            this._dom.enemyWrap.html(this._enemy.render());
+        },
+        
         _rollCallback: function (roll) {
             var foeAC = this._enemy.getStat("armorClass"),
                 playerFullAttack = roll + this._player.getStat("attack"),
                 subtraction = playerFullAttack - foeAC,
-                result = subtraction/Math.abs(subtraction);
+                result = subtraction/Math.abs(subtraction) + 1,
+                glt = [">", "=", "<"], event = ["battleLost", "battleDraw", "battleWon"],
+                parameters = [event[result]];
 
             this._dom.foeTotal.text(foeAC);
             this._dom.playerTotal.text(playerFullAttack);
-            this._dom.glt.text(result > 0 ? "<" : (result < 0 ? ">" : "="));
+            this._dom.glt.text(glt[result]);
+
+            if (result === 2) {
+                parameters.push(this._enemy.calculateXP(this._player.getStat("level")));
+            }
+            
+            this.trigger.apply(this, parameters);
         }
     })
 });

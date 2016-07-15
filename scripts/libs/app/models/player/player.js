@@ -11,12 +11,12 @@ define([
 ], function (_, $, Backbone, Displayable, Utils) {
     return Displayable.extend({
 
-        _markup: '',
-        
+        _xp: 0,
         _name: null,
         _attack: null,
         _armorClass: null,
         _damage: null,
+        _level: null,
 
         initialize: function () {
             Displayable.prototype.initialize.call(this);
@@ -40,6 +40,11 @@ define([
 
         getName: function () {
             return this._name;
+        },
+
+        XP: function (xp) {
+            this._xp += xp;
+            console.log(this._xp)
         }
     })
 });

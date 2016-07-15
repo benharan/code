@@ -11,25 +11,51 @@ define([
     "./models/enemy/enemy"
 ], function (_, $, Backbone, BattleBoard, Player, Enemy) {
     var game = Backbone.Model.extend({
-        start: function () {
-            var battleBoard = new BattleBoard(),
-                player = new Player(),
-                enemy = new Enemy("goblin");
+        
+        _player: null,
+        _currentEnemy: null,
+        _battleBoard: null,
 
-            player.setStats({
-                _name: "Rhorgrar",
+        start: function () {
+            this._currentEnemy = new Enemy("goblin");
+
+            this._player = new Player();
+            this._player.setStats({
+                _name: "Rhorgar",
                 _attack: 1,
                 _armorClass: 10,
-                _damage: "1d3"
+                _damage: "1d3",
+                _level: 1
             })
 
-            battleBoard
-                .setPlayer(player)
-                .setEnemy(enemy)
+            this._battleBoard = new BattleBoard();
+            this._battleBoard
+                .on({
+                    "battleLost": $.p(this._battleLost, this),
+                    "battleDraw": $.p(this._battleDraw, this),
+                    "battleWon": $.p(this._battleWon, this)
+                })
+                .setPlayer(this._player)
+                .setEnemy(this._currentEnemy)
                 .render();
 
-            $("body").append(battleBoard.$el);
+            $("body").append(this._battleBoard.$el);
+        },
 
+        _battleWon: function (xp) {
+            $("body").append("<br>XP Received: " + xp);
+            this._player.XP(xp);
+            this._currentEnemy.remove();
+            this._currentEnemy = new Enemy();
+            this._battleBoard.resetEnemy(this._currentEnemy);
+        },
+
+        _battleDraw: function () {
+            console.log("dr", arguments);
+        },
+
+        _battleLost: function () {
+            console.log("ll", arguments);
         }
     });
     

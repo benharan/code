@@ -4,16 +4,9 @@
 
 define([
     "underscore",
-    "jquery"
-], function (_, $) {
-    var enemiesById = {
-            goblin: {
-                _type: "Goblinoid",
-                _attack: 2,
-                _armorClass: 10,
-                _damage: "1d6"
-            }
-        };
+    "jquery",
+    "scripts/libs/app/enemyList.js"
+], function (_, $, enemiesById) {
     
     $.p = function (func, context, params) {
         return params ? func.bind(context, params) : func.bind(context);
@@ -43,6 +36,12 @@ define([
 
         getEnemyById: function (enemy_id) {
             return enemiesById[enemy_id]
+        },
+
+        getRandomEnemy: function () {
+            var keys = Object.keys(enemiesById);
+
+            return enemiesById[keys[parseInt(Math.random()*keys.length)]];
         }
     };
 });
