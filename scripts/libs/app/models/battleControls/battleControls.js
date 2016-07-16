@@ -35,7 +35,9 @@ define([
         _rollClickCallback: function (e) {
             var roll = Utils.rand(20);
 
-            this._dom.roll.text(roll);
+            this._dom.roll
+                .removeClass("button")
+                .text(roll);
 
             this.trigger("rolled", roll);
         }

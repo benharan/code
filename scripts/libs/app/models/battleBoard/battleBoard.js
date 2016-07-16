@@ -62,7 +62,7 @@ define([
             return this;
         },
 
-        _renderAndInjectEnemy: function (enemy) {
+        _renderAndInjectEnemy: function () {
             this._dom.enemyWrap.html(this._enemy.render());
         },
         
@@ -71,8 +71,9 @@ define([
                 playerFullAttack = roll + this._player.getStat("attack"),
                 subtraction = playerFullAttack - foeAC,
                 result = subtraction/Math.abs(subtraction) + 1,
-                glt = [">", "=", "<"], event = ["battleLost", "battleDraw", "battleWon"],
-                parameters = [event[result]];
+                glt = [">", "=", "<"],
+                events = ["battleLost", "battleDraw", "battleWon"],
+                parameters = [events[result]];
 
             this._dom.foeTotal.text(foeAC);
             this._dom.playerTotal.text(playerFullAttack);

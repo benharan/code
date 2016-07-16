@@ -6,10 +6,11 @@ define([
     "underscore",
     "jquery",
     "Backbone",
+    "utils",
     "./models/battleBoard/battleBoard",
     "./models/player/player",
     "./models/enemy/enemy"
-], function (_, $, Backbone, BattleBoard, Player, Enemy) {
+], function (_, $, Backbone, Utils, BattleBoard, Player, Enemy) {
     var game = Backbone.Model.extend({
         
         _player: null,
@@ -39,11 +40,13 @@ define([
                 .setEnemy(this._currentEnemy)
                 .render();
 
-            $("body").append(this._battleBoard.$el);
+            this._player.render();
+            $("body")
+                .append(this._player.$el)
+                .append(this._battleBoard.$el);
         },
 
         _battleWon: function (xp) {
-            $("body").append("<br>XP Received: " + xp);
             this._player.XP(xp);
             this._currentEnemy.remove();
             this._currentEnemy = new Enemy();
