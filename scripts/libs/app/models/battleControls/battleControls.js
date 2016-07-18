@@ -32,14 +32,24 @@ define([
             this._stats = stats;
         },
 
-        _rollClickCallback: function (e) {
-            var roll = Utils.rand(20);
-
+        resetRoller: function () {
             this._dom.roll
-                .removeClass("button")
-                .text(roll);
+                .addClass("button")
+                .text("Roll");
+        },
 
-            this.trigger("rolled", roll);
+        _rollClickCallback: function (e) {
+            var roll;
+
+            if (this._dom.roll.hasClass("button")) {
+                roll = Utils.rand(20);
+
+                this._dom.roll
+                    .removeClass("button")
+                    .text(roll);
+
+                this.trigger("rolled", roll);
+            }
         }
     })
 });

@@ -14,12 +14,15 @@ define([
     var game = Backbone.Model.extend({
         
         _player: null,
-        _currentEnemy: null,
         _battleBoard: null,
 
         start: function () {
-            this._currentEnemy = new Enemy("goblin");
-
+            var enemiesArray = [], enemiesAmount = 2;
+            
+            while (enemiesAmount--) {
+                enemiesArray.push(new Enemy())
+            }
+            
             this._player = new Player();
             this._player.setStats({
                 _name: "Rhorgar",
@@ -37,7 +40,7 @@ define([
                     "battleWon": $.p(this._battleWon, this)
                 })
                 .setPlayer(this._player)
-                .setEnemy(this._currentEnemy)
+                .setEnemy(enemiesArray)
                 .render();
 
             this._player.render();
@@ -46,19 +49,19 @@ define([
                 .append(this._battleBoard.$el);
         },
 
-        _battleWon: function (xp) {
-            this._player.XP(xp);
-            this._currentEnemy.remove();
-            this._currentEnemy = new Enemy();
-            this._battleBoard.resetEnemy(this._currentEnemy);
+        _battleWon: function () {
+            console.log("WON", arguments);
+            this._battleBoard.hideNext();
         },
 
         _battleDraw: function () {
             console.log("dr", arguments);
+            this._battleBoard.hideNext();
         },
 
         _battleLost: function () {
             console.log("ll", arguments);
+            this._battleBoard.hideNext();
         }
     });
     
