@@ -7,12 +7,12 @@ define([
     "jquery",
     "Backbone",
     "utils",
-    "./models/frame/frame"
-], function (_, $, Backbone, Utils, Frame) {
+    "./models/mainFrame/mainFrame"
+], function (_, $, Backbone, Utils, MainFrame) {
     var game = Backbone.Model.extend({
 
         init: function () {
-            let main_frame = new Frame();
+            let main_frame = new MainFrame();
             $('body').append(main_frame.render());
         }
     });
