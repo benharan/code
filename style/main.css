@@ -1,35 +1,35 @@
-body {
-    background-color: #1a1a1a;
-    color: #F1F1F1;
-}
+/*body {*/
+    /*background-color: #1a1a1a;*/
+    /*color: #F1F1F1;*/
+/*}*/
 
-.flexRowWrap { display: flex; flex-direction: row; }
-.flexColWrap { display: flex; flex-direction: column; }
-.flexRowWrap>div { flex: 1; }
-.flexColWrap>div { flex: 1; }
+/*.flexRowWrap { display: flex; flex-direction: row; }*/
+/*.flexColWrap { display: flex; flex-direction: column; }*/
+/*.flexRowWrap>div { flex: 1; }*/
+/*.flexColWrap>div { flex: 1; }*/
 
-.flex2 { flex: 2; }
+/*.flex2 { flex: 2; }*/
 
-.battleBoard_wrapper {
-    text-align: center;
-    margin-top: 10px;
-}
+/*.battleBoard_wrapper {*/
+    /*text-align: center;*/
+    /*margin-top: 10px;*/
+/*}*/
 
-.wrapper {
-    padding: 10px;
-}
-.wrapper>div {
-    display: inline-block;
-}
+/*.wrapper {*/
+    /*padding: 10px;*/
+/*}*/
+/*.wrapper>div {*/
+    /*display: inline-block;*/
+/*}*/
 
 
-.button {
-    border: white 1px solid;
-    border-radius: 2px;
-    cursor: pointer;
-    padding: 2px 5px;
-}
+/*.button {*/
+    /*border: white 1px solid;*/
+    /*border-radius: 2px;*/
+    /*cursor: pointer;*/
+    /*padding: 2px 5px;*/
+/*}*/
 
-.button:hover {
-    box-shadow: 0px 0px 6px 1px rgba(33, 175, 230, 0.78);
-}
+/*.button:hover {*/
+    /*box-shadow: 0px 0px 6px 1px rgba(33, 175, 230, 0.78);*/
+/*}*/
