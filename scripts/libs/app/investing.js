@@ -7,15 +7,26 @@ define([
     "jquery",
     "Backbone",
     "utils",
-    "./models/mainFrame/mainFrame"
-], function (_, $, Backbone, Utils, MainFrame) {
-    var game = Backbone.Model.extend({
-
+    "./models/mainFrame/mainFrame",
+    "./router"
+], function (_, $, Backbone, Utils, MainFrame, Router) {
+    var investingApp = Backbone.Model.extend({
         init: function () {
+            window.App = {
+                Models: {},
+                Collections: {},
+                Views: {},
+                Router: {},
+                root: '/'
+            }
+            Router.init().on('navigation', function (a,b,c,d) {
+                cl(a,b,c,d);
+                debugger;
+            });
             let main_frame = new MainFrame();
             $('body').append(main_frame.render());
         }
     });
     
-    return new game()
+    return new investingApp();
 });

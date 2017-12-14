@@ -4,10 +4,9 @@
 
 define([
     "underscore",
-    "jquery",
-    "scripts/libs/app/enemyList.js"
-], function (_, $, enemiesById) {
-    
+    "jquery"
+], function (_, $) {
+    window.cl = console.log;
     $.p = function (func, context, params) {
         return params ? func.bind(context, params) : func.bind(context);
     }
@@ -34,22 +33,6 @@ define([
             }
             
             return result;
-        },
-        
-        addToBody: function (markup) {
-            $("body")
-                .append("<br/>")
-                .append(markup)
-        },
-
-        getEnemyById: function (enemy_id) {
-            return enemiesById[enemy_id]
-        },
-
-        getRandomEnemy: function () {
-            var keys = Object.keys(enemiesById);
-
-            return enemiesById[keys[parseInt(Math.random()*keys.length)]];
         }
     };
 });

@@ -3,7 +3,7 @@
  */
 
 requirejs.config({
-    baseUrl: "scripts/libs",
+    baseUrl: "/scripts/libs",
     paths: {
         utils: "app/utils",
         Displayable: "app/models/displayable/displayable",
