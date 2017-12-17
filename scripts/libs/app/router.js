@@ -9,9 +9,9 @@ define([
     "utils",
     "./models/mainFrame/mainFrame"
 ], function (_, $, Backbone) {
-    var debug = function() { debugger; },
-        router = Backbone.Model.extend({
+    var debug = function() { if (1) debugger; };
 
+    return Backbone.Model.extend({
         _routes: {
             routes: {
                 '': 'index',
@@ -33,7 +33,7 @@ define([
             news4: function() { debug.apply(null, arguments) }
         },
 
-        init: function () {
+        initialize: function () {
             window.App.Router = Backbone.Router.extend(this._routes);
 
             new window.App.Router;
@@ -56,12 +56,10 @@ define([
                     // `Backbone.history.navigate` is sufficient for all Routers and will
                     // trigger the correct events. The Router's internal `navigate` method
                     // calls this anyways.  The fragment is sliced from the root.
-                    Backbone.history.navigate(href.attr, true);
+                    Backbone.history.navigate(href.attr, { trigger: true });
                 }
             });
             return this;
         }
-    });
-
-    return new router()
+    })
 });

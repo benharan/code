@@ -10,23 +10,25 @@ define([
     "./models/mainFrame/mainFrame",
     "./router"
 ], function (_, $, Backbone, Utils, MainFrame, Router) {
-    var investingApp = Backbone.Model.extend({
+    var investingApp;
+    window.App = {
+        Models: {},
+        Collections: {},
+        Views: {},
+        Router: {},
+        root: '/'
+    }
+    investingApp = Backbone.Model.extend({
         init: function () {
-            window.App = {
-                Models: {},
-                Collections: {},
-                Views: {},
-                Router: {},
-                root: '/'
-            }
-            Router.init().on('navigation', function (a,b,c,d) {
-                cl(a,b,c,d);
+            var router = new Router();
+            router.on('navigation', function (a,b,c,d) {
+                cl('@#$@#$@#$',a,b,c,d);
                 debugger;
             });
             let main_frame = new MainFrame();
             $('body').append(main_frame.render());
         }
     });
-    
+
     return new investingApp();
 });
