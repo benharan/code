@@ -23,7 +23,10 @@ define([
             var router = new Router();
             router.on('navigation', function (a,b,c,d) {
                 cl('@#$@#$@#$',a,b,c,d);
-                debugger;
+            });
+            Backbone.history.start({
+                pushState: true,
+                root: window.App.root
             });
             let main_frame = new MainFrame();
             $('body').append(main_frame.render());
