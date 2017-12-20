@@ -7,25 +7,27 @@ define([
     "jquery",
     "Backbone",
     "utils",
+    "./models/eventable/eventable",
     "./models/mainFrame/mainFrame"
-], function (_, $, Backbone) {
-    var debug = function() { if (1) debugger; };
+], function (_, $, Backbone, utils, Eventable) {
+    var debug = function() { if (1) debugger; },
+        innerEventBus = _.extend({}, Backbone.Events);
 
     return Backbone.Model.extend({
         _routes: {
             routes: {
                 '': 'index',
                 'news/:param': 'news',
-                'news/economy-news/:param': 'news2',
-                'news:param': 'news3',
+                'news/economy-news/:param': 'news',
+                'news:param': 'news',
                 '/:param': 'news4'
             },
             index: function(){
-                this.trigger('navigation', 'index');
+                innerEventBus.trigger('navigation', 'index');
                 debug();
             },
-            news: function(e){
-                this.trigger('navigation', 'news', e);
+            news: function(route){
+                innerEventBus.trigger('navigation', 'news', route);
                 debug();
             },
             news2: function() { debug.apply(null, arguments) },
@@ -34,6 +36,9 @@ define([
         },
 
         initialize: function () {
+            innerEventBus.on('navigation', $.p(function (group, route) {
+                this.trigger('navigation', group, route);
+            }, this))
             window.App.Router = Backbone.Router.extend(this._routes);
 
             new window.App.Router;
