@@ -4,17 +4,14 @@ var express = require("express"),
         res.sendfile('index.html')
     };
 
-/* serves all the static files */
+/* Serve all the static files */
 app.get(/^\/(scripts|style)(.+)$/, function(req, res){
-    console.log('static file request : ', req.params);
+    console.log(req.params, 'served');
     res.sendfile( __dirname + '/' + req.params[0] + req.params[1]);
 });
 
-/* serves main page */
-app.get('/', sendIndex);
-app.get('/news/', sendIndex);
-app.get('/news/*', sendIndex);
-
+/* Only serve main page */
+app.get('/*', sendIndex);
 
 var port = 8888;
 app.listen(port, function() {

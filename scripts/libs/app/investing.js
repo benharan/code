@@ -20,16 +20,17 @@ define([
     }
     investingApp = Backbone.Model.extend({
         init: function () {
-            var router = new Router();
-            router.on('navigation', function (a,b,c,d) {
-                cl('@#$@#$@#$',a,b,c,d);
+            var router = new Router(),
+                main_frame = new MainFrame();
+
+            $('body').append(main_frame.render());
+            router.on('navigation', function (section, p1, p2) {
+                main_frame.navigateTo(section, p1, p2);
             });
             Backbone.history.start({
                 pushState: true,
                 root: window.App.root
             });
-            let main_frame = new MainFrame();
-            $('body').append(main_frame.render());
         }
     });
 

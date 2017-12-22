@@ -13,8 +13,8 @@ define([
         innerEventBus = _.extend({}, Backbone.Events);
 
     return Backbone.Model.extend({
-        trigNav: function (p1, p2, p3) {
-            this.trigger('navigation', p1, p2, p3);
+        trigNav: function (section, p1, p2) {
+            this.trigger('navigation', section, p1, p2);
         },
 
         initialize: function () {
@@ -22,13 +22,17 @@ define([
                 RouterClass = Backbone.Router.extend({
                     routes: {
                         '': 'index',
-                        'news/:category/:article': 'news'
+                        'news/:category/:article': 'news',
+                        'indices/:instrument': 'indices'
                     },
                     index: function(){
                         triggerNavigation('index');
                     },
                     news: function(category, article){
                         triggerNavigation('news', category, article);
+                    },
+                    indices: function(indices){
+                        triggerNavigation('indices', indices);
                     }
                 });
 
@@ -38,8 +42,7 @@ define([
                 var href = { prop: $(this).prop("href"), attr: $(this).attr("href") },
                     root = location.protocol + "//" + location.host + App.root;
 
-                // Ensure the root is part of the anchor href, meaning it's relative.
-                if (href.prop.slice(0, root.length) === root) {
+                if (href.prop.slice(0, root.length) === root) { // Inner link
                     evt.preventDefault();
                     window.App.Router.navigate(href.attr, { trigger: true });
                 }
