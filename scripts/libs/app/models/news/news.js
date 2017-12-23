@@ -12,9 +12,7 @@ define([
     "text!../news/news.css"
 ], function (_, $, Backbone, Displayable, Utils, html, css) {
     function beautifyTitle(title) {
-        return title.split('-').map(word=>{
-            return word.substr(0, 1).toUpperCase() + word.substr(1);
-        }).join(' ');
+        return title.split('-').map(word => word.substr(0, 1).toUpperCase() + word.substr(1)).slice(0, -1).join(' ');
     }
 
     return Displayable.extend({
