@@ -12,7 +12,7 @@ define([
     "text!../news/news.css"
 ], function (_, $, Backbone, Displayable, Utils, html, css) {
     function beautifyTitle(title) {
-        return title.split('-').map(word => word.substr(0, 1).toUpperCase() + word.substr(1)).slice(0, -1).join(' ');
+        return title.split('-').map(Utils.capitalizeWord).slice(0, -1).join(' ');
     }
 
     return Displayable.extend({
@@ -29,6 +29,7 @@ define([
         },
 
         _markupScheme: {
+            'image': '.news-img'
         },
 
         initialize: function () {
@@ -38,6 +39,16 @@ define([
 
         render: function (category, title) {
             Displayable.prototype.render.call(this, this._chewTemplateData(category, title), this._markupScheme);
+            let loopLimit = 5,
+                appendToImage = () => this._dom.image.after(loopLimit + '<br/>'),
+                loop = function () {
+                    setTimeout(function () {
+                        appendToImage();
+                        loopLimit-- && loop();
+                    }, 1000)
+                }
+
+            loop();
 
             return this.$el;
         },

@@ -9,11 +9,10 @@ define([
     "Displayable",
     "utils",
     "../topBar/topBar",
-    "../mainContent/mainContent",
     "../rightContent/rightContent",
     "text!../mainFrame/mainFrame.html",
     "text!../mainFrame/mainFrame.css"
-], function (_, $, Backbone, Displayable, Utils, TopBar, MainContent, RightContent, html, css) {
+], function (_, $, Backbone, Displayable, Utils, TopBar, RightContent, html, css) {
     return Displayable.extend({
 
         _topBar: null,
@@ -31,14 +30,12 @@ define([
         initialize: function () {
             Displayable.prototype.initialize.call(this, html, css);
             this._topBar = new TopBar();
-            this._mainContent = new MainContent();
             this._rightContent = new RightContent();
         },
 
         render: function () {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
             this._dom.topBar.html(this._topBar.render());
-            //this._setMainContent(this._mainContent.render());
             this._dom.rightContent.html(this._rightContent.render());
             return this.$el;
         },
