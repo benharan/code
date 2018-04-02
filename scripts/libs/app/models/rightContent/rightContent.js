@@ -7,10 +7,10 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "utils",
+    "Toolset/toolset",
     "text!../rightContent/rightContent.html",
     "text!../rightContent/rightContent.css"
-], function (_, $, Backbone, Displayable, Utils, html, css) {
+], function (_, $, Backbone, Displayable, Toolset, html, css) {
     return Displayable.extend({
 
         _markupScheme: {
@@ -18,7 +18,6 @@ define([
 
         initialize: function () {
             Displayable.prototype.initialize.call(this, html, css);
-
         },
 
         render: function () {

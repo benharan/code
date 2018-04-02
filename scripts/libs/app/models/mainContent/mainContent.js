@@ -7,10 +7,9 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "utils",
     "text!../mainContent/mainContent.html",
     "text!../mainContent/mainContent.css"
-], function (_, $, Backbone, Displayable, Utils, html, css) {
+], function (_, $, Backbone, Displayable, html, css) {
     return Displayable.extend({
 
         _markupScheme: {

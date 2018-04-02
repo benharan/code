@@ -6,9 +6,8 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "utils",
     "./models/mainFrame/mainFrame"
-], function (_, $, Backbone, utils) {
+], function (_, $, Backbone) {
     var debug = function() { if (1) debugger; },
         innerEventBus = _.extend({}, Backbone.Events);
 

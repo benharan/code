@@ -7,12 +7,12 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "utils",
+    "Toolset/toolset",
     "text!../news/news.html",
     "text!../news/news.css"
-], function (_, $, Backbone, Displayable, Utils, html, css) {
+], function (_, $, Backbone, Displayable, Toolset, html, css) {
     function beautifyTitle(title) {
-        return title.split('-').map(Utils.capitalizeWord).slice(0, -1).join(' ');
+        return title.split('-').map(Toolset.Texts.capitalizeWord).slice(0, -1).join(' ');
     }
 
     return Displayable.extend({

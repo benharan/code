@@ -19,7 +19,7 @@ define([
 
         render: function (templateData, scheme) {
             $("head").append(this._cssElement);
-            
+
             this.$el = $(this._markupTemplate(templateData || {}));
 
             this.delegateEvents();
@@ -27,15 +27,18 @@ define([
             if (scheme) {
                 this._cacheDom(scheme);
             }
-            
+
             return this.$el;
         },
-        
+
         _cacheDom: function (scheme) {
             var key, result = {};
 
             for (key in scheme) {
                 result[key] = this.$el.find(scheme[key]);
+                if (!result[key].length) {
+                    throwError('DOM Element Not Found', key, scheme[key]);
+                }
             }
 
             this._dom = result;

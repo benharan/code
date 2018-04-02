@@ -1,15 +1,10 @@
-/**
- * Created by Skeksify on 09/07/2016.
- */
-
 define([
     "underscore",
     "jquery",
     "Backbone",
-    "utils",
     "./models/mainFrame/mainFrame",
     "./router"
-], function (_, $, Backbone, Utils, MainFrame, Router) {
+], function (_, $, Backbone, MainFrame, Router) {
     var investingApp;
     window.App = {
         Models: {},

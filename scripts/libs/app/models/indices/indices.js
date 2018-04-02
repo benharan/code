@@ -7,10 +7,9 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "utils",
     "text!../indices/indices.html",
     "text!../indices/indices.css"
-], function (_, $, Backbone, Displayable, Utils, html, css) {
+], function (_, $, Backbone, Displayable, html, css) {
     return Displayable.extend({
 
         _instrumentTitleMap: {
