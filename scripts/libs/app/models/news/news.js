@@ -39,12 +39,17 @@ define([
 
         render: function (category, title) {
             Displayable.prototype.render.call(this, this._chewTemplateData(category, title), this._markupScheme);
-            let loopLimit = 5,
+			window.prerenderReady = false;
+			let loopLimit = 5,
                 appendToImage = () => this._dom.image.after(loopLimit + '<br/>'),
                 loop = function () {
                     setTimeout(function () {
                         appendToImage();
-                        loopLimit-- && loop();
+                        if (loopLimit--) {
+                            loop();
+						} else {
+							window.prerenderReady = true;
+                        }
                     }, 1000)
                 }
 
