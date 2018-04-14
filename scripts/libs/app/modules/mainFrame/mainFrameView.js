@@ -12,7 +12,7 @@ define([
     "Modules/rightContent/rightContentView",
     "text!./mainFrame.html",
     "text!./mainFrame.css"
-], function (_, $, Backbone, Displayable, Toolset, TopBar, RightContent, html, css) {
+], function (_, $, Backbone, Displayable, Toolset, TopBarView, RightContentView, html, css) {
     return Displayable.extend({
         _topBar: null,
         _markupScheme: {
@@ -22,8 +22,8 @@ define([
         },
         initialize: function () {
             Displayable.prototype.initialize.call(this, html, css);
-            this._topBar = new TopBar();
-            this._rightContent = new RightContent();
+            this._topBar = new TopBarView();
+            this._rightContent = new RightContentView();
         },
 
         render: function () {

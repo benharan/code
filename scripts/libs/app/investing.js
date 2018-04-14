@@ -7,9 +7,6 @@ define([
 ], function (_, $, Backbone, MainFrame, Router) {
     var investingApp;
     window.InvestingApp = {
-        Models: {},
-        Collections: {},
-        Views: {},
         Router: {},
         root: '/'
     }
