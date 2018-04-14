@@ -2,11 +2,11 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "./models/mainFrame/mainFrame",
+    "Modules/mainFrame/mainFrame",
     "./router"
 ], function (_, $, Backbone, MainFrame, Router) {
     var investingApp;
-    window.App = {
+    window.InvestingApp = {
         Models: {},
         Collections: {},
         Views: {},
@@ -18,13 +18,12 @@ define([
             var router = new Router(),
                 main_frame = new MainFrame();
 
-            $('body').append(main_frame.render());
-            router.on('navigation', function (section, p1, p2) {
-                main_frame.navigateTo(section, p1, p2);
-            });
+            $(document.body).append(main_frame.render());
+            router.on('navigation', main_frame.navigate.bind(main_frame));
+
             Backbone.history.start({
                 pushState: true,
-                root: window.App.root
+                root: window.InvestingApp.root
             });
         }
     });

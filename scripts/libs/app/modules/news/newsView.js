@@ -8,8 +8,8 @@ define([
     "Backbone",
     "Displayable",
     "Toolset/toolset",
-    "text!../news/news.html",
-    "text!../news/news.css"
+    "text!./news.html",
+    "text!./news.css"
 ], function (_, $, Backbone, Displayable, Toolset, html, css) {
     function beautifyTitle(title) {
         return title.split('-').map(Toolset.Texts.capitalizeWord).slice(0, -1).join(' ');

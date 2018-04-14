@@ -5,8 +5,9 @@
 requirejs.config({
     baseUrl: "/scripts/libs",
     paths: {
-        Displayable: "app/models/displayable/displayable",
-        Toolset: "app/models/toolset"
+        Displayable: "app/modules/displayable/displayable",
+        Toolset: "app/modules/toolset",
+        Modules: "app/modules"
     },
     shim: {
         backbone: {

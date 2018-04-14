@@ -7,8 +7,8 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "text!../indices/indices.html",
-    "text!../indices/indices.css"
+    "text!./indices.html",
+    "text!./indices.css"
 ], function (_, $, Backbone, Displayable, html, css) {
     return Displayable.extend({
 

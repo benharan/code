@@ -6,7 +6,7 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "./models/mainFrame/mainFrame"
+    "Modules/mainFrame/mainFrame"
 ], function (_, $, Backbone) {
     var debug = function() { if (1) debugger; },
         innerEventBus = _.extend({}, Backbone.Events);
@@ -35,15 +35,15 @@ define([
                     }
                 });
 
-            window.App.Router = new RouterClass();
+            window.InvestingApp.Router = new RouterClass();
 
             $(document).on("click", "a[href]:not([data-bypass])", function(evt) {
                 var href = { prop: $(this).prop("href"), attr: $(this).attr("href") },
-                    root = location.protocol + "//" + location.host + App.root;
+                    root = location.protocol + "//" + location.host + window.InvestingApp.root;
 
                 if (href.prop.slice(0, root.length) === root) { // Inner link
                     evt.preventDefault();
-                    window.App.Router.navigate(href.attr, { trigger: true });
+                    window.InvestingApp.Router.navigate(href.attr, { trigger: true });
                 }
             });
             return this;

@@ -8,10 +8,10 @@ define([
     "Backbone",
     "Displayable",
     "Toolset/toolset",
-    "../topBar/topBar",
-    "../rightContent/rightContent",
-    "text!../mainFrame/mainFrame.html",
-    "text!../mainFrame/mainFrame.css"
+    "Modules/topBar/topBarView",
+    "Modules/rightContent/rightContentView",
+    "text!./mainFrame.html",
+    "text!./mainFrame.css"
 ], function (_, $, Backbone, Displayable, Toolset, TopBar, RightContent, html, css) {
     return Displayable.extend({
         _topBar: null,
@@ -20,12 +20,6 @@ define([
             "mainContent": ".main-content",
             "rightContent": ".right-content",
         },
-        _sectionToModelMap: {
-            'index': './app/models/mainContent/mainContent',
-            'indices': './app/models/indices/indices',
-            'news': './app/models/news/news'
-        },
-
         initialize: function () {
             Displayable.prototype.initialize.call(this, html, css);
             this._topBar = new TopBar();
@@ -39,22 +33,11 @@ define([
             return this.$el;
         },
 
-        navigateTo: function (section, p1, p2) {
-            var setMainCont = this._setMainContent.bind(this);
-
-            // Dynamically require needed model
-            require([this._sectionToModelMap[section]], function (ModelClass) {
-                var modelInstance = new ModelClass();
-                setMainCont(modelInstance.render(p1, p2));
-                $(document).attr("title", section);
-            })
-        },
-
         events: {
             "click .battleBoard_next": "_next"
         },
 
-        _setMainContent: function (content) {
+        setMainContent: function (content) {
             this._dom.mainContent.html(content)
         },
 
