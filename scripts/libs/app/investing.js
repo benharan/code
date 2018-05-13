@@ -3,9 +3,11 @@ define([
     "jquery",
     "Backbone",
     "Modules/mainFrame/mainFrame",
+    "Modules/jQueryMutator/jQueryMutator",
     "./router"
-], function (_, $, Backbone, MainFrame, Router) {
+], function (_, $, Backbone, MainFrame, jQueryMutator, Router) {
     var investingApp;
+
     window.InvestingApp = {
         Router: {},
         root: '/'
