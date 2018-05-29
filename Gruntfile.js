@@ -12,7 +12,13 @@ module.exports = function(grunt) {
   				'play_script_built.js': 'play_script.js'
   			}
   		}
-  	}
+  	},
+	polyfill: {
+		options: {
+			features: ['es6.symbol', 'es6.promise'], // https://github.com/zloirock/core-js#features
+			output: 'polyfill.js'
+		}
+	}
   });
 
   // Default task(s).

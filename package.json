@@ -31,6 +31,7 @@
     "babel-preset-env": "^1.7.0",
     "grunt": "^1.0.2",
     "grunt-babel": "^7.0.0",
+    "grunt-polyfill-builder": "^1.0.2",
     "load-grunt-tasks": "^4.0.0"
   }
 }

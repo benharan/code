@@ -13,6 +13,10 @@ define([
     "text!./mainFrame.html",
     "text!./mainFrame.css"
 ], function (_, $, Backbone, Displayable, Toolset, TopBarView, RightContentView, html, css) {
+    function loadContent($destination, $content) {
+        $destination.html($content);
+	}
+
     return Displayable.extend({
         _topBar: null,
         _markupScheme: {
@@ -28,8 +32,8 @@ define([
 
         render: function () {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
-            this._dom.topBar.html(this._topBar.render());
-            this._dom.rightContent.html(this._rightContent.render());
+            loadContent(this._dom.topBar, this._topBar.render());
+            loadContent(this._dom.rightContent, this._rightContent.render());
             return this.$el;
         },
 

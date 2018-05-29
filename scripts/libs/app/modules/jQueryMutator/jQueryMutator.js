@@ -19,7 +19,6 @@ define([
         }
 
         $.fn.html = function () {
-            debugger;
             return S(nativeFu.html.apply(this, arguments));
         }
 });
