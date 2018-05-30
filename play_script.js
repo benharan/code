@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-
     let specObj = { a1: 1, a2: 3498, a3: 49589, a4: 'HI' },
         daPromise = new Promise(function(resolve, reject) {
             setTimeout(() => {
@@ -30,4 +29,27 @@
         console.log(moi);
     }
 
+})()
+
+(() => {
+	function* synchlyOp(par) {
+		cl('Starting', par);
+		par = yield delayFive('Five');
+		cl('Passed five', par);
+		par = yield delayTen('Ten');
+		cl('Passed ten', par);
+		return 'done';
+	}
+
+	function stepper(synchIter, lastIterationValue) {
+		var iteration = synchIter.next(lastIterationValue);
+		if (!iteration.done) {
+			iteration.value.then(val => {
+			    cl(`Got ${val}`);
+			    stepper(synchIter, val); // Recurse to next iteration
+			});
+		}
+	}
+
+	stepper(synchlyOp('╪'));
 })()
