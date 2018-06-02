@@ -13,7 +13,8 @@ define([
         _sectionToModelMap: {
             'index': 'Modules/mainContent/mainContentView',
             'indices': 'Modules/indices/indicesView',
-            'news': 'Modules/news/newsView'
+            'news': 'Modules/news/newsView',
+            'portfolio': 'Modules/portfolios/portfolios',
         },
 
         initialize: function () {
@@ -25,7 +26,7 @@ define([
         navigate: function (section, p1, p2) {
             // Dynamically require needed model
             require([this._sectionToModelMap[section]], function (ModelClass) {
-                var modelInstance = new ModelClass();
+                var modelInstance = new ModelClass(p1, p2);
                 view.setMainContent(modelInstance.render(p1, p2));
                 $(document).attr("title", section);
             })

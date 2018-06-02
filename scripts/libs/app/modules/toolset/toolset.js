@@ -2,6 +2,8 @@
  * Created by Skeksify on 09/07/2016.
  */
 
+window.cl = console.log;
+
 define([
     "underscore",
     "jquery",
@@ -12,7 +14,7 @@ define([
 ], function (_, $, Backbone, MathTool, TextsTool, IsTool) {
     var Toolset = Backbone.Model.extend({
             initialize: function () {
-                
+
             },
             Math: new MathTool(),
             Texts: new TextsTool(),
@@ -27,7 +29,6 @@ define([
             }
         });
 
-    window.cl = console.log;
     window.throwError = function (mainLabel) {
         var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];
         for (i = 1; i < arguments.length; i++) {

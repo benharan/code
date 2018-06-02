@@ -6,6 +6,13 @@ define([
     "jquery"
 ], function ($) {
 
+	$.elementAcc = function (action) {
+		return (acc, item) => {
+			const itemRes = action ? action(item) : item;
+			return acc ? acc.add(itemRes) : itemRes
+		}
+	}
+
     var S = function (str) {
         	var strInstance = new String(str);
         	strInstance.print = function() { console.log(this.toString()) }

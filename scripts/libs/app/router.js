@@ -22,7 +22,8 @@ define([
                     routes: {
                         '': 'index',
                         'news/:category/:article': 'news',
-                        'indices/:instrument': 'indices'
+                        'indices/:instrument': 'indices',
+                        'portfolio/(:pId)': 'portfolio'
                     },
                     index: function(){
                         triggerNavigation('index');
@@ -32,10 +33,15 @@ define([
                     },
                     indices: function(indices){
                         triggerNavigation('indices', indices);
+                    },
+                    portfolio: function(portfolioId){
+                        triggerNavigation('portfolio', portfolioId);
                     }
                 });
 
             window.InvestingApp.Router = new RouterClass();
+
+			// window.InvestingApp.Router.on('route', () => {debugger;});
 
             $(document).on("click", "a[href]:not([data-bypass])", function(evt) {
                 var href = { prop: $(this).prop("href"), attr: $(this).attr("href") },

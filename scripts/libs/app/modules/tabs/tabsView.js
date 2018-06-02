@@ -7,21 +7,22 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "text!./mainContent.html",
-    "text!./mainContent.css"
-], function (_, $, Backbone, Displayable, html, css) {
+    "Toolset/toolset",
+    "text!./tabs.html",
+    "text!./tabs.css"
+], function (_, $, Backbone, Displayable, Toolset, html, css) {
     return Displayable.extend({
-
-        _markupScheme: { },
+        _markupScheme: {
+            wrapper: '.tabs-wrapper'
+        },
 
         initialize: function () {
             Displayable.prototype.initialize.call(this, html, css);
-
         },
 
-        render: function () {
+        render: function ($tabs) {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
-
+            this._dom.wrapper.html($tabs);
             return this.$el;
         }
     })

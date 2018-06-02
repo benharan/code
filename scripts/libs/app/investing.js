@@ -2,10 +2,12 @@ define([
     "underscore",
     "jquery",
     "Backbone",
+	"Toolset/toolset",
     "Modules/mainFrame/mainFrame",
     "Modules/jQueryMutator/jQueryMutator",
+    "Modules/backboneEnhancement/backboneEnhancement",
     "./router"
-], function (_, $, Backbone, MainFrame, jQueryMutator, Router) {
+], function (_, $, Backbone, Toolset, MainFrame, jQueryMutator, backboneEnhancement, Router) {
     var investingApp;
 
     window.InvestingApp = {
@@ -14,7 +16,7 @@ define([
     }
     investingApp = Backbone.Model.extend({
         init: function () {
-            var router = new Router(),
+            let router = new Router(),
                 main_frame = new MainFrame();
 
             $(document.body).append(main_frame.render());

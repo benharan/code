@@ -1,0 +1,14 @@
+.tabs-wrapper li {
+    display: inline-block;
+    width: 109px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    padding: 7px;
+    margin: 5px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.tabs-wrapper li.selected {
+    background: #0D416F;
+}
