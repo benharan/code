@@ -7,16 +7,16 @@ define([
     "jquery",
     "Backbone",
 	"Modules/tabs/tabs",
-	"Modules/tab/tab",
+	"Modules/tab/portfolioTab",
 	"Modules/portfolio/portfolio",
 	"./portfoliosView"
-], function (_, $, Backbone, Tabs, Tab, Portfolio, View) {
+], function (_, $, Backbone, Tabs, PortfolioTab, Portfolio, View) {
 	return Backbone.Model.extend({
 
 		initialize: function (pId) {
 			this._reset(pId);
 			this._view = new View();
-			this._portfolioTabs = new Tabs(Tab);
+			this._portfolioTabs = new Tabs(PortfolioTab);
 			this._nameToId = {};
 			_.each(window.serverData.portfolios, portfolioObj => {
 				this._portfolios[portfolioObj.id] = new Portfolio(portfolioObj.name);
@@ -43,6 +43,8 @@ define([
 			const pId = this._nameToId[pName];
 			this._currentsId = pId;
 			this._view.loadPortfolio(this._portfolios[pId].render());
+
+			window.InvestingApp.Router.navigate(`portfolio/${pId}`, { trigger: true });
 		},
 
 		_reset: function (pId) {

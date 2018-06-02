@@ -10,36 +10,12 @@ define([
 ], function (_, $, Backbone, Tab) {
 	return Tab.extend({
 
-		isSelected: false,
-
 		initialize: function (tabName, tabSettings) {
-			this._settings = tabSettings;
-			this._view = new View();
-			this._view.on('selected', () => {
-				if (!this.isSelected || tabSettings.alwaysTrigger) {
-					this.trigger('selected', tabName, tabSettings);
-				}
-			});
+			Tab.prototype.initialize.call(this, tabName, tabSettings);
 		},
 
 		render: function () {
-			return this._view.render({
-				label: this._settings.name
-			});
-		},
-
-		getName: function () {
-			return this._settings.name;
-		},
-
-		select: function () {
-			this.isSelected = true;
-			this._view.select();
-		},
-
-		unselect: function () {
-			this.isSelected = false;
-			this._view.unselect();
+			return Tab.prototype.render.call(this);
 		}
 	})
 });
