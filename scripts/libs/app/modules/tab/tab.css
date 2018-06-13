@@ -10,5 +10,6 @@
 }
 
 .tabs-wrapper li.selected {
+    color: white;
     background: #0D416F;
 }

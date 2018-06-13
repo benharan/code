@@ -65,8 +65,8 @@ define([
 
 		function loadTemplate(name, content) {
 			if (content && content.trim()) {
-				let processedResult = compileTemplate(content);
-				templateLoader.load(name, processedResult.deps, processedResult.text);
+				let compiledResult = compileTemplate(content);
+				templateLoader.load(name, compiledResult.deps, compiledResult.text);
 			} else {
 				throwError('Bad Template Content', content);
 			}
@@ -77,6 +77,11 @@ define([
 			return templateLoader.getLoaded(name);
 		}
 
+		function areLoaded(askedDeps) {
+			return templateLoader.areLoaded(askedDeps);
+		}
+
+		this.areLoaded = areLoaded;
 		this.loadTemplate = loadTemplate;
 		this.getTemplate = getTemplate;
 	}

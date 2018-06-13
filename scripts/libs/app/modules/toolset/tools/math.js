@@ -2,7 +2,7 @@ define([
     "underscore",
     "jquery",
     "Backbone"
-], function (_, $, Backbone, MainFrame, Router) {
+], function (_, $, Backbone) {
     return Backbone.Model.extend({
         initialize: function () {
 

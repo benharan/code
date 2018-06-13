@@ -4,11 +4,14 @@ define([
     "Backbone",
 	"Toolset/toolset",
     "Modules/mainFrame/mainFrame",
+    "Modules/TemplateManager/TemplateManager",
     "Modules/jQueryMutator/jQueryMutator",
     "Modules/backboneMutator/backboneMutator",
     "./router"
-], function (_, $, Backbone, Toolset, MainFrame, jQueryMutator, backboneMutator, Router) {
+], function (_, $, Backbone, Toolset, MainFrame, TemplateManager, jQueryMutator, backboneMutator, Router) {
     var investingApp;
+
+    new TemplateManager();
 
     window.InvestingApp = {
         Router: {},

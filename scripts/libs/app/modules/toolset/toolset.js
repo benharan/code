@@ -13,8 +13,8 @@ define([
     "Toolset/tools/is",
     "Toolset/tools/DeepMap",
     "Toolset/tools/RecursiveLoader",
-    "Toolset/tools/TemplateProcessor",
-], function (_, $, Backbone, MathTool, TextsTool, IsTool, DeepMap, RecursiveLoader, TemplateProcessor) {
+    "Toolset/tools/TemplateCompiler",
+], function (_, $, Backbone, MathTool, TextsTool, IsTool, DeepMap, RecursiveLoader, TemplateCompiler) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {  },
         Math: new MathTool(),
@@ -22,7 +22,7 @@ define([
         is: new IsTool(),
         DeepMap,
         RecursiveLoader,
-		TemplateProcessor,
+		TemplateCompiler,
         miscFuncs: {
             p: function (func, context, params) {
                 return params ? func.bind(context, params) : func.bind(context);
@@ -34,8 +34,7 @@ define([
     });
 
 
-
-window.TemplateProcessor = TemplateProcessor;
+window.TemplateCompiler = TemplateCompiler;
 
 	window.throwError = function (mainLabel) {
         var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];

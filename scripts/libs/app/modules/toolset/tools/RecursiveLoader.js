@@ -61,5 +61,7 @@ define([], function () {
 				}
 			}
 		}
+
+		this.areLoaded = (col) => allScriptsLoadedInArray(col);
 	}
 });

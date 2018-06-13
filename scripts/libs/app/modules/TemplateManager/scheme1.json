@@ -1,0 +1,39 @@
+{
+  "content": {
+    "vars": {
+      "name": "Ben"
+    },
+    "nested": {
+      "some_nested_kind": {
+        "view": "huinya",
+        "vars": {
+          "kakaya": "nevedomaya"
+        }
+      },
+      "issues": {
+        "_list": [
+          {
+            "view": "issue_row",
+            "vars": {
+              "name": "issue 1"
+            }
+          },
+          {
+            "view": "issue_row",
+            "vars": {
+              "name": "issue 2"
+            }
+          },
+          {
+            "view": "issue_row",
+            "vars": {
+              "name": "issue 3"
+            }
+          }
+        ]
+      }
+    },
+    "viewPath": "\/var\/www\/html\/investing2018\/app\/modules\/index\/views",
+    "view": "index"
+  }
+}
