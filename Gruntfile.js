@@ -15,7 +15,7 @@ module.exports = function(grunt) {
   	},
 	polyfill: {
 		options: {
-			features: ['es6.symbol', 'es6.promise'], // https://github.com/zloirock/core-js#features
+			features: ['es6.symbol', 'es6.map', 'es6.promise'], // https://github.com/zloirock/core-js#features
 			output: 'polyfill.js'
 		}
 	}

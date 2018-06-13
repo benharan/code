@@ -5,9 +5,9 @@ define([
 	"Toolset/toolset",
     "Modules/mainFrame/mainFrame",
     "Modules/jQueryMutator/jQueryMutator",
-    "Modules/backboneEnhancement/backboneEnhancement",
+    "Modules/backboneMutator/backboneMutator",
     "./router"
-], function (_, $, Backbone, Toolset, MainFrame, jQueryMutator, backboneEnhancement, Router) {
+], function (_, $, Backbone, Toolset, MainFrame, jQueryMutator, backboneMutator, Router) {
     var investingApp;
 
     window.InvestingApp = {

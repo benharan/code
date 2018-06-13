@@ -35,7 +35,7 @@ define([
 
 
 
-
+window.TemplateProcessor = TemplateProcessor;
 
 	window.throwError = function (mainLabel) {
         var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];

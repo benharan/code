@@ -22,11 +22,11 @@ define([
 		}
 
 		function testInjectionSyntax(text) {
-			return text.match(/^\s*\$this\s*->\s*render\(\s*'([\s\w]+)'\s*\)\s*;?/);
+			return text.match(/^\s*\$this\s*->\s*renderNested\(\s*'([\s\w]+)'\s*\)\s*;?/);
 		}
 
 		function trimWrappers(text) {
-			return text.substr(2, text.length - 4).trim();
+			return text.replace(/\<\?\s*(php)?\s*|\s*\?\>/g, '');
 		}
 
 		function getAllIndices(needle, haystack) {
@@ -40,28 +40,36 @@ define([
 				injection = testInjectionSyntax(result);
 
 			if (injection) {
-				result = `=$views.${injection[1]}`
+				result = `=$views.${injection[1]}; `
 				resultPayload.deps.push(injection[1]);
 			}
 
 			return `<%${result}%>`;
 		}
 
-		function processTemplate(templateString) {
-			var result = { deps: [] }, resultText = new StringAccumulator(), lastHandledIndex = 0, closingIndex;
+		function compileTemplate(templateString) {
+			var result = { deps: [] }, resultText = new StringAccumulator(), lastHandledIndex = 0, nextEnd, closingIndex, totalLength = templateString.length;
 			getAllIndices('<?', templateString).forEach(function(openingIndex) {
 				resultText.add(templateString.substr(lastHandledIndex, openingIndex - lastHandledIndex)); // Store all until current opening
 				closingIndex = templateString.indexOf('?>', openingIndex);
-				resultText.add(chewChunk(templateString.substr(openingIndex, closingIndex - openingIndex + 2), result));
+				nextEnd = ~closingIndex ? closingIndex + 2 : undefined;
+				resultText.add(chewChunk(templateString.substring(openingIndex, nextEnd), result));
 				lastHandledIndex = closingIndex + 2;
 			});
-			result.text = resultText.add(templateString.substr(lastHandledIndex)).get();
+			if (nextEnd > totalLength) { // If anything remains after
+				resultText.add(templateString.substr(lastHandledIndex));
+			}
+			result.text = resultText.get();
 			return result;
 		}
 
 		function loadTemplate(name, content) {
-			var processedResult = processTemplate(content);
-			templateLoader.load(name, processedResult.deps, processedResult.text);
+			if (content && content.trim()) {
+				let processedResult = compileTemplate(content);
+				templateLoader.load(name, processedResult.deps, processedResult.text);
+			} else {
+				throwError('Bad Template Content', content);
+			}
 			return this;
 		}
 

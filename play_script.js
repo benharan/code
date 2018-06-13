@@ -42,7 +42,8 @@
 	}
 
 	function stepper(synchIter, lastIterationValue) {
-		var iteration = synchIter.next(lastIterationValue);
+		const iteration = synchIter.next(lastIterationValue);
+
 		if (!iteration.done) {
 			iteration.value.then(val => {
 			    cl(`Got ${val}`);
