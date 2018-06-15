@@ -1,0 +1,31 @@
+{
+  "titleWrap": {
+    "vars": {
+      "sign": "&%&"
+    },
+    "viewPath": "",
+    "view": "titleWrap",
+    "nested": {
+      "innerTitle": {
+        "view": "innerTitle",
+        "vars": {
+          "title": "Nevedomaya!"
+        }
+      },
+      "from": {
+        "view": "from",
+        "vars": {
+          "fromLabel": "Ben!"
+        },
+        "nested": {
+          "companyName": {
+            "view": "companyNameView",
+            "vars": {
+              "companyNameLabel": "Investing Ltd."
+            }
+          }
+        }
+      }
+    }
+  }
+}

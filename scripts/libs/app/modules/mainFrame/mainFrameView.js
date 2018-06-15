@@ -24,6 +24,7 @@ define([
             "mainContent": ".main-content",
             "rightContent": ".right-content",
         },
+
         initialize: function () {
             Displayable.prototype.initialize.call(this, html, css);
             this._topBar = new TopBarView();
@@ -35,10 +36,6 @@ define([
             loadContent(this._dom.topBar, this._topBar.render());
             loadContent(this._dom.rightContent, this._rightContent.render());
             return this.$el;
-        },
-
-        events: {
-            "click .battleBoard_next": "_next"
         },
 
         setMainContent: function (content) {

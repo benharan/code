@@ -30,10 +30,11 @@
               "name": "issue 3"
             }
           }
-        ]
+        ],
+        "view": "pff"
       }
     },
-    "viewPath": "\/var\/www\/html\/investing2018\/app\/modules\/index\/views",
+    "viewPath": "mainContentView\/",
     "view": "index"
   }
 }

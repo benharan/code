@@ -7,46 +7,151 @@ define([
 	"jquery",
 	"Backbone",
 	"Toolset/toolset",
-	"text!./scheme1.json"
-], function (_, $, Backbone, Toolset, scheme1) {
+	"Modules/DependencyLoader/DependencyLoader",
+	"text!./views1.json"
+], function (_, $, Backbone, Toolset, DependencyLoader, views1) {
 
 	let lcl = 0 ? cl : $.noop,
-		scheme = JSON.parse(scheme1),
-		views = {},
-		data = {};
+		viewsMockup = JSON.parse(views1),
+		data = {},
+		promiseCollection = [],
+		templateLoader = new DependencyLoader(),
+		templateCompiler = new Toolset.TemplateCompiler(),
+		templateManager;
 
-	function loadView(name, fullPath) {
-		if (!views[name]) { // ToDo: Implement view fetching
-			views[name] = fullPath;
+	function fetchView(templateName, fullPath) {
+		let tO = 100 * Math.random();
+		return new Promise(resolve => {
+			setTimeout(()=>{
+				lcl(`Resolved after ${tO} ms`);
+				resolve({ templateName, content: viewsMockup[fullPath] });
+			}, tO)
+		})
+	}
+
+	function addToRender(templateName, parentName, dataObj) {
+		if (!data[templateName]) {
+			data[templateName] = dataObj;
 		}
 	}
-	function loadData(name, dataObj) {
-		if (!data[name]) { // ToDo: Implement view fetching
-			data[name] = dataObj;
+
+	function adaptDataObj(dataObj, extensionData) {
+		return _.extend(_.reduce(dataObj.templateData, (acc, value, key) => {
+			acc['$' + key] = value;
+			return acc;
+		}, {}), extensionData);
+	}
+
+	function isLoaded(templateName) {
+		return !!templateLoader.get(templateName);
+	}
+
+	function templateValidation(templateName, content) {
+		if (!content || !content.trim()) {
+			throwError('Bad Template Content', templateName, content);
 		}
 	}
 
-	return Backbone.Model.extend({
+	function loadTemplate({ templateName, content = '' }) {
+		templateValidation(templateName, content); // You shall not pass!
+		let { deps, compiledContent } = templateCompiler.compile(content);
+
+		templateLoader.load(templateName, deps, compiledContent);
+		lcl('Compiled and loaded ', templateName);
+		return this;
+	}
+
+	function attachToNestedData(result, templateName, renderedTemplate) {
+		if (!result['$nestedData']) {
+			result['$nestedData'] = {};
+		}
+		result['$nestedData'][templateName] = renderedTemplate;
+	}
+
+	templateManager = Backbone.Model.extend({
 		initialize: function () {
-			this._processor = new Toolset.TemplateCompiler();
+			const lsTemplates = this._loadFromLS();
 
-			this.recursivelyLoadTemplates(scheme);
-			cl(views);
-			cl('@@@@');
-			cl(data);
+			if (lsTemplates) { // Import compiled templates from localStorage
+				templateLoader.import(lsTemplates);
+				lcl('Imported ', lsTemplates);
+			}
 		},
 
-		recursivelyLoadTemplates: function (templatesObj) {
+		recursivelyLoadScheme: function (templatesObj, dataContainer) {
 			_.each(templatesObj, (templateDefinition, templateName) => {
-				let { viewPath: path, view: viewName, nested = null, vars } = templateDefinition;
+				let { viewPath: path = '', view: viewName = '', nested = null, vars: templateData } = templateDefinition;
 
-				lcl(`Doing ${templateName}`, templateDefinition);
+				if (!isLoaded(templateName)) {
+					promiseCollection.push(fetchView(templateName, path + viewName));
+				}
 
-				loadView(templateName, path + viewName);
-				loadData(templateName, vars);
+				dataContainer[templateName] = { templateData };
 
-				nested && this.recursivelyLoadTemplates(nested);
+				if (nested) {
+					dataContainer[templateName].nestedData = {};
+					this.recursivelyLoadScheme(nested, dataContainer[templateName].nestedData);
+				}
 			})
+		},
+
+		// If needed, Recursively: fetch views, compile, save
+		_loadScheme: function (schemeParam) {
+			data = {};
+			this.recursivelyLoadScheme(schemeParam, data); // Init according to scheme, loading what's not loaded
+
+			return new Promise(resolve => {
+				// Need to fetch views and finish asynchly
+				if (_.isntEmpty(promiseCollection)) {
+					Promise.all(promiseCollection).then(values => {
+						lcl('Finished promises, loading', values);
+						_.each(values, loadTemplate);
+						this._saveToLS();
+						resolve();
+					});
+				} else { // All needed templates already loaded, finish synchronously
+					resolve();
+				}
+			})
+		},
+
+		// Attempt to load any unloaded templates, then recursively render
+		render: function (schemeObj) {
+			return new Promise(resolve => {
+				this._loadScheme(schemeObj).then(() => {
+					let res = _.reduce(this._recursivelyRenderTemplates(data).$nestedData,
+						(acc, viewText) => acc + viewText, '');
+
+					resolve(res);
+				})
+			})
+		},
+
+		_recursivelyRenderTemplates: function (dataObj) {
+			var result = {};
+			_.each(dataObj, (templateData, templateName) => {
+				let templateObj = templateLoader.get(templateName),
+					templateFunction = _.template(templateObj.definition),
+					renderedTemplate, nestedData = {};
+
+				if (_.isntEmpty(templateObj.deps)) {
+					nestedData = this._recursivelyRenderTemplates(templateData.nestedData);
+				}
+
+				renderedTemplate = templateFunction(adaptDataObj(templateData, nestedData));
+				attachToNestedData(result, templateName, renderedTemplate);
+			})
+			return result;
+		},
+
+		_saveToLS: function () {
+			localStorage.setItem('templates', templateLoader.export());
+		},
+
+		_loadFromLS: function () {
+			return localStorage.getItem('templates');
 		}
 	})
+
+	return new templateManager();
 });

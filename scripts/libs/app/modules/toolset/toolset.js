@@ -12,16 +12,14 @@ define([
     "Toolset/tools/texts",
     "Toolset/tools/is",
     "Toolset/tools/DeepMap",
-    "Toolset/tools/RecursiveLoader",
     "Toolset/tools/TemplateCompiler",
-], function (_, $, Backbone, MathTool, TextsTool, IsTool, DeepMap, RecursiveLoader, TemplateCompiler) {
+], function (_, $, Backbone, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {  },
         Math: new MathTool(),
         Texts: new TextsTool(),
         is: new IsTool(),
         DeepMap,
-        RecursiveLoader,
 		TemplateCompiler,
         miscFuncs: {
             p: function (func, context, params) {
