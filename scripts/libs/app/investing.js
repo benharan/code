@@ -2,13 +2,14 @@ define([
     "underscore",
     "jquery",
     "Backbone",
+	"ex-lib/lz-string",
 	"Toolset/toolset",
     "Modules/mainFrame/mainFrame",
     "Modules/mutators/underscoreMutator",
     "Modules/mutators/jQueryMutator",
     "Modules/mutators/backboneMutator",
     "./router"
-], function (_, $, Backbone, Toolset, MainFrame, underscoreMutator, jQueryMutator, backboneMutator, Router) {
+], function (_, $, Backbone, lzstring, Toolset, MainFrame, underscoreMutator, jQueryMutator, backboneMutator, Router) {
     var investingApp;
 
     window.InvestingApp = {

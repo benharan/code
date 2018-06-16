@@ -11,7 +11,8 @@ define([
 	"text!./views1.json"
 ], function (_, $, Backbone, Toolset, DependencyLoader, views1) {
 
-	let lcl = 0 ? cl : $.noop,
+	let lcl = 1 ? cl : $.noop,
+		useCompression = true,
 		viewsMockup = JSON.parse(views1),
 		data = {},
 		promiseCollection = [],
@@ -46,16 +47,22 @@ define([
 		return !!templateLoader.get(templateName);
 	}
 
-	function templateValidation(templateName, content) {
+	function validateContent(templateName, content) {
 		if (!content || !content.trim()) {
 			throwError('Bad Template Content', templateName, content);
 		}
 	}
 
-	function loadTemplate({ templateName, content = '' }) {
-		templateValidation(templateName, content); // You shall not pass!
-		let { deps, compiledContent } = templateCompiler.compile(content);
+	function validateRecursiveDep(templateName, deps) {
+		if (~deps.indexOf(templateName)) {
+			throwError('Recursive Template Dependency', templateName, deps);
+		}
+	}
 
+	function loadTemplate({ templateName, content = '' }) {
+		validateContent(templateName, content); // You shall not pass!
+		let { deps, compiledContent } = templateCompiler.compile(content);
+		validateRecursiveDep(templateName, deps);
 		templateLoader.load(templateName, deps, compiledContent);
 		lcl('Compiled and loaded ', templateName);
 		return this;
@@ -131,25 +138,31 @@ define([
 			var result = {};
 			_.each(dataObj, (templateData, templateName) => {
 				let templateObj = templateLoader.get(templateName),
-					templateFunction = _.template(templateObj.definition),
+					renderTemplate = _.template(templateObj.definition),
 					renderedTemplate, nestedData = {};
 
 				if (_.isntEmpty(templateObj.deps)) {
 					nestedData = this._recursivelyRenderTemplates(templateData.nestedData);
 				}
 
-				renderedTemplate = templateFunction(adaptDataObj(templateData, nestedData));
+				renderedTemplate = renderTemplate(adaptDataObj(templateData, nestedData));
 				attachToNestedData(result, templateName, renderedTemplate);
 			})
 			return result;
 		},
 
 		_saveToLS: function () {
-			localStorage.setItem('templates', templateLoader.export());
+			const input = templateLoader.export(),
+				_input_ = useCompression ? LZString.compress(input) : input;
+
+			lcl(`Compression Stats\nBefore: ${input.length}\nAfter: ${_input_.length}\nRatio: ${_input_.length/input.length}`);
+
+			localStorage.setItem('templates', _input_);
 		},
 
 		_loadFromLS: function () {
-			return localStorage.getItem('templates');
+			const storedValue = localStorage.getItem('templates');
+			return useCompression ? LZString.decompress(storedValue) : storedValue;
 		}
 	})
 

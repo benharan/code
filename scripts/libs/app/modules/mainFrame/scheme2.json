@@ -1,4 +1,20 @@
 {
+  "cont" : {
+    "view": "mainContentView",
+    "vars": {
+      "name": "Ben",
+      "takeOverBg": "yup",
+      "bodyClass": "white"
+    },
+    "nested": {
+      "some_nested_kind": {
+        "view": "innerTitle",
+        "vars": {
+          "title": "PAPAO"
+        }
+      }
+    }
+  },
   "titleWrap": {
     "vars": {
       "sign": "&%&"

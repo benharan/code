@@ -1,5 +1,5 @@
 {
-  "mainContentView\/index": "<body class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><header><? $this->render('header') ?></header><div><? $this->render('cont') ?></div><footer><? $this->render('footer') ?></footer></body>",
+  "mainContentView": "<body class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><header><? $this->render('header') ?></header><div><? $this->render('innerTitle') ?></div><footer><? $this->render('footer') ?></footer></body>",
   "huinya": "<table><? foreach ($rows as $row) { ?><tr><? foreach ($row->cells as $cell) { ?><td><?=$cell?></td><? } ?></tr><? } ?></table>",
   "innerTitle": "<h1><?=$title;?></h1>",
   "companyNameView": "<h6><?=$companyNameLabel;?></h6>",
