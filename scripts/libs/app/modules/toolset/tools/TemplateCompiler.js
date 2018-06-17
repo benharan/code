@@ -19,30 +19,45 @@ define([
 			}
 		}
 
-		function testInjectionSyntax(text) {
-			return text.match(/^\s*\$this\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/);
-		}
-
-		function trimWrappers(text) {
-			return text.replace(/\<\?\s*(php)?\s*|;?\s*\?\>/g, '');
-		}
-
 		function getAllIndices(needle, haystack) {
 			var result = [], i = -1;
 			while (~(i = haystack.indexOf(needle, i+1))) { result.push(i); }
 			return result;
 		}
 
-		function chewChunk(chunk, resultPayload) {
-			var result = trimWrappers(chunk),
-				[,, injection] = testInjectionSyntax(result) || [];
+		function trimWrappers(text) {
+			return text.replace(/\<\?\s*(php)?\s*|;?\s*\?\>/g, '');
+		}
 
+		function matchInjection(text, resultPayload) {
+			let result, [,, injection] = text.match(/^\s*\$this\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/) || [];
 			if (injection) {
-				result = `=$nestedData.${injection} `
+				result = `=$nestedData.${injection} `;
 				resultPayload.deps.push(injection);
 			}
+			return result;
+		}
 
-			return `<%${result}%>`;
+		function matchIteration(text, resultPayload) {
+			let result, [,, injection] = text.match(/^\s*\$that\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/) || [];
+			if (injection) {
+				result = `=$nestedData.${injection} `;
+				resultPayload.deps.push(injection);
+			}
+			return result;
+		}
+
+		function chewChunk(chunk, resultPayload) {
+			var result,
+				trimmedChunk = trimWrappers(chunk),
+				counter = 0,
+				matchingFunctions = [matchInjection, matchIteration];
+
+			while (!result && counter < matchingFunctions.length) {
+				result = matchingFunctions[counter++](trimmedChunk, resultPayload);
+			}
+
+			return `<%${result || trimmedChunk}%>`;
 		}
 
 		function compileTemplate(templateString) {
