@@ -47,17 +47,22 @@ define([
 			return result;
 		}
 
-		function chewChunk(chunk, resultPayload) {
-			var result,
-				trimmedChunk = trimWrappers(chunk),
-				counter = 0,
-				matchingFunctions = [matchInjection, matchIteration];
+		function chewChunk(input, resultPayload) {
+			var digest,
+				trimmedInput = trimWrappers(input),
+				digestMap = [matchInjection, matchIteration];
 
-			while (!result && counter < matchingFunctions.length) {
-				result = matchingFunctions[counter++](trimmedChunk, resultPayload);
+			for (digest of mapGenerator(digestMap, trimmedInput, resultPayload)) {
+				if (digest) break;
 			}
 
-			return `<%${result || trimmedChunk}%>`;
+			return `<%${ digest || trimmedInput }%>`;
+		}
+
+		function* mapGenerator(funcs, input, resultPayload) {
+			for (fuI in funcs) {
+				yield funcs[fuI](input, resultPayload);
+			}
 		}
 
 		function compileTemplate(templateString) {
