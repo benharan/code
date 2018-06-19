@@ -8,8 +8,7 @@ define([
     "Backbone",
     "Modules/mainFrame/mainFrame"
 ], function (_, $, Backbone) {
-    var debug = function() { if (1) debugger; },
-        innerEventBus = _.extend({}, Backbone.Events);
+    var debug = function() { if (1) debugger; };
 
     return Backbone.Model.extend({
         trigNav: function (section, p1, p2) {

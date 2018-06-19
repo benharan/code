@@ -6,6 +6,8 @@ define([
 
 ], function () {
 	return function () {
+		let scopeParsingInProcess = false;
+
 		function StringAccumulator() {
 			var result = [];
 			return {
@@ -25,29 +27,54 @@ define([
 			return result;
 		}
 
-		function trimWrappers(text) {
-			return text.replace(/\<\?\s*(php)?\s*|;?\s*\?\>/g, '');
+		function trimWrappers(input) {
+			return input.replace(/\<\?\s*(php)?\s*|;?\s*\?\>/g, '');
 		}
 
-		function matchInjection(text, resultPayload) {
-			let result, [,, injection] = text.match(/^\s*\$this\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/) || [];
-			if (injection) {
-				result = `=$nestedData.${injection} `;
-				resultPayload.deps.push(injection);
+		function matchPrint(input) {
+			let result, [, variableName] = input.match(/^\s*=\$(\w+);?/) || [];
+			if (variableName) {
+				result = input;
 			}
 			return result;
 		}
 
-		function matchIteration(text, resultPayload) {
-			let result, [,, injection] = text.match(/^\s*\$that\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/) || [];
-			if (injection) {
-				result = `=$nestedData.${injection} `;
-				resultPayload.deps.push(injection);
+		function matchInjection(input, resultPayload) {
+			let result, [,, nestedTemplateName] = input.match(/^\s*\$this\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/i) || [];
+			if (nestedTemplateName) {
+				scopeParsingInProcess && announceWarn('Template Parsing Error', 'Nested Templates detected inside iteration scope, currently not supported');
+				result = `=$nestedData.${nestedTemplateName} `;
+				resultPayload.deps.push(nestedTemplateName);
+			}
+			return result;
+		}
+
+		function matchIteration(input) {
+			let result, [, collection, valueOrKey,, value] = input.match(/^\s*foreach\s*\(\s*\$(\w+)\s+as\s+\$(\w+)\s*(=>\s*\$(\w+)\s*)?\)\s*\{/i) || [];
+
+			if (collection) {
+				result = `_.each($${collection}, function($${!value ? valueOrKey : value}${value ? `, $${valueOrKey}` : ''}) {`;
+				scopeParsingInProcess = true;
+			}
+			return result;
+		}
+
+		function matchScopeEnd(input) {
+			let result, matchResult = input.match(/^\s*}\s*/)
+
+			if (matchResult) {
+				result = '});';
+				!scopeParsingInProcess && announceWarn('Template Parsing Error', 'Scope end detected before scope beginning');
+				scopeParsingInProcess = false;
 			}
 			return result;
 		}
 
 		function* matchGenerator(input, resultPayload) {
+			if (scopeParsingInProcess) {
+				yield matchScopeEnd(input);
+			}
+			yield matchPrint(input);
 			yield matchInjection(input, resultPayload);
 			yield matchIteration(input);
 		}
@@ -59,7 +86,9 @@ define([
 				if (matchResult) break;
 			}
 
-			return `<%${ matchResult || trimmedInput }%>`;
+			!matchResult && throwError('Template Parsing Error', `Unrecognized Expression '${trimmedInput}'`);
+
+			return `<%${matchResult}%>`;
 		}
 
 		function compileTemplate(templateString) {
@@ -71,6 +100,7 @@ define([
 				resultText.add(chewChunk(templateString.substring(openingIndex, nextEnd), result));
 				lastHandledIndex = closingIndex + 2;
 			});
+			scopeParsingInProcess && throwError('Template Parsing Error', 'Scope opened but never closed');
 			if (nextEnd < totalLength) { // If anything remains after
 				resultText.add(templateString.substr(lastHandledIndex));
 			}

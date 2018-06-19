@@ -7,9 +7,10 @@ define([
 	"jquery",
 	"Backbone",
 	"Toolset/toolset",
+	"Modules/EventBus/EventBus",
 	"Modules/DependencyLoader/DependencyLoader",
 	"text!./views1.json"
-], function (_, $, Backbone, Toolset, DependencyLoader, views1) {
+], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, views1) {
 
 	let lcl = 1 ? cl : $.noop,
 		useCompression = true,
@@ -20,6 +21,8 @@ define([
 		templateCompiler = new Toolset.TemplateCompiler(),
 		templateManager;
 
+
+	// ToDo: don't recompile repeating fullPath(s) regardless of templateName
 	function fetchView(templateName, fullPath) {
 		let tO = 100 * Math.random();
 		return new Promise(resolve => {
@@ -79,6 +82,8 @@ define([
 		initialize: function () {
 			const lsTemplates = this._loadFromLS();
 
+			EventBus.on('dropTemplates', () => templateLoader.drop());
+
 			if (lsTemplates) { // Import compiled templates from localStorage
 				templateLoader.import(lsTemplates);
 				lcl('Imported ', lsTemplates);
@@ -105,6 +110,7 @@ define([
 		// If needed, Recursively: fetch views, compile, save
 		_loadScheme: function (schemeParam) {
 			data = {};
+			promiseCollection = [];
 			this.recursivelyLoadScheme(schemeParam, data); // Init according to scheme, loading what's not loaded
 
 			return new Promise(resolve => {
@@ -139,13 +145,14 @@ define([
 			_.each(dataObj, (templateData, templateName) => {
 				let templateObj = templateLoader.get(templateName),
 					renderTemplate = _.template(templateObj.definition),
-					renderedTemplate, nestedData = {};
+					adaptedDataObj, renderedTemplate, nestedData = {};
 
 				if (_.isntEmpty(templateObj.deps)) {
 					nestedData = this._recursivelyRenderTemplates(templateData.nestedData);
 				}
 
-				renderedTemplate = renderTemplate(adaptDataObj(templateData, nestedData));
+				adaptedDataObj = adaptDataObj(templateData, nestedData);
+				renderedTemplate = renderTemplate(adaptedDataObj);
 				attachToNestedData(result, templateName, renderedTemplate);
 			})
 			return result;

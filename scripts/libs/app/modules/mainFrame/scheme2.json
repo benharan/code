@@ -7,31 +7,10 @@
       "bodyClass": "white"
     },
     "nested": {
-      "some_nested_kind": {
-        "view": "innerTitle",
-        "vars": {
-          "title": "PAPAO"
-        }
-      }
-    }
-  },
-  "titleWrap": {
-    "vars": {
-      "sign": "&%&"
-    },
-    "viewPath": "",
-    "view": "titleWrap",
-    "nested": {
-      "innerTitle": {
-        "view": "innerTitle",
-        "vars": {
-          "title": "Nevedomaya!"
-        }
-      },
       "from": {
         "view": "from",
         "vars": {
-          "fromLabel": "Ben!"
+          "fromLabel": "Skeksify"
         },
         "nested": {
           "companyName": {
@@ -40,6 +19,19 @@
               "companyNameLabel": "Investing Ltd."
             }
           }
+        }
+      },
+      "header": {
+        "view": "companyNameView",
+        "vars": {
+          "companyNameLabel": "Success."
+        }
+      },
+      "iterMacher": {
+        "view": "iter1",
+        "vars": {
+          "rows": ["Yabba", " dubbah", " DOO"],
+          "rowsa": {"a":"OBYabba", "b":" OBdubbah", "c":" OBDOO"}
         }
       }
     }

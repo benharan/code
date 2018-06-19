@@ -1,8 +1,9 @@
 {
-  "mainContentView": "<body class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><header><? $this->render('header') ?></header><div><? $this->render('innerTitle') ?></div><footer><? $this->render('footer') ?></footer></body>",
+  "mainContentView": "<body class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><footer><? $this->render('iterMacher') ?></footer></body>",
   "huinya": "<table><? foreach ($rows as $row) { ?><tr><? foreach ($row->cells as $cell) { ?><td><?=$cell?></td><? } ?></tr><? } ?></table>",
+  "iter1": "<table><? foreach ($rows as $rowIndex => $rowValue) { ?><h3><?=$rowIndex?>: <?=$rowValue?></h3><? } ?></table>",
   "innerTitle": "<h1><?=$title;?></h1>",
   "companyNameView": "<h6><?=$companyNameLabel;?></h6>",
   "from": "[From <?=$fromLabel;?>, by <? $this->render('companyName') ?>]",
-  "titleWrap": "<?=$sign?><? $this->render('innerTitle') ?><?=$sign?> - <? $this->render('from') ?>"
+  "titleWrap": "<?=$sign?><? $this->render('innerTitle') ?><?=$sign?>"
 }

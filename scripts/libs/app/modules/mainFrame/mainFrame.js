@@ -42,7 +42,8 @@ define([
 
         _go: function () {
             TemplateManager.render(scheme).then(cont => {
-                view.$el.find('h1').html(cont);
+                view.$el.find('h1').eq(1).html(cont);
+                view.$el.find('h2').html(cont);
             });
 		}
     });

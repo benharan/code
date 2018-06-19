@@ -7,7 +7,6 @@ define([
 	"jquery",
 	"Backbone"
 ], function (_, $, Backbone) {
-	var EB = Backbone.Model.extend({});
-
-	return new EB();
+	var EventBus = Backbone.Model.extend({});
+	return new EventBus();
 });
