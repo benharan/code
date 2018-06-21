@@ -1,5 +1,5 @@
 {
-  "mainContentView": "<body class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><footer><? $this->render('iterMacher') ?></footer></body>",
+  "mainContentView": "<body class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><div><? $this->render('iterMacher') ?></div></body>",
   "huinya": "<table><? foreach ($rows as $row) { ?><tr><? foreach ($row->cells as $cell) { ?><td><?=$cell?></td><? } ?></tr><? } ?></table>",
   "iter1": "<table><? foreach ($rows as $rowIndex => $rowValue) { ?><h3><?=$rowIndex?>: <?=$rowValue?></h3><? } ?></table>",
   "innerTitle": "<h1><?=$title;?></h1>",

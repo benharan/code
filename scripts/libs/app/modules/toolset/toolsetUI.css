@@ -1,0 +1,73 @@
+.toolset-ui-wrapper {
+    top: 20px;
+    right: 20px;
+    z-index: 99;
+    width: 300px;
+    padding: 10px;
+    position: fixed;
+    border-radius: 4px;
+    text-align: center;
+    background: #222121;
+    border: 1px white solid;
+}
+
+.toolset-ui-wrapper.open {
+    /*min-height: 300px;*/
+}
+
+.toolset-ui-wrapper.open .toolset-ui-cont {
+    display: block;
+}
+
+.toolset-ui-toggle {
+    position: absolute;
+    left: 15px;
+    top: 13px;
+    cursor: pointer;
+}
+.toolset-ui-wrapper h2 {
+    margin: 0;
+}
+
+button {
+    margin: 10px;
+    background: #333;
+    border: 1px solid white;
+    padding: 4px 21px;
+    border-radius: 4px;
+    color: white;
+}
+
+.toolset-ui-cont {
+    padding-top: 12px;
+    display: none;
+}
+
+h6 {
+    display: inline-block;
+}
+
+.topBar .topBarSearch INPUT {
+    margin-top: 8px;
+}
+
+.console-entry.closed {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.console-entry {
+    max-width: 300px;
+    margin: 10px 2px;
+}
+
+.custom-console {
+    padding-top: 24px;
+}
+
+.clear-console {
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
+}

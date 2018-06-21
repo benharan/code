@@ -12,8 +12,7 @@ define([
 	"text!./views1.json"
 ], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, views1) {
 
-	let lcl = 1 ? cl : $.noop,
-		useCompression = true,
+	let useCompression = true,
 		viewsMockup = JSON.parse(views1),
 		data = {},
 		promiseCollection = [],

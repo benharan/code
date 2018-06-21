@@ -7,10 +7,9 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "Modules/EventBus/EventBus",
     "text!./topBar.html",
     "text!./topBar.css"
-], function (_, $, Backbone, Displayable, EventBus, html, css) {
+], function (_, $, Backbone, Displayable, html, css) {
     return Displayable.extend({
 
         events: {
@@ -29,10 +28,6 @@ define([
             Displayable.prototype.render.call(this, {}, this._markupScheme);
 
             return this.$el;
-        },
-
-        _loadTitle: function () {
-			EventBus.trigger('loadTitle');
-		}
+        }
     })
 });
