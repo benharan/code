@@ -44,8 +44,7 @@ define([
 			this._currentsId = pId;
 			this._view.loadPortfolio(this._portfolios[pId].render());
 
-			// Todo : DOUBLE NAV?? Trigger false?
-			window.InvestingApp.Router.navigate(`portfolio/${pId}`, { trigger: true });
+			window.InvestingApp.Router.navigate(`portfolio/${pId}`, { trigger: false });
 
 		},
 
