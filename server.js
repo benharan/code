@@ -1,18 +1,14 @@
 var express = require("express"),
     app = express(),
     sendIndex = function(req, res) {
-        res.sendfile('index.html')
+        res.sendFile(__dirname + '/index.html')
     };
 
-/* Serve all the static files */
+/* Serve static files */
 app.get(/^\/(scripts|style)(.+)$/, function(req, res){
-    res.sendfile( __dirname + '/' + req.params[0] + req.params[1]);
+    res.sendFile( __dirname + '/' + req.params[0] + req.params[1]);
 });
 
-/* Serve all the static files */
-app.get(/^\/getScheme$/, function(req, res){
-    res.sendfile(__dirname + '/scheme3.json');
-});
 
 /* Only serve main page */
 app.get('/*', sendIndex);

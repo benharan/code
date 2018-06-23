@@ -1,5 +1,6 @@
 {
   "mainContentView": "<div class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><div><? $this->render('iterMacher') ?></div></div>",
+  "mainEquitiesView": "<div data-section=\"equities\" class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><div><? $this->render('iterMacher') ?></div></div>",
   "huinya": "<table><? foreach ($rows as $row) { ?><tr><? foreach ($row->cells as $cell) { ?><td><?=$cell?></td><? } ?></tr><? } ?></table>",
   "iter1": "<table><? foreach ($rows as $rowIndex => $rowValue) { ?><h3><?=$rowIndex?>: <?=$rowValue?></h3><? } ?></table>",
   "innerTitle": "<h1><?=$title;?></h1>",

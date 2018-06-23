@@ -8,7 +8,8 @@ requirejs.config({
     paths: {
         Displayable: "app/modules/displayable/displayable",
         Toolset: "app/modules/toolset",
-        Modules: "app/modules"
+        Modules: "app/modules",
+        Schemes: "app/schemes"
     },
     shim: {
         backbone: {

@@ -1,0 +1,39 @@
+{
+  "cont" : {
+    "view": "mainEquitiesView",
+    "vars": {
+      "name": "Ben",
+      "takeOverBg": "yup",
+      "bodyClass": ""
+    },
+    "nested": {
+      "from": {
+        "view": "from",
+        "vars": {
+          "fromLabel": "Skeksify"
+        },
+        "nested": {
+          "companyName": {
+            "view": "companyNameView",
+            "vars": {
+              "companyNameLabel": "Investing Ltd."
+            }
+          }
+        }
+      },
+      "header": {
+        "view": "companyNameView",
+        "vars": {
+          "companyNameLabel": "Success."
+        }
+      },
+      "iterMacher": {
+        "view": "iter1",
+        "vars": {
+          "rows": ["Yabba", " dubbah", " DOO"],
+          "rowsa": {"a":"OBYabba", "b":" OBdubbah", "c":" OBDOO"}
+        }
+      }
+    }
+  }
+}
