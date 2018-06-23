@@ -7,20 +7,19 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "text!./topBar.html",
-    "text!./topBar.css"
-], function (_, $, Backbone, Displayable, html, css) {
+	"Modules/TemplateManager/TemplateManager"
+], function (_, $, Backbone, Displayable) {
     return Displayable.extend({
 
         events: {
-            "click #searchTextTop": "_loadTitle"
+            "mouseover.lt #searchTextTop": "_al"
         },
 
         _markupScheme: {
         },
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this, html, css);
+            Displayable.prototype.initialize.call(this, 'topBar', 'topBar', true);
 
         },
 
@@ -28,6 +27,11 @@ define([
             Displayable.prototype.render.call(this, {}, this._markupScheme);
 
             return this.$el;
-        }
+        },
+
+		_al: function () {
+			// TemplateManager.loadTemplate('cont', 'titleWrap');
+			this.$el.off('mouseover.lt');
+		}
     })
 });

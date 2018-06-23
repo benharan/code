@@ -26,6 +26,7 @@ define([
 			"click .clear-console": "_clearCustomConsole",
 			"click .clear-template-cache": "_clearTemplateCache",
 			"click .compile-templates": "_compileTemplates",
+			"click .load-portfolios": "_loadPortfolios",
 			"click .console-entry": "_toggleEntry"
 		},
 
@@ -97,7 +98,11 @@ define([
 		},
 
 		_compileTemplates: function () {
-			EventBus.trigger('loadTitle');
+			EventBus.trigger('CompileTemplates');
+		},
+
+		_loadPortfolios: function () {
+			EventBus.trigger('loadTemplate', 'portfolios', 'portfolios')
 		}
 	})
 });

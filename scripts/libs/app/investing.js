@@ -1,3 +1,5 @@
+window.InvestingApp = {};
+
 define([
     "underscore",
     "jquery",
@@ -12,10 +14,8 @@ define([
 ], function (_, $, Backbone, lzstring, Toolset, MainFrame, underscoreMutator, jQueryMutator, backboneMutator, Router) {
     var investingApp;
 
-    window.InvestingApp = {
-        Router: {},
-        root: '/'
-    }
+    window.InvestingApp.Router = {};
+    window.InvestingApp.root = '/';
 
     investingApp = Backbone.Model.extend({
         init: function () {

@@ -19,7 +19,6 @@ define([
 
 		initialize: function () {
 			Displayable.prototype.initialize.call(this, html, css);
-
 		},
 
 		render: function (settings) {

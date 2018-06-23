@@ -12,24 +12,35 @@ define([
         _dom: null,
         _markupTemplate: null,
 
-        initialize: function (html, css) {
-            this._markupTemplate = _.template(html || "");
-            this._cssElement = $("<style/>").text(css || "");
+        initialize: function (html, css, arePaths) {
+            if (arePaths) { // Server rendered, seek in DOM
+                this.$el = $(`body [data-section="${html}"]`);
+            } else { // Normal fetching through require, render regularly
+				this._setTemplate(html, css);
+			}
         },
 
         render: function (templateData, scheme) {
-            $("head").append(this._cssElement);
-
-            this.$el = $(this._markupTemplate(templateData || {}));
-
-            this.delegateEvents();
-
-            if (scheme) {
-                this._cacheDom(scheme);
-            }
+			this._render(templateData, scheme);
 
             return this.$el;
         },
+
+		_setTemplate: function (html, css) {
+			this._markupTemplate = _.template(html || "");
+			this._cssElement = $("<style/>").text(css || "");
+		},
+
+		_render: function (templateData, scheme) {
+			if (this._markupTemplate) {
+                $('head').append(this._cssElement);
+                this.$el = $(this._markupTemplate(templateData || {}));
+            }
+			this.delegateEvents(); // Rebind according to 'events'
+			if (scheme) {
+				this._cacheDom(scheme);
+			}
+		},
 
         _cacheDom: function (scheme) {
             var key, result = {};
@@ -37,7 +48,7 @@ define([
             for (key in scheme) {
                 result[key] = this.$el.find(scheme[key]);
                 if (!result[key].length) {
-                    throwError('DOM Element Not Found', key, scheme[key]);
+                    throwError('cacheDOM - Element Not Found', key, scheme[key]);
                 }
             }
 

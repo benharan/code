@@ -24,23 +24,25 @@ define([
 
         initialize: function () {
             view = new View();
-			EventBus.on('loadTitle', this._go)
+			EventBus.on('CompileTemplates', this._renderTemplatesAndInject)
         },
+
         render: function () {
             return view.render();
         },
+
         navigate: function (section, p1, p2) {
             if (this._sectionToModelMap[section]) {
 				// Dynamically require needed model
 				require([this._sectionToModelMap[section]], function (ModelClass) {
-					var modelInstance = new ModelClass(p1, p2);
+					let modelInstance = new ModelClass(p1, p2);
 					view.setMainContent(modelInstance.render(p1, p2));
 					$(document).attr("title", section);
 				})
 			}
         },
 
-        _go: function () {
+        _renderTemplatesAndInject: function () {
             TemplateManager.render(scheme).then(cont => {
                 view.$el.find('h1').eq(1).html(cont);
                 view.$el.find('h2').html(cont);

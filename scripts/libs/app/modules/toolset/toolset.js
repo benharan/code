@@ -22,7 +22,7 @@ define([
     "Toolset/tools/texts",
     "Toolset/tools/is",
     "Toolset/tools/DeepMap",
-    "Toolset/tools/TemplateCompiler",
+    "Toolset/tools/TemplateCompiler"
 ], function (_, $, Backbone, View, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {

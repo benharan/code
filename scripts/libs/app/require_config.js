@@ -4,6 +4,7 @@
 
 requirejs.config({
     baseUrl: "/scripts/libs",
+	waitSeconds: 200,
     paths: {
         Displayable: "app/modules/displayable/displayable",
         Toolset: "app/modules/toolset",
@@ -15,6 +16,7 @@ requirejs.config({
             exports: "Backbone"
         },
         underscore: {
+            deps: [],
             exports: "_"
         }
     }
