@@ -26,7 +26,7 @@ define([
                 },
                 index: () => this._dispatchNavigation(false, 'index'),
                 news: (category, article) => this._dispatchNavigation(false, 'news', category, article),
-                indices: (indices) => this._dispatchNavigation(false, 'indices', indices),
+                indices: (indices) => this._dispatchNavigation(true, 'indices', indices),
 				equities: (equities) => this._dispatchNavigation(true, 'equities', equities),
                 portfolio: (portfolioId) => this._dispatchNavigation(false, 'portfolio', portfolioId)
             });

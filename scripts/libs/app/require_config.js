@@ -10,6 +10,7 @@ requirejs.config({
         Toolset: "app/modules/toolset",
         Modules: "app/modules",
         Schemes: "app/schemes"
+        // CDN Path?
     },
     shim: {
         backbone: {

@@ -13,7 +13,7 @@ define([
 ], function (_, $, Backbone, EventBus, TemplateManager, scheme2, View) {
     var scheme2Obj = JSON.parse(scheme2),
         view,
-		getCacheVer = () => {
+		getCacheParam = () => {
     		let result = '?v=';
     		if (0){ // No cache
 				result += (new Date).getTime()
@@ -26,7 +26,10 @@ define([
     return Backbone.Model.extend({
         _sectionToModelMap: {
             'index': 'Modules/mainContent/mainContentView',
-            'indices': 'Modules/indices/indicesView',
+            'indices': {
+				'model': 'Modules/indices/indicesView',
+				'scheme': 'text!Schemes/indicesScheme.json'
+			},
             'news': 'Modules/news/newsView',
             'portfolio': 'Modules/portfolios/portfolios',
             'equities': {
@@ -49,7 +52,7 @@ define([
 
 			$(document).attr("title", section);
 			if (schemeNav) {
-				require([modelPath.model, modelPath.scheme + getCacheVer()], (ModelClass, Scheme) => {
+				require([modelPath.model, modelPath.scheme + getCacheParam()], (ModelClass, Scheme) => {
 					let schemeObj = JSON.parse(Scheme);
 					this._renderTemplatesAndInject(schemeObj).then(cont => {
 						view.setMainContent(cont);

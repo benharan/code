@@ -20,17 +20,23 @@ define([
 		promiseCollection = [],
 		templateLoader = new DependencyLoader(),
 		templateCompiler = new Toolset.TemplateCompiler(),
-		templateManager;
+		templateManager,
+		requestViewFromServer = _.memoize((fullPath) => {
+			lcl(`Requesting View Resource '${fullPath}'`);
+			return viewsMockup[fullPath];
+		});
 
 
-	// ToDo: don't recompile repeating fullPath(s) regardless of templateName
 	function fetchView(templateName, fullPath) {
-		let tO = 100 * Math.random();
+		let tO = parseInt(100 * Math.random());
 		freeToLazyLoad = false;
 		return new Promise(resolve => {
 			setTimeout(()=>{
 				lcl(`Resolved after ${tO} ms`);
-				resolve({ templateName, content: viewsMockup[fullPath] });
+				// Memoized so saves server calls but need to avoid recompilation
+				// Tricky since if you mark it as duplicate you need to compile the
+				// other one first (as dependency)
+				resolve({ templateName, content: requestViewFromServer(fullPath) });
 			}, tO)
 		})
 	}
