@@ -11,6 +11,8 @@ define([
     "text!./tab.html",
     "text!./tab.css"
 ], function (_, $, Backbone, Displayable, Toolset, html, css) {
+	let alreadyInjectedCSS = false;
+
     return Displayable.extend({
         _markupScheme: {
 
@@ -21,8 +23,8 @@ define([
 		},
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this, html, css);
-
+            Displayable.prototype.initialize.call(this, html, !alreadyInjectedCSS ? css : '');
+			alreadyInjectedCSS = true;
         },
 
         render: function (settings) {

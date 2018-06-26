@@ -7,7 +7,7 @@ define([
 	"jquery",
 	"Backbone",
 	"Toolset/toolset",
-	"Modules/EventBus/EventBus",
+	"EventBus",
 	"Modules/DependencyLoader/DependencyLoader",
 	"text!./views1.json"
 ], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, views1) {
@@ -105,7 +105,7 @@ define([
 
 			if (lsTemplates) { // Import compiled templates from localStorage
 				templateLoader.import(lsTemplates);
-				lcl('Imported ', lsTemplates);
+				0 && lcl('Imported ', lsTemplates);
 			}
 		},
 

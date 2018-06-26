@@ -7,7 +7,7 @@ define([
 	"jquery",
 	"Backbone",
 	"Displayable",
-	"Modules/EventBus/EventBus",
+	"EventBus",
 	"text!./toolsetUI.html",
 	"text!./toolsetUI.css"
 ], function (_, $, Backbone, Displayable, EventBus, html, css) {

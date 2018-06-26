@@ -32,4 +32,9 @@ H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .lin
 
 .main-content {
     float: left;
+    max-width: 658px;
+}
+
+#rightColumn {
+    margin: 0!important;
 }

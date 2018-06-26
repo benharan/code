@@ -1,13 +1,19 @@
 <html>
 <head>
     <script>
-		window.serverData = {
-			portfolios: [{
-				name: 'Holdings1', id: 70, alwaysTrigger: true
-			}, {
-				name: 'Watchlist1', id: 50
-			}]
-		};
+        (function () {
+            var i = 0, longArr = [];
+
+            while (i++ < 30)
+                longArr.push({
+					name: 'Watchlist' + i, id: 100 + i
+				})
+            window.serverData = {
+                portfolios: [{
+                    name: 'Holdings1', id: 70, alwaysTrigger: true
+                }].concat(longArr)
+            };
+		})()
     </script>
     <script data-main="/scripts/app_init" src="/scripts/libs/require.js"></script>
     <link rel="stylesheet" href="/style/mainFrame.css">

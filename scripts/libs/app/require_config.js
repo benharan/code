@@ -6,8 +6,9 @@ requirejs.config({
     baseUrl: "/scripts/libs",
 	waitSeconds: 200,
     paths: {
-        Displayable: "app/modules/displayable/displayable",
+        Displayable: "app/modules/Displayable/Displayable",
         Toolset: "app/modules/toolset",
+		EventBus: "app/modules/EventBus/EventBus",
         Modules: "app/modules",
         Schemes: "app/schemes"
         // CDN Path?

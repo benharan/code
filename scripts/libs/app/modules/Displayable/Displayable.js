@@ -7,6 +7,8 @@ define([
     "jquery",
     "Backbone"
 ], function (_, $, Backbone) {
+	let $head = $('head');
+
     return Backbone.View.extend({
 
         _dom: null,
@@ -29,12 +31,16 @@ define([
 
 		_setTemplate: function (html, css) {
 			this._markupTemplate = _.template(html || "");
-			this._cssElement = $("<style/>").text(css || "");
+			if (css) {
+				this._cssElement = $("<style/>").text(css);
+			}
 		},
 
 		_render: function (templateData, scheme) {
 			if (this._markupTemplate) {
-                $('head').append(this._cssElement);
+				if (this._cssElement) {
+					$head.append(this._cssElement);
+				}
                 this.$el = $(this._markupTemplate(templateData || {}));
             }
 			this.delegateEvents(); // Rebind according to 'events'

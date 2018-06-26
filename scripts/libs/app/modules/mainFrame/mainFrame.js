@@ -6,7 +6,7 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-	"Modules/EventBus/EventBus",
+	"EventBus",
 	"Modules/TemplateManager/TemplateManager",
 	"text!./scheme2.json",
     "./mainFrameView"
@@ -50,6 +50,8 @@ define([
         navigate: function (schemeNav, section, p1, p2) {
         	const modelPath = this._sectionToModelMap[section];
 
+        	// Todo: DESTROY PREVIOUS!
+
 			$(document).attr("title", section);
 			if (schemeNav) {
 				require([modelPath.model, modelPath.scheme + getCacheParam()], (ModelClass, Scheme) => {
@@ -61,8 +63,11 @@ define([
 				})
 			} else {
 				require([modelPath], function (ModelClass) {
-					let modelInstance = new ModelClass(p1, p2);
-					view.setMainContent(modelInstance.render(p1, p2));
+					let modelInstance = new ModelClass(p1, p2),
+						renderedView = modelInstance.render(p1, p2);
+
+					view.setMainContent(renderedView);
+					EventBus.trigger('mainFrameInsertion', renderedView);
 					$(document).attr("title", section);
 				})
 			}

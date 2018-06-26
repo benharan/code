@@ -6,7 +6,7 @@ var express = require("express"),
 
 /* Serve static files */
 app.get(/^\/(scripts|style)(.+)$/, function(req, res){
-    res.sendFile( __dirname + '/' + req.params[0] + req.params[1]);
+    res.sendFile(__dirname + '/' + req.params[0] + req.params[1]);
 });
 
 
