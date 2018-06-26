@@ -3,19 +3,33 @@
  */
 
 window.cl = console.log;
+window.lcl = (...args) => {
+    if (window.lcl.flag) {
+        cl(...args);
+        window.lcl.customCL(...args);
+    }
+}
+
+window.lcl.flag = localStorage.getItem('consolePrints') === '1';
+window.lcl.customCL = ()=>1;
 
 define([
     "underscore",
     "jquery",
     "Backbone",
+    "Toolset/toolsetUIView",
     "Toolset/tools/math",
     "Toolset/tools/texts",
     "Toolset/tools/is",
     "Toolset/tools/DeepMap",
-    "Toolset/tools/TemplateCompiler",
-], function (_, $, Backbone, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
+    "Toolset/tools/TemplateCompiler"
+], function (_, $, Backbone, View, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
     var Toolset = Backbone.Model.extend({
-        initialize: function () {  },
+        initialize: function () {
+            this._uiView = new View();
+
+            $('body').append(this._uiView.render());
+        },
         Math: new MathTool(),
         Texts: new TextsTool(),
         is: new IsTool(),

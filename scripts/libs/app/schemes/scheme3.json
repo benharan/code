@@ -1,0 +1,8 @@
+{
+  "portfolios" : {
+    "view": "portfolios",
+    "vars": {
+      "sign": "@#$"
+    }
+  }
+}

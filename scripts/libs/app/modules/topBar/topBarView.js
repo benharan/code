@@ -7,21 +7,19 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "Modules/EventBus/EventBus",
-    "text!./topBar.html",
-    "text!./topBar.css"
-], function (_, $, Backbone, Displayable, EventBus, html, css) {
+	"Modules/TemplateManager/TemplateManager"
+], function (_, $, Backbone, Displayable) {
     return Displayable.extend({
 
         events: {
-            "click #searchTextTop": "_loadTitle"
+            "mouseover.lt #searchTextTop": "_al"
         },
 
         _markupScheme: {
         },
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this, html, css);
+            Displayable.prototype.initialize.call(this, 'topBar', 'topBar', true);
 
         },
 
@@ -31,8 +29,9 @@ define([
             return this.$el;
         },
 
-        _loadTitle: function () {
-			EventBus.trigger('loadTitle');
+		_al: function () {
+			// TemplateManager.loadTemplate('cont', 'titleWrap');
+			this.$el.off('mouseover.lt');
 		}
     })
 });

@@ -1,12 +1,25 @@
+.tabs-inner-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.tabs-wrapper {
+
+}
+
 .tabs-wrapper li {
-    display: inline-block;
-    width: 109px;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    padding: 7px;
     margin: 5px;
+    padding: 7px;
+    width: 109px;
+    cursor: pointer;
+    font-size: 20px;
     text-align: center;
     border-radius: 3px;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+.tabs-wrapper li:hover {
+    border-color: #71c2ff;
 }
 
 .tabs-wrapper li.selected {
