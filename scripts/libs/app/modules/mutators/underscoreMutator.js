@@ -8,4 +8,6 @@ define([
     "Backbone"
 ], function (_, $, Backbone) {
     _.isntEmpty = obj => !_.isEmpty(obj);
+    _.isUn = _.isUndefined;
+	_.isSt = _.isString;
 });

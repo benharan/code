@@ -1,0 +1,17 @@
+{
+  "iterMacher": {
+    "view": "iter1",
+    "vars": {
+      "rows": [
+        "Yabba",
+        " dubbah",
+        " DOO"
+      ],
+      "rowsa": {
+        "a": "OBYabba",
+        "b": " OBdubbah",
+        "c": " OBDOO"
+      }
+    }
+  }
+}

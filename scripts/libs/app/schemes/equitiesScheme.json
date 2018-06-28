@@ -1,10 +1,10 @@
 {
   "cont" : {
-    "view": "mainContentView",
+    "view": "mainEquitiesView",
     "vars": {
       "name": "Ben",
       "takeOverBg": "yup",
-      "bodyClass": "white"
+      "bodyClass": ""
     },
     "nested": {
       "from": {

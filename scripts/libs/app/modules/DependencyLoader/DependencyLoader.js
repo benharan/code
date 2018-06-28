@@ -22,6 +22,11 @@ define([
 			this.initializedComponents = {};
 		},
 
+		drop: function () {
+			this.loadedComponents = {};
+			this.initializedComponents = {};
+		},
+
 		get: function (name) {
 			return this.loadedComponents[name];
 		},

@@ -7,25 +7,36 @@ define([
 	"jquery",
 	"Backbone",
 	"Toolset/toolset",
+	"EventBus",
 	"Modules/DependencyLoader/DependencyLoader",
 	"text!./views1.json"
-], function (_, $, Backbone, Toolset, DependencyLoader, views1) {
+], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, views1) {
 
-	let lcl = 1 ? cl : $.noop,
-		useCompression = true,
+	let useCompression = 1,
 		viewsMockup = JSON.parse(views1),
 		data = {},
+		freeToLazyLoad = true,
+		pendingTemplates = {},
 		promiseCollection = [],
 		templateLoader = new DependencyLoader(),
 		templateCompiler = new Toolset.TemplateCompiler(),
-		templateManager;
+		templateManager,
+		requestViewFromServer = _.memoize((fullPath) => {
+			lcl(`Requesting View Resource '${fullPath}'`);
+			return viewsMockup[fullPath];
+		});
+
 
 	function fetchView(templateName, fullPath) {
-		let tO = 100 * Math.random();
+		let tO = parseInt(100 * Math.random());
+		freeToLazyLoad = false;
 		return new Promise(resolve => {
 			setTimeout(()=>{
 				lcl(`Resolved after ${tO} ms`);
-				resolve({ templateName, content: viewsMockup[fullPath] });
+				// Memoized so saves server calls but need to avoid recompilation
+				// Tricky since if you mark it as duplicate you need to compile the
+				// other one first (as dependency)
+				resolve({ templateName, content: requestViewFromServer(fullPath) });
 			}, tO)
 		})
 	}
@@ -46,6 +57,16 @@ define([
 	function isLoaded(templateName) {
 		return !!templateLoader.get(templateName);
 	}
+
+	function getLoadedTemplate(templateName) {
+		return templateLoader.get(templateName);
+	}
+
+	window.InvestingApp.TemplateAccess = {
+		isTemplateLoaded: isLoaded,
+		getTemplate: getLoadedTemplate
+	}
+
 
 	function validateContent(templateName, content) {
 		if (!content || !content.trim()) {
@@ -79,13 +100,29 @@ define([
 		initialize: function () {
 			const lsTemplates = this._loadFromLS();
 
+			EventBus.on('dropTemplates', () => templateLoader.drop());
+			EventBus.on('loadTemplate', this.loadTemplate.bind(this));
+
 			if (lsTemplates) { // Import compiled templates from localStorage
 				templateLoader.import(lsTemplates);
-				lcl('Imported ', lsTemplates);
+				0 && lcl('Imported ', lsTemplates);
 			}
 		},
 
-		recursivelyLoadScheme: function (templatesObj, dataContainer) {
+		loadTemplate: function (templateName, path) {
+			if (freeToLazyLoad) {
+				if (!isLoaded(templateName)) {
+					fetchView(templateName, path)
+						.then(loadTemplate)
+						.then(this._saveToLS)
+						.then(this._attemptPending)
+				}
+			} else {
+				pendingTemplates[templateName] = path;
+			}
+		},
+
+		_recursivelyLoadScheme: function (templatesObj, dataContainer) {
 			_.each(templatesObj, (templateDefinition, templateName) => {
 				let { viewPath: path = '', view: viewName = '', nested = null, vars: templateData } = templateDefinition;
 
@@ -97,7 +134,7 @@ define([
 
 				if (nested) {
 					dataContainer[templateName].nestedData = {};
-					this.recursivelyLoadScheme(nested, dataContainer[templateName].nestedData);
+					this._recursivelyLoadScheme(nested, dataContainer[templateName].nestedData);
 				}
 			})
 		},
@@ -105,7 +142,8 @@ define([
 		// If needed, Recursively: fetch views, compile, save
 		_loadScheme: function (schemeParam) {
 			data = {};
-			this.recursivelyLoadScheme(schemeParam, data); // Init according to scheme, loading what's not loaded
+			promiseCollection = [];
+			this._recursivelyLoadScheme(schemeParam, data); // Init according to scheme, loading what's not loaded
 
 			return new Promise(resolve => {
 				// Need to fetch views and finish asynchly
@@ -139,16 +177,27 @@ define([
 			_.each(dataObj, (templateData, templateName) => {
 				let templateObj = templateLoader.get(templateName),
 					renderTemplate = _.template(templateObj.definition),
-					renderedTemplate, nestedData = {};
+					adaptedDataObj, renderedTemplate, nestedData = {};
 
 				if (_.isntEmpty(templateObj.deps)) {
 					nestedData = this._recursivelyRenderTemplates(templateData.nestedData);
 				}
 
-				renderedTemplate = renderTemplate(adaptDataObj(templateData, nestedData));
+				adaptedDataObj = adaptDataObj(templateData, nestedData);
+				renderedTemplate = renderTemplate(adaptedDataObj);
 				attachToNestedData(result, templateName, renderedTemplate);
 			})
 			return result;
+		},
+
+		_attemptPending: function () {
+			const templateNameIfAny = _.keys(pendingTemplates)[0];
+			freeToLazyLoad = true;
+			if (templateNameIfAny) {
+				const path = pendingTemplates[templateNameIfAny];
+				delete pendingTemplates[templateNameIfAny];
+				this.loadTemplate(templateNameIfAny, path);
+			}
 		},
 
 		_saveToLS: function () {

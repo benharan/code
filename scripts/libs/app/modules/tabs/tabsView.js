@@ -8,12 +8,13 @@ define([
     "Backbone",
     "Displayable",
     "Toolset/toolset",
+	"Modules/TabScrollability/TabScrollability",
     "text!./tabs.html",
     "text!./tabs.css"
-], function (_, $, Backbone, Displayable, Toolset, html, css) {
+], function (_, $, Backbone, Displayable, Toolset, TabScrollability, html, css) {
     return Displayable.extend({
         _markupScheme: {
-            wrapper: '.tabs-wrapper'
+            ul: 'ul'
         },
 
         initialize: function () {
@@ -22,7 +23,8 @@ define([
 
         render: function ($tabs) {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
-            this._dom.wrapper.html($tabs);
+            this._dom.ul.html($tabs);
+            new TabScrollability(this.$el);
             return this.$el;
         }
     })

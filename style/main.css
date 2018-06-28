@@ -1,35 +1,40 @@
-/*body {*/
-    /*background-color: #1a1a1a;*/
-    /*color: #F1F1F1;*/
-/*}*/
+body {
+    background-color: #1c1c1c;
+}
 
-/*.flexRowWrap { display: flex; flex-direction: row; }*/
-/*.flexColWrap { display: flex; flex-direction: column; }*/
-/*.flexRowWrap>div { flex: 1; }*/
-/*.flexColWrap>div { flex: 1; }*/
+body,
+H2 A, .popupBigTitle A, .h2LikeTitle A,
+H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .linkTitle A
 
-/*.flex2 { flex: 2; }*/
+{
+    color: #f3f3f3;
+}
 
-/*.battleBoard_wrapper {*/
-    /*text-align: center;*/
-    /*margin-top: 10px;*/
-/*}*/
+.subMenuWrapper LI A, .subMenuWrapper LI.popular {
+    border: 0;
+}
 
-/*.wrapper {*/
-    /*padding: 10px;*/
-/*}*/
-/*.wrapper>div {*/
-    /*display: inline-block;*/
-/*}*/
+.subMenuWrapper {
+    background-color: #1d1d1d;
+    border-bottom: 1px solid #2a2a2a;
+    box-shadow: 0px 1px 3px rgba(85, 78, 78, 0.2);
+}
 
+.instrumentFloaterInner {
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 
-/*.button {*/
-    /*border: white 1px solid;*/
-    /*border-radius: 2px;*/
-    /*cursor: pointer;*/
-    /*padding: 2px 5px;*/
-/*}*/
+.hugeTitle .articleItem {
+    background: none;
+}
 
-/*.button:hover {*/
-    /*box-shadow: 0px 0px 6px 1px rgba(33, 175, 230, 0.78);*/
-/*}*/
+.main-content {
+    float: left;
+    max-width: 658px;
+}
+
+#rightColumn {
+    margin: 0!important;
+}

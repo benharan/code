@@ -6,9 +6,7 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "Displayable",
-    "text!./indices.html",
-    "text!./indices.css"
+    "Displayable"
 ], function (_, $, Backbone, Displayable, html, css) {
     return Displayable.extend({
 
@@ -24,15 +22,18 @@ define([
         },
 
         _markupScheme: {
+            "spans": "span"
         },
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this, html, css);
+            Displayable.prototype.initialize.call(this, 'indices', 'indices', true);
 
         },
 
         render: function (instrument) {
             Displayable.prototype.render.call(this, this._chewTemplateData(instrument), this._markupScheme);
+
+            this._dom.spans.css('font-size', '30px');
 
             return this.$el;
         },

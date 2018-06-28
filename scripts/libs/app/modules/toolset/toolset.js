@@ -3,19 +3,33 @@
  */
 
 window.cl = console.log;
+window.lcl = (...args) => {
+    if (window.lcl.flag) {
+        cl(...args);
+        window.lcl.customCL(...args);
+    }
+}
+
+window.lcl.flag = localStorage.getItem('consolePrints') === '1';
+window.lcl.customCL = ()=>1;
 
 define([
     "underscore",
     "jquery",
     "Backbone",
+    "Toolset/toolsetUIView",
     "Toolset/tools/math",
     "Toolset/tools/texts",
     "Toolset/tools/is",
     "Toolset/tools/DeepMap",
-    "Toolset/tools/TemplateCompiler",
-], function (_, $, Backbone, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
+    "Toolset/tools/TemplateCompiler"
+], function (_, $, Backbone, View, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
     var Toolset = Backbone.Model.extend({
-        initialize: function () {  },
+        initialize: function () {
+            this._uiView = new View();
+
+            $('body').append(this._uiView.render());
+        },
         Math: new MathTool(),
         Texts: new TextsTool(),
         is: new IsTool(),
@@ -31,10 +45,15 @@ define([
         }
     });
 
+    function getIfNotProd(fu) {
+        if ('Not production') {
+            return fu;
+        } else {
+            return $.noop;
+        }
+	}
 
-window.TemplateCompiler = TemplateCompiler;
-
-	window.throwError = function (mainLabel) {
+	window.throwError = getIfNotProd(function (mainLabel) {
         var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];
         for (i = 1; i < arguments.length; i++) {
             i === 1 && finalStrArr.push(' [');
@@ -42,6 +61,17 @@ window.TemplateCompiler = TemplateCompiler;
             i === arguments.length - 1 && finalStrArr.push(']');
         }
         throw new Error(finalStrArr.join(''))
-    }
+    })
+
+	window.announceWarn = getIfNotProd(function (mainLabel) {
+        var i, finalStrArr = ['__ Runtime Warning: ' + mainLabel];
+        for (i = 1; i < arguments.length; i++) {
+            i === 1 && finalStrArr.push(' [');
+            finalStrArr.push(arguments[i] + (i !== arguments.length - 1 ? ', ' : ''));
+            i === arguments.length - 1 && finalStrArr.push(']');
+        }
+        console.warn(finalStrArr.join(''));
+    })
+
     return new Toolset();
 });

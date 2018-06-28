@@ -8,36 +8,28 @@ define([
     "Backbone",
     "Modules/mainFrame/mainFrame"
 ], function (_, $, Backbone) {
-    var debug = function() { if (1) debugger; },
-        innerEventBus = _.extend({}, Backbone.Events);
+    var debug = function() { if (1) debugger; };
 
     return Backbone.Model.extend({
-        trigNav: function (section, p1, p2) {
-            this.trigger('navigation', section, p1, p2);
+        _dispatchNavigation: function (schemeNav, section, p1, p2) {
+            this.trigger('navigation', schemeNav, section, p1, p2);
         },
 
         initialize: function () {
-            var triggerNavigation = this.trigNav.bind(this),
-                RouterClass = Backbone.Router.extend({
-                    routes: {
-                        '': 'index',
-                        'news/:category/:article': 'news',
-                        'indices/:instrument': 'indices',
-                        'portfolio/(:pId)': 'portfolio'
-                    },
-                    index: function(){
-                        triggerNavigation('index');
-                    },
-                    news: function(category, article){
-                        triggerNavigation('news', category, article);
-                    },
-                    indices: function(indices){
-                        triggerNavigation('indices', indices);
-                    },
-                    portfolio: function(portfolioId){
-                        triggerNavigation('portfolio', portfolioId);
-                    }
-                });
+            var RouterClass = Backbone.Router.extend({
+                routes: {
+                    '': 'index',
+                    'news/:category/:article': 'news',
+                    'indices/:instrument': 'indices',
+                    'equities/:instrument': 'equities',
+                    'portfolio/(:pId)': 'portfolio'
+                },
+                index: () => this._dispatchNavigation(false, 'index'),
+                news: (category, article) => this._dispatchNavigation(false, 'news', category, article),
+                indices: (indices) => this._dispatchNavigation(true, 'indices', indices),
+				equities: (equities) => this._dispatchNavigation(true, 'equities', equities),
+                portfolio: (portfolioId) => this._dispatchNavigation(false, 'portfolio', portfolioId)
+            });
 
             window.InvestingApp.Router = new RouterClass();
 
