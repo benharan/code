@@ -7,11 +7,10 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "Toolset/toolset",
 	"Modules/TabScrollability/TabScrollability",
     "text!./tabs.html",
     "text!./tabs.css"
-], function (_, $, Backbone, Displayable, Toolset, TabScrollability, html, css) {
+], function (_, $, Backbone, Displayable, TabScrollability, html, css) {
     return Displayable.extend({
         _markupScheme: {
             ul: 'ul'

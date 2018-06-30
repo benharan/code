@@ -6,25 +6,9 @@ define([
 	"underscore",
 	"jquery",
 	"Backbone",
+	"Toolset/toolset",
 	"./TableView"
-], function (_, $, Backbone, View) {
-
-	const typeRegexMap = {
-		'price': val => {
-			let regResult = /^\d{1,3}(,(\d{3}))*(\.\d+)?$/.exec(val);
-			!regResult && announceWarn('Table Data parsing error, type mismatch', 'Price');
-			return +val.replace(/,/g, '');
-		},
-		'percent': val => {
-			let regResult = /^\+?\d{1,3}(,(\d{3}))*(\.\d+)?%$/.exec(val);
-			!regResult && announceWarn('Table Data parsing error, type mismatch', 'Percent');
-			return +val.replace(/[\+%,]/g, '');
-		}
-	};
-
-	function chewValueByType(value, type) {
-		return typeRegexMap[type](value);
-	}
+], function (_, $, Backbone, Toolset, View) {
 
 	function makeComparisonFunction(dir, colName) {
 		if (dir === 0) {
@@ -69,7 +53,9 @@ define([
 				if (_.isNu(value)) { // New Row
 					this._data[value] = { originalIndex: value };
 				} else { // TD
-					this._data[value.rowIndex][value.colName] = chewValueByType(value.text, this._columns[value.colName].dataType);
+					let dataType = this._columns[value.colName].dataType;
+					!Toolset.FinancialData.is(dataType, value.text) && announceWarn('Table Data parsing error, type mismatch', `'${value.text}' isn't ${dataType}`);
+					this._data[value.rowIndex][value.colName] = Toolset.FinancialData.getValue(dataType, value.text);
 				}
 			}
 

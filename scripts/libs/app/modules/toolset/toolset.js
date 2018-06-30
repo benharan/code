@@ -19,11 +19,12 @@ define([
     "Backbone",
     "Toolset/toolsetUIView",
     "Toolset/tools/math",
+    "Toolset/tools/FinancialData",
     "Toolset/tools/texts",
     "Toolset/tools/is",
     "Toolset/tools/DeepMap",
     "Toolset/tools/TemplateCompiler"
-], function (_, $, Backbone, View, MathTool, TextsTool, IsTool, DeepMap, TemplateCompiler) {
+], function (_, $, Backbone, View, MathTool, FinancialData, TextsTool, IsTool, DeepMap, TemplateCompiler) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {
             this._uiView = new View();
@@ -31,6 +32,7 @@ define([
             $('body').append(this._uiView.render());
         },
         Math: new MathTool(),
+		FinancialData: new FinancialData(),
         Texts: new TextsTool(),
         is: new IsTool(),
         DeepMap,
