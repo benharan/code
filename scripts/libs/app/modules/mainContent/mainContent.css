@@ -1,0 +1,18 @@
+
+
+.main-content table {
+    border: 1px solid white;
+}
+
+.main-content table tr {
+    border-bottom: 1px solid white;
+}
+
+.main-content table tr th,
+.main-content table tr td {
+    border-right: 1px solid white;
+    padding: 8px;
+}
+.main-content table tr th[data-type] {
+    cursor: pointer;
+}

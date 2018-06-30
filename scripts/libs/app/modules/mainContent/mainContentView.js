@@ -7,9 +7,11 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
+    "EventBus",
+    "Modules/Table/Table",
     "text!./mainContent.html",
     "text!./mainContent.css"
-], function (_, $, Backbone, Displayable, html, css) {
+], function (_, $, Backbone, Displayable, EventBus, Table, html, css) {
     return Displayable.extend({
 
         _markupScheme: { },
@@ -21,6 +23,10 @@ define([
 
         render: function () {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
+
+			EventBus.onceAttachedToDOM(this.$el, () => {
+                new Table('main-table', { stickyIndices: [0, 2, 3] });
+            })
 
             return this.$el;
         }

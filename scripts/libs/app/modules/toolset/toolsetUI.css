@@ -33,7 +33,7 @@
     margin: 0;
 }
 
-button {
+.toolset-ui-wrapper button {
     color: white;
     margin: 10px;
     cursor: pointer;
@@ -43,11 +43,11 @@ button {
     border: 1px solid white;
 }
 
-button:hover {
+.toolset-ui-wrapper button:hover {
     border-color: #aaffbd;
 }
 
-button.disabled {
+.toolset-ui-wrapper button.disabled {
     color: #000;
 }
 
