@@ -5,8 +5,9 @@
 define([
     "underscore",
     "jquery",
-    "Backbone"
-], function (_, $, Backbone) {
+    "Backbone",
+	"./Mutator"
+], function (_, $, Backbone, Mutator) {
 
 	const functionSet = [
 		['isntEmpty', obj => !_.isEmpty(obj)],
@@ -55,13 +56,5 @@ define([
 		}]
 	]
 
-	function setUnderscoreFunction(fuName, fu) {
-		if (_[fuName]) {
-			throwError('Underscore Mutation Exception', `Function '${fuName}' already exists`);
-		} else {
-			_[fuName] = fu;
-		}
-	}
-
-	functionSet.map(mapping => setUnderscoreFunction.apply(null, mapping));
+	Mutator.mutate(_, functionSet, 'Underscore');
 });

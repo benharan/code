@@ -17,7 +17,7 @@ define([
         initialize: function (html, css, arePaths) {
             if (arePaths) { // Server rendered, seek in DOM
                 this.$el = $(`body [data-section="${html}"]`);
-				!this.$el.length && throwError('Section Wrapper not found', html);
+				this.$el.isEmpty() && throwError('Section Wrapper not found', html);
             } else { // Normal fetching through require, render regularly
 				this._setTemplate(html, css);
 			}

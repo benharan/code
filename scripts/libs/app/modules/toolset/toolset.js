@@ -13,6 +13,37 @@ window.lcl = (...args) => {
 window.lcl.flag = localStorage.getItem('consolePrints') === '1';
 window.lcl.customCL = ()=>1;
 
+
+function getIfNotProd(fu) {
+	if ('Not production') {
+		return fu;
+	} else {
+		return $.noop;
+	}
+}
+
+window.throwError = getIfNotProd(function (mainLabel) {
+	var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];
+	for (i = 1; i < arguments.length; i++) {
+		i === 1 && finalStrArr.push(' [');
+		finalStrArr.push(arguments[i] + (i !== arguments.length - 1 ? ', ' : ''));
+		i === arguments.length - 1 && finalStrArr.push(']');
+	}
+	throw new Error(finalStrArr.join(''))
+})
+
+window.announceWarn = getIfNotProd(function (mainLabel) {
+	var i, finalStrArr = ['__ Runtime Warning: ' + mainLabel];
+	for (i = 1; i < arguments.length; i++) {
+		i === 1 && finalStrArr.push(' [');
+		finalStrArr.push(arguments[i] + (i !== arguments.length - 1 ? ', ' : ''));
+		i === arguments.length - 1 && finalStrArr.push(']');
+	}
+	console.warn(finalStrArr.join(''));
+})
+
+
+
 define([
     "underscore",
     "jquery",
@@ -46,34 +77,6 @@ define([
             }
         }
     });
-
-    function getIfNotProd(fu) {
-        if ('Not production') {
-            return fu;
-        } else {
-            return $.noop;
-        }
-	}
-
-	window.throwError = getIfNotProd(function (mainLabel) {
-        var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];
-        for (i = 1; i < arguments.length; i++) {
-            i === 1 && finalStrArr.push(' [');
-            finalStrArr.push(arguments[i] + (i !== arguments.length - 1 ? ', ' : ''));
-            i === arguments.length - 1 && finalStrArr.push(']');
-        }
-        throw new Error(finalStrArr.join(''))
-    })
-
-	window.announceWarn = getIfNotProd(function (mainLabel) {
-        var i, finalStrArr = ['__ Runtime Warning: ' + mainLabel];
-        for (i = 1; i < arguments.length; i++) {
-            i === 1 && finalStrArr.push(' [');
-            finalStrArr.push(arguments[i] + (i !== arguments.length - 1 ? ', ' : ''));
-            i === arguments.length - 1 && finalStrArr.push(']');
-        }
-        console.warn(finalStrArr.join(''));
-    })
 
     return new Toolset();
 });
