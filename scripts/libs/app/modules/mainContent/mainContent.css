@@ -13,6 +13,15 @@
     border-right: 1px solid white;
     padding: 8px;
 }
+
 .main-content table tr th[data-type] {
     cursor: pointer;
+}
+
+.main-content table tr.sticky {
+    background: #3a3826;
+}
+
+.main-content table tr.marked {
+    background: #0D416F;
 }

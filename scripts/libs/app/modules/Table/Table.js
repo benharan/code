@@ -41,9 +41,23 @@ define([
 				this._stickyIndices = settings.stickyIndices;
 				this._view.colorRows(this._stickyIndices);
 			}
+
+			this._view.on('markRows', this._markRows.bind(this))
 		},
 
 		render: function () { },
+
+		sort: function (colIndex) {
+			let newDir = this._getNewDir(colIndex),
+				extractedStickies = _.extractByIndices(this._data, this._stickyIndices);
+
+			this._data.sort(makeComparisonFunction(newDir, this._indexToColName[colIndex]));
+
+			_.injectByIndices(this._data, this._stickyIndices, extractedStickies);
+			this._view.reorder(_.pluck(this._data, 'originalIndex'), !newDir); // 0 is reset
+			this._sortState = { colIndex, dir: newDir };
+			this._view.setTHSortState(this._sortState);
+		},
 
 		_loadDataFromRows: function () {
 			let value;
@@ -59,6 +73,7 @@ define([
 				}
 			}
 
+			// Update view's _data?
 			lcl(this._data);
 		},
 
@@ -68,20 +83,12 @@ define([
 			this._indexToColName = indexToColName;
 		},
 
-		sort: function (colIndex) {
-			let newDir = this._getNewDir(colIndex),
-				extractedStickies = _.extractByIndices(this._data, this._stickyIndices);
-
-			this._data.sort(makeComparisonFunction(newDir, this._indexToColName[colIndex]));
-
-			_.injectByIndices(this._data, this._stickyIndices, extractedStickies);
-			this._view.reorder(_.pluck(this._data, 'originalIndex'));
-			this._sortState = { colIndex, dir: newDir };
-			this._view.setTHSortState(this._sortState);
-		},
-
 		_getNewDir: function (colIndex) {
 			return this._sortState.colIndex === colIndex ? ((this._sortState.dir + 1) % 3) : 1;
+		},
+
+		_markRows: function (rows) {
+			lcl('Rows marked:', _.getByIndices(this._data, rows));
 		}
 	})
 });

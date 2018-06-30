@@ -25,7 +25,8 @@ define([
             Displayable.prototype.render.call(this, {}, this._markupScheme);
 
 			EventBus.onceAttachedToDOM(this.$el, () => {
-                new Table('main-table', { stickyIndices: [0, 2, 3] });
+                new Table('main-table', { stickyIndices: [0] });
+                new Table('main-table-two', { stickyIndices: [2, 3] });
             })
 
             return this.$el;

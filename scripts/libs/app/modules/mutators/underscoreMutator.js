@@ -53,6 +53,18 @@ define([
 			}
 
 			return result;
+		}],
+		['getByIndices', function (arr, indices) {
+			let result = [];
+
+			_.e(indices, index => {
+				result.push(arr.slice(+index, +index + 1)[0]);
+			})
+
+			return result;
+		}],
+		['existsIn', function (arr, value) {
+			return _.indexOf(arr, value) > -1;
 		}]
 	]
 
