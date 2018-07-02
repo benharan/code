@@ -13,6 +13,7 @@ window.lcl = (...args) => {
 window.lcl.flag = localStorage.getItem('consolePrints') === '1';
 window.lcl.customCL = ()=>1;
 
+console.clear();
 
 function getIfNotProd(fu) {
 	if ('Not production') {

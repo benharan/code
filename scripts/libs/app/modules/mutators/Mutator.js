@@ -17,10 +17,12 @@ define([
 		},
 
 		_applyFunction: function(mutatee, fuName, fu) {
-			if (mutatee[fuName]) {
-				throwError(`${currentMutateeName} Mutation Exception`, `Function '${fuName}' already exists`);
-			} else {
-				mutatee[fuName] = fu;
+			if (fuName) {
+				if (mutatee[fuName]) {
+					throwError(`${currentMutateeName} Mutation Exception`, `Function '${fuName}' already exists`);
+				} else {
+					mutatee[fuName] = fu;
+				}
 			}
 		}
 	});

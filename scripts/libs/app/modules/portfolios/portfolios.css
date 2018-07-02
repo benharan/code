@@ -3,6 +3,7 @@
     min-width: 630px;
     min-height: 420px;
     border-radius: 3px;
+    position: relative;
     border: 1px solid #cdd;
 }
 

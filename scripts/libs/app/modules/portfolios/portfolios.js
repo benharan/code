@@ -16,7 +16,7 @@ define([
 		initialize: function (pId) {
 			this._reset(pId);
 			this._view = new View();
-			this._portfolioTabs = new Tabs(PortfolioTab);
+			this._portfolioTabs = new Tabs(PortfolioTab, { clip: true, scrollability: false });
 			this._nameToId = {};
 			_.each(window.serverData.portfolios, portfolioObj => {
 				this._portfolios[portfolioObj.id] = new Portfolio(portfolioObj.name);

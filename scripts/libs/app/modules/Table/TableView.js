@@ -135,7 +135,7 @@ define([
 				currentIndex = $tr.index(); // Original to current
 
 			if (this._markedRows[originalIndex]) { // Unmark
-				this._lastMarkedRowIndex = currentIndex;
+				this._lastMarkedRowIndex = null;
 				delete this._markedRows[originalIndex];
 				$tr.removeClass('marked');
 			} else if (e.shiftKey && _.isNu(this._lastMarkedRowIndex)) { // Bulk mark

@@ -39,7 +39,10 @@ define([
 			}
 			return result;
 		}],
-		['',],
+		['swapWith', function ($withThis) {
+			$.swapElements($(this), $withThis);
+		}],
+		['', ],
 	],
 	functionSet = [
 		['elementAcc', function (action) {
@@ -47,6 +50,12 @@ define([
 				const itemRes = action ? action(item) : item;
 				return acc ? acc.add(itemRes) : itemRes
 			}
+		}],
+		['swapElements', function ($first, $second) { // Make two DOM elements trade places
+			var $worthlessSpan = $('<span/>');
+			$first.after($worthlessSpan);
+			$second.after($first);
+			$worthlessSpan.after($second).remove();
 		}]
 	],
 	StringFunctionSet = [

@@ -44,8 +44,6 @@ define([
 				};
 
 			$tabs.on('click', this._scrollTabIntoViewIfNeeded.bind(this));
-			$innerWrapper.on('scroll', () => lcl($innerWrapper.scrollLeft()))
-			$tabs.on('click', (e) => lcl($(e.currentTarget).position().left))
 
 			this._dom = { $tabsWrapper, $tabs, $innerWrapper, controls };
 		},

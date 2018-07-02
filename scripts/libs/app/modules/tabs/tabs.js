@@ -12,13 +12,13 @@ define([
 
         _tabs: null, // Tab Collection
 
-        initialize: function (TabConstructor) {
+        initialize: function (TabConstructor, settings) {
             const TabCollection = Backbone.Collection.extend({
 				model: TabConstructor
 			});
             this._tabs = new TabCollection();
             this._tabs.on('selected', this._onTabSelected.bind(this))
-            this._view = new View();
+            this._view = new View(settings);
         },
 
         render: function (tabName) {
@@ -34,6 +34,7 @@ define([
 		_onTabSelected: function (tabName) {
             this._markAsSelected(tabName);
             this.trigger('tabSelected', tabName);
+            this._view.closeTabClipper();
 		},
 
         _markAsSelected: function (tabName) {
