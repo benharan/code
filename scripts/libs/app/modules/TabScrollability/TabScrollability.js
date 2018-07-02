@@ -68,7 +68,7 @@ define([
 				// The rightmost point in view (scrollLeft+viewWidth) is beyond selected tab's right edge (left + selected's width)
 				// AKA Too to the right
 				if (viewScrollLeft + this._m.totalViewWidth < selectedsLeft + this._m.selectedTabWidth) {
-					this._toLeft(selectedsLeft - this._m.totalViewWidth + this._m.selectedTabWidth);
+					this._toLeft(selectedsLeft - this._m.totalViewWidth + this._m.selectedTabWidth + 8);
 				} else if (viewScrollLeft > selectedsLeft) {
 					// The leftmost point in view is before selected tab's left edge (just left)
 					// AKA Too to the left

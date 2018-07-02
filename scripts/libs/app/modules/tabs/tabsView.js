@@ -29,23 +29,21 @@ define([
         render: function ($tabs) {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
 
+			this._dom.ul.html($tabs);
+
             if (this._settings.scrollability) {
                 new TabScrollability(this.$el);
                 this.$el.addClass('scrollability');
-            }
-
-            if (this._settings.clip) {
+            } else if (this._settings.clip) {
                 this._tabClipper = new TabClipping(this.$el);
                 this.$el.addClass('clip');
             }
-
-            this._dom.ul.html($tabs);
 
             return this.$el;
         },
 
         closeTabClipper: function () {
-			this._tabClipper.closeDialog();
+			this._tabClipper && this._tabClipper.closeDialog();
 		}
     })
 });
