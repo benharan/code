@@ -8,8 +8,8 @@ define([
     "Backbone",
     "Displayable",
     "Toolset/toolset",
-    "text!./tab.html",
-    "text!./tab.css"
+    "text!./Tab.html",
+    "text!./Tab.css"
 ], function (_, $, Backbone, Displayable, Toolset, html, css) {
 	let alreadyInjectedCSS = false;
 
@@ -22,9 +22,13 @@ define([
 			'click': 'tabClick'
 		},
 
-        initialize: function () {
-            Displayable.prototype.initialize.call(this, html, !alreadyInjectedCSS ? css : '');
+        initialize: function ($prerenderedTab) {
+            Displayable.prototype.initialize.call(this, $prerenderedTab ? '' : html, !alreadyInjectedCSS ? css : '');
 			alreadyInjectedCSS = true;
+			if ($prerenderedTab) {
+				this.$el = $prerenderedTab;
+				Displayable.prototype.injectCSS.call(this);
+			}
         },
 
         render: function (settings) {

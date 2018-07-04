@@ -1,11 +1,23 @@
 {
+
   "mainContentView": "<div class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><div><? $this->render('iterMacher') ?></div></div>",
+
   "mainEquitiesView": "<div data-section=\"equities\" class=\"<?=$bodyClass;?>\" <?=$takeOverBg?>><span><? $this->render('header') ?></span><div><? $this->render('from') ?></div><div><? $this->render('iterMacher') ?></div></div>",
+
   "huinya": "<table><? foreach ($rows as $row) { ?><tr><? foreach ($row->cells as $cell) { ?><td><?=$cell?></td><? } ?></tr><? } ?></table>",
+
   "iter1": "<table data-section=\"indices\"><? foreach ($rows as $rowIndex => $rowValue) { ?><tr><td><h3><?=$rowIndex?>: <span><?=$rowValue?></span></h3></td></tr><? } ?></table>",
+
   "innerTitle": "<h1><?=$title;?></h1>",
+
   "companyNameView": "<h6><?=$companyNameLabel;?></h6>",
+
   "from": "[From <?=$fromLabel;?>, by <? $this->render('companyName') ?>]",
+
   "titleWrap": "<?=$sign?><? $this->render('innerTitle') ?><?=$sign?>",
-  "portfolios": "<div class='portfolios-wrapper'><div class='tabs-placeholder'></div><div class='portfolio-placeholder'></div></div><?=$sign?>"
+
+  "portfolios2": "<div class='portfolios-wrapper'><div class='tabs-placeholder'></div><div class='portfolio-placeholder'></div></div><?=$sign?>",
+
+  "major-indices-view": "<div data-section=\"major-indices\" class=\"indices-wrapper\"><div class=\"tabs-placeholder\">    <div data-section=\"tabs-wrapper\" class=\"tabs-wrapper clip\">        <div class=\"tabs-inner-wrapper\">            <ul class=\"main\">                <li>Watchlist0</li>                <li>Watchlist1</li>                <li>Watchlist2</li>                <li class=\"selected\">Watchlist3</li>            </ul>            <div class=\"clip-controls\"><span class=\"show-more\">...</span>                <div class=\"more-tabs displayNone\">                    <ul>                        <li>Watchlist4</li>                        <li>Watchlist5</li>                        <li>Watchlist6</li>                        <li>Watchlist7</li>                        <li>Watchlist8</li>                        <li>Watchlist9</li>                        <li>Watchlist10</li>                    </ul>                </div>            </div>        </div>    </div></div></div>"
+  
 }

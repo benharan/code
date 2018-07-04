@@ -10,14 +10,17 @@ define([
 ], function (_, $, Backbone, EventBus) {
 	return Backbone.Model.extend({
 
-		_alreadyRendered: null,
+		_prerendered: null,
 
-		initialize: function ($tabsWrapper, alreadyRendered) {
+		initialize: function ($tabsWrapper, prerendered) {
 			this._dom = {};
-			this._alreadyRendered = !!alreadyRendered; // Todo: Initialize without rendering
+			if (prerendered) {
+				this._prerendered = true;
+				this._initializeClippedTabs($tabsWrapper);
+			} else {
+				EventBus.on('mainFrameInsertion', this._initializeClippedTabs.bind(this, $tabsWrapper));
+			}
 
-			// Needs to be in DOM for element size calculations
-			EventBus.on('mainFrameInsertion', this._initializeClippedTabs.bind(this, $tabsWrapper));
 		},
 
 		_initializeClippedTabs: function ($tabsWrapper) {
@@ -29,32 +32,48 @@ define([
 		},
 
 		_outcastTabs: function ($revealedTabs, $innerWrapper) {
-			let $aTab = $revealedTabs.first(),
-				wrapperWidth = $innerWrapper.width(),
-				outerWidth = $aTab.outerWidth(true),
-				maxVisibleTabs = Math.floor(wrapperWidth / outerWidth),
-				$outcastTabs = $($revealedTabs.splice(maxVisibleTabs)); // Mutate
-
-			return $outcastTabs;
+			let $result;
+			if (this._prerendered) {
+				$result = $innerWrapper.find('.more-tabs ul li');
+			} else {
+				let $aTab = $revealedTabs.first(),
+					wrapperWidth = $innerWrapper.width(),
+					outerWidth = $aTab.outerWidth(true),
+					maxVisibleTabs = Math.floor(wrapperWidth / outerWidth);
+				$result = $($revealedTabs.splice(maxVisibleTabs)); // Mutate
+			}
+			return $result;
 		},
 
 		_initControls: function () {
-			let $controls = this._generateControls(),
+			let $controls = this._getControls(),
 				$moreTabsContainer = $controls.find('.more-tabs'),
-				$showMoreButton = $controls.find('.show-more'),
-				$outcastTabsUL = $('<ul/>').html(this._dom.$outcastTabs);
+				$showMoreButton = $controls.find('.show-more');
 
-			$moreTabsContainer.html($outcastTabsUL);
+			if (!this._prerendered) {
+				let $outcastTabsUL = $('<ul/>').html(this._dom.$outcastTabs);
+				$moreTabsContainer.html($outcastTabsUL);
+				this._dom.$innerWrapper.append($controls);
+			}
+
 			this._dom.$moreTabsContainer = $moreTabsContainer;
-			this._dom.$innerWrapper.append($controls);
 			$showMoreButton.on('click', () => $moreTabsContainer._toggleShow());
 		},
 
+		_outcastTab: function ($subject) {
+			let $succeedingTab = this._dom.$outcastTabs.eq($subject.data('initial-order') || 0);
+			if ($succeedingTab.exists()) {
+				$succeedingTab.before($subject);
+			} else { // Last, no succeeding elem
+				this._dom.$outcastTabs.last().after($subject);
+			}
+		}, 
+		
 		_switchToTab: function ($tabToReveal) {
 			let $lastRevealed = this._dom.$revealedTabs.last();
 
 			// Outcast last revealed
-			this._dom.$outcastTabs.eq($lastRevealed.data('initial-order') || 0).before($lastRevealed);
+			this._outcastTab($lastRevealed);
 			// Reveal this tab
 			this._dom.$revealedTabsUL.append($tabToReveal);
 			// Update References
@@ -80,7 +99,7 @@ define([
 
 		_initDOMRefs: function ($tabsWrapper) {
 			let $innerWrapper = $tabsWrapper.find('.tabs-inner-wrapper'),
-				$revealedTabsUL = $tabsWrapper.find('ul'),
+				$revealedTabsUL = $tabsWrapper.find('ul.main'),
 				$revealedTabs = $revealedTabsUL.find('li'),
 				$outcastTabs = this._outcastTabs($revealedTabs, $innerWrapper);
 
@@ -91,8 +110,14 @@ define([
 			_.e(this._dom.$outcastTabs, (tab, orderId) => $(tab).data('initial-order', orderId + 1));
 		},
 
-		_generateControls: function () {
-			return $('<div class="clip-controls"><span class="show-more">...</span><div class="more-tabs displayNone"></div></div>');
+		_getControls: function () {
+			let $result;
+			if (this._prerendered) {
+				$result = this._dom.$innerWrapper.find('.clip-controls');
+			} else {
+				$result = $('<div class="clip-controls"><span class="show-more">...</span><div class="more-tabs displayNone"></div></div>');
+			}
+			return $result;
 		},
 
 		closeDialog: function () {

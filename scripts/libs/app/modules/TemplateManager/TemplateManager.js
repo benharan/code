@@ -14,6 +14,7 @@ define([
 
 	let useCompression = 1,
 		viewsMockup = JSON.parse(views1),
+		disableCache = true,
 		data = {},
 		freeToLazyLoad = true,
 		pendingTemplates = {},
@@ -26,6 +27,7 @@ define([
 			return viewsMockup[fullPath];
 		});
 
+	disableCache && lcl('Template Cache Disabled');
 
 	function fetchView(templateName, fullPath) {
 		let tO = parseInt(100 * Math.random());
@@ -80,9 +82,16 @@ define([
 		}
 	}
 
+	function validateCompiledContent(templateName, compiledContent) {
+		if (!compiledContent.trim()) {
+			throwError('Major Template Error - Zerostring Output', templateName, compiledContent);
+		}
+	}
+
 	function loadTemplate({ templateName, content = '' }) {
 		validateContent(templateName, content); // You shall not pass!
 		let { deps, compiledContent } = templateCompiler.compile(content);
+		validateCompiledContent(templateName, compiledContent);
 		validateRecursiveDep(templateName, deps);
 		templateLoader.load(templateName, deps, compiledContent);
 		lcl('Compiled and loaded ', templateName);
@@ -201,17 +210,23 @@ define([
 		},
 
 		_saveToLS: function () {
-			const input = templateLoader.export(),
-				_input_ = useCompression ? LZString.compress(input) : input;
+			if (!disableCache) {
+				const input = templateLoader.export(),
+					_input_ = useCompression ? LZString.compress(input) : input;
 
-			lcl(`Compression Stats\nBefore: ${input.length}\nAfter: ${_input_.length}\nRatio: ${_input_.length/input.length}`);
+				lcl(`Compression Stats\nBefore: ${input.length}\nAfter: ${_input_.length}\nRatio: ${_input_.length / input.length}`);
 
-			localStorage.setItem('templates', _input_);
+				localStorage.setItem('templates', _input_);
+			}
 		},
 
 		_loadFromLS: function () {
-			const storedValue = localStorage.getItem('templates');
-			return useCompression ? LZString.decompress(storedValue) : storedValue;
+			let result;
+			if (!disableCache) {
+				const storedValue = localStorage.getItem('templates');
+				result = useCompression ? LZString.decompress(storedValue) : storedValue;
+			}
+			return result;
 		}
 	})
 

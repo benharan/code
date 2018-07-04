@@ -6,8 +6,8 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-	"Modules/tabs/tabs",
-	"Modules/tab/portfolioTab",
+	"Modules/Tabs/Tabs",
+	"Modules/Tab/PortfolioTab",
 	"Modules/portfolio/portfolio",
 	"./portfoliosView"
 ], function (_, $, Backbone, Tabs, PortfolioTab, Portfolio, View) {

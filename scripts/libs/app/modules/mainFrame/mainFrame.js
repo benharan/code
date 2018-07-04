@@ -26,8 +26,12 @@ define([
     return Backbone.Model.extend({
         _sectionToModelMap: {
             'index': 'Modules/mainContent/mainContentView',
+            'major-indices': {
+				'model': 'Modules/indices/MajorIndicesView',
+				'scheme': 'text!Schemes/MajorIndicesScheme.json'
+			},
             'indices': {
-				'model': 'Modules/indices/indicesView',
+				'model': 'Modules/indices/IndicesView',
 				'scheme': 'text!Schemes/indicesScheme.json'
 			},
             'news': 'Modules/news/newsView',
@@ -56,9 +60,10 @@ define([
 			if (schemeNav) {
 				require([modelPath.model, modelPath.scheme + getCacheParam()], (ModelClass, Scheme) => {
 					let schemeObj = JSON.parse(Scheme);
-					this._renderTemplatesAndInject(schemeObj).then(cont => {
-						view.setMainContent(cont);
-						(new ModelClass(p1, p2)).render(p1, p2);
+					this._renderTemplatesAndInject(schemeObj).then(renderedView => {
+						view.setMainContent(renderedView);
+						(new ModelClass(p1, p2, true)).render(p1, p2, true);
+						// EventBus.trigger('mainFrameInsertion', renderedView);
 					})
 				})
 			} else {

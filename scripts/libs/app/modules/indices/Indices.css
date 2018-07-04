@@ -1,0 +1,15 @@
+.indices-wrapper {
+    padding: 5px;
+    min-width: 630px;
+    min-height: 420px;
+    border-radius: 3px;
+    position: relative;
+    border: 1px solid #cdd;
+}
+
+.indices-placeholder {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #cdd;
+}

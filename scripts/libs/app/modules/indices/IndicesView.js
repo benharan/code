@@ -7,7 +7,7 @@ define([
     "jquery",
     "Backbone",
     "Displayable"
-], function (_, $, Backbone, Displayable, html, css) {
+], function (_, $, Backbone, Displayable) {
     return Displayable.extend({
 
         _instrumentTitleMap: {

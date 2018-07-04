@@ -92,7 +92,7 @@ define([
 		}
 
 		function compileTemplate(templateString) {
-			var result = { deps: [] }, resultText = new StringAccumulator(), lastHandledIndex = 0, nextEnd, closingIndex, totalLength = templateString.length;
+			var result = { deps: [] }, resultText = new StringAccumulator(), lastHandledIndex = 0, nextEnd = 0, closingIndex, totalLength = templateString.length;
 			getAllIndices('<?', templateString).forEach(function(openingIndex) {
 				resultText.add(templateString.substr(lastHandledIndex, openingIndex - lastHandledIndex)); // Store all until current opening
 				closingIndex = templateString.indexOf('?>', openingIndex);

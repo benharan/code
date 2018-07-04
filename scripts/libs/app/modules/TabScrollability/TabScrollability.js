@@ -36,7 +36,7 @@ define([
 		_initDOMRefs: function ($tabsWrapper) {
 			let $innerWrapper = $tabsWrapper.find('.tabs-inner-wrapper'),
 				$tabs = $tabsWrapper.find('li'),
-				$preparedControls = this._generateControls().appendTo($tabsWrapper),
+				$preparedControls = this._getControls().appendTo($tabsWrapper),
 				controls = {
 					$prev: $preparedControls.filter(htmlDirection.is('rtl') ? '.next' : '.prev'),
 					$next: $preparedControls.filter(htmlDirection.is('rtl') ? '.prev' : '.next'),
@@ -112,7 +112,7 @@ define([
 			this._dom.controls.$next.on('click', this._makeScrollabilityAction('next'));
 		},
 
-		_generateControls: function () {
+		_getControls: function () {
 			return $('<button class="prev">PREV</button><button class="next">NEXT</button>');
 		}
 	})

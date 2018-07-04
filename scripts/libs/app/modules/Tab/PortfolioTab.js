@@ -6,7 +6,7 @@ define([
 	"underscore",
 	"jquery",
 	"Backbone",
-	"./tab"
+	"./Tab"
 ], function (_, $, Backbone, Tab) {
 	return Tab.extend({
 

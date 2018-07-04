@@ -12,15 +12,18 @@ define([
     return Backbone.View.extend({
 
         _dom: null,
+		_rawCSS: null,
         _markupTemplate: null,
 
-        initialize: function (html, css, arePaths) {
-            if (arePaths) { // Server rendered, seek in DOM
+        initialize: function (html, css, prerendered) {
+        	this._rawCSS = css;
+            if (prerendered) { // Server rendered, seek in DOM
                 this.$el = $(`body [data-section="${html}"]`);
 				this.$el.isEmpty() && throwError('Section Wrapper not found', html);
             } else { // Normal fetching through require, render regularly
-				this._setTemplate(html, css);
+				this._setTemplate(html);
 			}
+			this._createStyleElem();
         },
 
         render: function (templateData, scheme) {
@@ -29,18 +32,27 @@ define([
             return this.$el;
         },
 
-		_setTemplate: function (html, css) {
-			this._markupTemplate = _.template(html || "");
-			if (css) {
-				this._cssElement = $("<style/>").text(css);
+		_setTemplate: function (html) {
+        	if (html) {
+				this._markupTemplate = _.template(html || "");
+			}
+		},
+
+		_createStyleElem: function () {
+			if (this._rawCSS) {
+				this._cssElement = $("<style/>").text(this._rawCSS);
+			}
+		},
+
+		injectCSS: function () {
+			if (this._cssElement) {
+				$head.append(this._cssElement);
 			}
 		},
 
 		_render: function (templateData, scheme) {
+			this.injectCSS();
 			if (this._markupTemplate) {
-				if (this._cssElement) {
-					$head.append(this._cssElement);
-				}
                 this.$el = $(this._markupTemplate(templateData || {}));
             }
 			this.delegateEvents(); // Rebind according to 'events'
