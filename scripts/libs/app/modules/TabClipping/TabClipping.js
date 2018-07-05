@@ -18,7 +18,7 @@ define([
 				this._prerendered = true;
 				this._initializeClippedTabs($tabsWrapper);
 			} else {
-				EventBus.on('mainFrameInsertion', this._initializeClippedTabs.bind(this, $tabsWrapper));
+				EventBus.onceAttachedToDOM($tabsWrapper, this._initializeClippedTabs.bind(this, $tabsWrapper));
 			}
 
 		},
