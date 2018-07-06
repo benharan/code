@@ -9,18 +9,17 @@ define([
 	"Toolset/toolset",
 	"EventBus",
 	"Modules/DependencyLoader/DependencyLoader",
-	"text!./views1.json"
-], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, views1) {
+	"text!./_views1.json"
+], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, _views1) {
 
 	let useCompression = 1,
-		viewsMockup = JSON.parse(views1),
 		disableCache = true,
 		data = {},
-		freeToLazyLoad = true,
 		pendingTemplates = {},
 		promiseCollection = [],
+		freeToLazyLoad = true,
+		viewsMockup = JSON.parse(_views1),
 		templateLoader = new DependencyLoader(),
-		templateCompiler = new Toolset.TemplateCompiler(),
 		templateManager,
 		requestViewFromServer = _.memoize((fullPath) => {
 			lcl(`Requesting View Resource '${fullPath}'`);
@@ -38,6 +37,7 @@ define([
 				// Memoized so saves server calls but need to avoid recompilation
 				// Tricky since if you mark it as duplicate you need to compile the
 				// other one first (as dependency)
+				//     *** Solved when detached compilation ***
 				resolve({ templateName, content: requestViewFromServer(fullPath) });
 			}, tO)
 		})
@@ -90,11 +90,8 @@ define([
 
 	function loadTemplate({ templateName, content = '' }) {
 		validateContent(templateName, content); // You shall not pass!
-		let { deps, compiledContent } = templateCompiler.compile(content);
-		validateCompiledContent(templateName, compiledContent);
-		validateRecursiveDep(templateName, deps);
-		templateLoader.load(templateName, deps, compiledContent);
-		lcl('Compiled and loaded ', templateName);
+		templateLoader.load(templateName, [], content);
+		lcl('Loaded ', templateName);
 		return this;
 	}
 
@@ -188,7 +185,7 @@ define([
 					renderTemplate = _.template(templateObj.definition),
 					adaptedDataObj, renderedTemplate, nestedData = {};
 
-				if (_.isntEmpty(templateObj.deps)) {
+				if (templateData.nestedData) { // Rely on scheme, forgo deps
 					nestedData = this._recursivelyRenderTemplates(templateData.nestedData);
 				}
 
