@@ -15,6 +15,9 @@ define([
 		['isSt', _.isString],
 		['isNu', _.isNumber],
 		['e', _.each],
+		['bindSet', function (set, context) {
+			return set.map(fu => fu.bind(context));
+		}],
 		['swap', function (arr, i1, i2) {
 			const first = arr[i1];
 			arr[i1] = arr[i2];

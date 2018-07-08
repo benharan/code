@@ -14,6 +14,8 @@ define([
 ], function (_, $, Backbone, Displayable, EventBus, Table, html, css) {
     return Displayable.extend({
 
+        _identifier: 'mainContentView',
+        _mainTable: null,
         _markupScheme: { },
 
         initialize: function () {
@@ -24,12 +26,25 @@ define([
         render: function () {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
 
-			EventBus.onceAttachedToDOM(this.$el, () => {
-                new Table('main-table', { stickyIndices: [0] });
-                new Table('main-table-two', { stickyIndices: [2, 3] });
-            })
+			EventBus.onceAttachedToDOM(this.$el, _.bindSet([this._initMainTable, () => {
+				$('.append-more-rows-button').on('click', this._append5k.bind(this));
+            }], this))
 
             return this.$el;
-        }
+        },
+
+		_append5k: function () {
+			var i = 0, $tableTB = $('table[data-section="main-table"] tbody'),
+				$lastTr = $tableTB.find('tr').last(),
+				limit = 5000;
+			while (i++ < (limit)) {
+				$tableTB.append($lastTr.clone())
+			}
+			this._mainTable.refresh();
+		},
+
+        _initMainTable: function () {
+            this._mainTable = new Table('main-table', { stickyIndices: [3] });
+		}
     })
 });

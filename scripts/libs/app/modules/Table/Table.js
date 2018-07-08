@@ -47,7 +47,13 @@ define([
 
 		render: function () { },
 
+		refresh: function () {
+			this._view.render();
+			this._loadDataFromRows();
+		},
+
 		sort: function (colIndex) {
+			let startTime = (new Date()).getTime();
 			let newDir = this._getNewDir(colIndex),
 				extractedStickies = _.extractByIndices(this._data, this._stickyIndices);
 
@@ -57,6 +63,11 @@ define([
 			this._view.reorder(_.pluck(this._data, 'originalIndex'), !newDir); // 0 is reset
 			this._sortState = { colIndex, dir: newDir };
 			this._view.setTHSortState(this._sortState);
+			let sortEndTime = (new Date()).getTime();
+			lcl(`Sort duration ${sortEndTime - startTime}ms`);
+			requestAnimationFrame(()=>{
+				lcl(`Rendering done after another ${(new Date()).getTime() - sortEndTime}ms`);
+			})
 		},
 
 		_loadDataFromRows: function () {
@@ -74,7 +85,7 @@ define([
 			}
 
 			// Update view's _data?
-			lcl(this._data);
+			lcl('Table initialized. Data:', this._data);
 		},
 
 		_initColumns: function () {

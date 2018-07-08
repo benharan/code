@@ -19,7 +19,7 @@ define([
 	EventBusInstance.on('mainFrameInsertion', ($elemInjected) => {
 		_.each(domAttachmentWatchers, (watcher, i) => {
 			if (watcher.$elemToMonitor.isChildOf($elemInjected) || watcher.$elemToMonitor === $elemInjected) {
-				watcher.cb();
+				watcher.cb.forEach ? watcher.cb.forEach(cb => cb()) : watcher.cb();
 				delete domAttachmentWatchers[i]; // Always Once (heh) need optionality?
 			}
 		})
