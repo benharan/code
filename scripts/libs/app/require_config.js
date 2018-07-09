@@ -10,6 +10,7 @@ requirejs.config({
         Toolset: "app/modules/toolset",
 		EventBus: "app/modules/EventBus/EventBus",
         Modules: "app/modules",
+        External: "ex-lib",
         Schemes: "app/schemes"
         // CDN Path?
     },

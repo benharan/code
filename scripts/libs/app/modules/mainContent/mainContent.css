@@ -14,7 +14,8 @@
     padding: 8px;
 }
 
-.main-content table tr th[data-type] {
+.main-content table tr th[data-type] i,
+.main-content table tr th[data-type] span {
     cursor: pointer;
 }
 

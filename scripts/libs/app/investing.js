@@ -4,7 +4,7 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-	"ex-lib/lz-string",
+	"External/lz-string",
 	"Toolset/toolset",
     "Modules/mainFrame/mainFrame",
     "Modules/mutators/underscoreMutator",
