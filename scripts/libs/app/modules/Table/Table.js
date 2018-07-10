@@ -22,9 +22,10 @@ define([
 		}
 	}
 
-	return Backbone.Model.extend({
+	return Backbone.ModelI.extend({
 
 		_data: null,
+		_view: null,
 		_columns: null,
 		_indexToColName: null,
 		_stickyIndices: null,
@@ -68,6 +69,10 @@ define([
 			requestAnimationFrame(()=>{
 				lcl(`Rendering done after another ${(new Date()).getTime() - sortEndTime}ms`);
 			})
+		},
+
+		toggle: function (flag) {
+			this._view.toggle(flag);
 		},
 
 		_loadDataFromRows: function () {

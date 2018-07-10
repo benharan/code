@@ -1,5 +1,6 @@
 body {
     background-color: #1c1c1c;
+    overflow: visible!important;
 }
 
 body,
@@ -41,4 +42,36 @@ H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .lin
 
 .displayNone {
     display: none!important;
+}
+
+
+table.data-table-style {
+    border: 1px solid white;
+}
+
+table.data-table-style tr {
+    border-bottom: 1px solid white;
+}
+
+table.data-table-style tr th,
+table.data-table-style tr td {
+    border-right: 1px solid white;
+    padding: 8px;
+}
+
+table.data-table-style tr th[data-type] i,
+table.data-table-style tr th[data-type] span {
+    cursor: pointer;
+}
+
+table.data-table-style tr.sticky {
+    background: #3a3826;
+}
+
+table.data-table-style tr.marked {
+    background: #0D416F;
+}
+
+.table-wrapper {
+    padding: 10px 5px;
 }

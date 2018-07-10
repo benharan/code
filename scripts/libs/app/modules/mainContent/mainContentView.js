@@ -26,18 +26,17 @@ define([
         render: function () {
             Displayable.prototype.render.call(this, {}, this._markupScheme);
 
-			EventBus.onceAttachedToDOM(this.$el, _.bindSet([this._initMainTable, () => {
-				$('.append-more-rows-button').on('click', this._append5k.bind(this));
-            }], this))
+			EventBus.onceAttachedToDOM(this.$el, this._initMainTable.bind(this), this);
+			EventBus.on('append1k', this._append5k.bind(this, 1000))
 
             return this.$el;
         },
 
-		_append5k: function () {
+		_append5k: function (limit = 5000) {
 			var i = 0, $tableTB = $('table[data-section="main-table"] tbody'),
-				$lastTr = $tableTB.find('tr').last(),
-				limit = 5000;
-			while (i++ < (limit)) {
+				$lastTr = $tableTB.find('tr').last();
+
+			while (i++ < limit) {
 				$tableTB.append($lastTr.clone())
 			}
 			this._mainTable.refresh();

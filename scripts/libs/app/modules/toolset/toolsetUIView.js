@@ -27,7 +27,8 @@ define([
 			"click .clear-template-cache": "_clearTemplateCache",
 			"click .compile-templates": "_compileTemplates",
 			"click .load-portfolios": "_loadPortfolios",
-			"click .console-entry": "_toggleEntry"
+			"click .console-entry": "_toggleEntry",
+			"click .append-more-rows-button2": "_append1k"
 		},
 
 		initialize: function () {
@@ -103,6 +104,10 @@ define([
 
 		_loadPortfolios: function () {
 			EventBus.trigger('loadTemplate', 'portfolios', 'portfolios')
+		},
+
+		_append1k: function () {
+			EventBus.trigger('append1k');
 		}
 	})
 });

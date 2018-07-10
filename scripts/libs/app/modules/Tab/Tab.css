@@ -1,9 +1,9 @@
 .tabs-wrapper li {
     margin: 5px;
-    padding: 7px;
+    padding: 5px;
     width: 109px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     border-radius: 3px;
     display: inline-block;

@@ -19,8 +19,9 @@ define([
 	"underscore",
 	"jquery",
 	"Backbone",
-	"Displayable"
-], function (_, $, Backbone, Displayable) {
+	"Displayable",
+	"External/table-dragger"
+], function (_, $, Backbone, Displayable, TableDragger) {
 	return Displayable.extend({
 
 		_markupScheme: {
@@ -33,7 +34,6 @@ define([
 		Perhaps keep refs and from a certain row count go dynamic */
 
 		_columns: null,
-		_columnNames: null,
 		_indexToColName: null,
 		_markColumnIndex: null,
 		_markedRows: null,
@@ -51,6 +51,8 @@ define([
 
 		render: function () {
 			Displayable.prototype.render.call(this, {}, this._markupScheme);
+
+			this._initializeDraggability();
 
 			return this.$el;
 		},
@@ -99,7 +101,10 @@ define([
 					this._markColumnIndex = i;
 				}
 			})
-			return { indexToColName: this._indexToColName, columns: this._columns };
+			return {
+				indexToColName: _.extend({}, this._indexToColName), // Later mutated in view
+				columns: this._columns
+			};
 		},
 
 		generateTableIterator: function* () {
@@ -124,6 +129,21 @@ define([
 					}
 				}
 			}
+		},
+
+		toggle: function (flag) {
+			this.$el._toggleShow(flag);
+		},
+
+		_initializeDraggability: function () {
+			this._tableDragger = TableDragger(this.$el[0], {
+				mode: 'column',
+				dragHandler: '.drag-handle'
+			})
+
+			this._tableDragger.on('drop', (old, newI) => {
+				_.swap(this._indexToColName, old, newI);
+			});
 		},
 
 		_currentToOriginalIndex: function (rowIndex) {
