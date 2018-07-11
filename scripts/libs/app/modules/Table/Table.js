@@ -32,9 +32,7 @@ define([
 		_sortState: { colIndex: -1, dir: 0 }, // 0 - None, 1 - Desc, 2 - Asc
 
 		initialize: function (tableName, settings) {
-			this._view = new View(tableName);
-			this._view.on('thClick', this.sort.bind(this));
-			this._view.render();
+			this._initView(tableName, settings);
 			this._initColumns();
 			this._loadDataFromRows();
 
@@ -44,6 +42,12 @@ define([
 			}
 
 			this._view.on('markRows', this._markRows.bind(this))
+		},
+
+		_initView: function (tableName, settings) {
+			this._view = new View(tableName, settings.$table);
+			this._view.on('thClick', this.sort.bind(this));
+			this._view.render();
 		},
 
 		render: function () { },

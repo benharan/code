@@ -9,7 +9,7 @@ define([
 	"Toolset/toolset",
 	"EventBus",
 	"Modules/DependencyLoader/DependencyLoader",
-	"text!./_views1.json"
+	"text!Modules/TemplateManager/_views1.json"
 ], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, _views1) {
 
 	let useCompression = 1,

@@ -42,8 +42,8 @@ define([
 
 		events: { },
 
-		initialize: function (tableName) {
-			Displayable.prototype.initialize.call(this, tableName, tableName, true);
+		initialize: function (tableName, $elem) {
+			Displayable.prototype.initialize.call(this, $elem || tableName, tableName, true);
 
 			this._markedRows = {};
 			return this;

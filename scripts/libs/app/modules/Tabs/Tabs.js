@@ -28,7 +28,7 @@ define([
 
 				_.e($result.find('li'), (tabElement, i) => {
 					let $tab = $(tabElement);
-					let tabObj = { name: $tab.text(), id: i, $tab };
+					let tabObj = { name: $tab.data('tabName'), id: i, $tab };
 					this.addTab(tabObj.name, tabObj).render();
 				})
 			} else {

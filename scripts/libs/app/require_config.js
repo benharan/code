@@ -9,6 +9,7 @@ requirejs.config({
         Displayable: "app/modules/Displayable/Displayable",
         Toolset: "app/modules/toolset",
 		EventBus: "app/modules/EventBus/EventBus",
+		TemplateManager: "app/modules/TemplateManager/TemplateManager",
         Modules: "app/modules",
         External: "ex-lib",
         Schemes: "app/schemes"

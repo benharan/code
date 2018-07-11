@@ -6,8 +6,7 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "Displayable",
-	"Modules/TemplateManager/TemplateManager"
+    "Displayable"
 ], function (_, $, Backbone, Displayable) {
     return Displayable.extend({
 
@@ -30,7 +29,6 @@ define([
         },
 
 		_al: function () {
-			// TemplateManager.loadTemplate('cont', 'titleWrap');
 			this.$el.off('mouseover.lt');
 		}
     })

@@ -15,13 +15,13 @@ define([
 		_rawCSS: null,
         _markupTemplate: null,
 
-        initialize: function (html, css, prerendered) {
+        initialize: function (html__$elem, css, prerendered) {
         	this._rawCSS = css;
             if (prerendered) { // Server rendered, seek in DOM
-                this.$el = $(`body [data-section="${html}"]`);
-				this.$el.isEmpty() && throwError('Section Wrapper not found', html);
+                this.$el = $.is$elem(html__$elem) ? html__$elem : $(`body [data-section="${html__$elem}"]`);
+				this.$el.isEmpty() && throwError('Section Wrapper not found', html__$elem);
             } else { // Normal fetching through require, render regularly
-				this._setTemplate(html);
+				this._setTemplate(html__$elem);
 			}
 			this._createStyleElem();
         },

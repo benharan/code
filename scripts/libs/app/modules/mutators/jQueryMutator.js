@@ -56,6 +56,9 @@ define([
 			$first.after($worthlessSpan);
 			$second.after($first);
 			$worthlessSpan.after($second).remove();
+		}],
+		['is$elem', function ($possibleElem) {
+			return $possibleElem instanceof $;
 		}]
 	],
 	StringFunctionSet = [

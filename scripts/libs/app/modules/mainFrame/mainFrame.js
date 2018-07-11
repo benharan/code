@@ -7,7 +7,7 @@ define([
     "jquery",
     "Backbone",
 	"EventBus",
-	"Modules/TemplateManager/TemplateManager",
+	"TemplateManager",
 	"text!./scheme2.json",
     "./mainFrameView"
 ], function (_, $, Backbone, EventBus, TemplateManager, scheme2, View) {
