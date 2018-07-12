@@ -54,9 +54,8 @@ define([
     "Toolset/tools/FinancialData",
     "Toolset/tools/texts",
     "Toolset/tools/is",
-    "Toolset/tools/DeepMap",
-    "Toolset/tools/TemplateCompiler"
-], function (_, $, Backbone, View, MathTool, FinancialData, TextsTool, IsTool, DeepMap, TemplateCompiler) {
+    "Toolset/tools/DeepMap"
+], function (_, $, Backbone, View, MathTool, FinancialData, TextsTool, IsTool, DeepMap) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {
             this._uiView = new View();
@@ -68,7 +67,6 @@ define([
         Texts: new TextsTool(),
         is: new IsTool(),
         DeepMap,
-		TemplateCompiler,
         miscFuncs: {
             p: function (func, context, params) {
                 return params ? func.bind(context, params) : func.bind(context);

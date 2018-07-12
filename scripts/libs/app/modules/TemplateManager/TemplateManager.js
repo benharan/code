@@ -13,7 +13,7 @@ define([
 ], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, _views1) {
 
 	let useCompression = 1,
-		disableCache = true,
+		disableCache = 0,
 		data = {},
 		pendingTemplates = {},
 		promiseCollection = [],
