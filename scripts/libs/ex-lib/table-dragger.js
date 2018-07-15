@@ -654,7 +654,7 @@
 					}, {
 						key: 'sortColumn',
 						value: function sortColumn(from, to) {
-							if (from === to) {
+							if (from === to || !to) {
 								return;
 							}
 							var table = this.el;

@@ -6,7 +6,7 @@ define([
 	"underscore",
 	"jquery",
 	"Backbone",
-	"Toolset/toolset",
+	"Toolset/Toolset",
 	"./TableView"
 ], function (_, $, Backbone, Toolset, View) {
 

@@ -8,10 +8,11 @@ define([
 	"Backbone",
 	"Displayable",
 	"EventBus",
+	"Toolset/Toolset",
 	"text!./ToolsetUI.html",
 	"text!./ToolsetUI.css"
-], function (_, $, Backbone, Displayable, EventBus, html, css) {
-	var consolePrintsIsOn = localStorage.getItem('consolePrints') === '1';
+], function (_, $, Backbone, Displayable, EventBus, Toolset, html, css) {
+	var consolePrintsAreOn = Toolset.ClientStorage.getVal('consolePrints') === '1';
 
 	return Displayable.extend({
 
@@ -71,29 +72,29 @@ define([
 
 		_saveState: function (isOpen) {
 			this._state = isOpen;
-			localStorage.setItem('toolset-ui-isOpen', +this._state);
+			Toolset.ClientStorage.setVal('toolset-ui-isOpen', +this._state);
 			return this._state;
 		},
 
 		_loadState: function () {
-			this._state = localStorage.getItem('toolset-ui-isOpen') === '1';
+			this._state = Toolset.ClientStorage.getVal('toolset-ui-isOpen') === '1';
 			return this._state;
 		},
 
-		_toggleConsolePrints: function (){
-			consolePrintsIsOn = !consolePrintsIsOn;
-			cl(`Console Prints are ${consolePrintsIsOn ? 'On' : 'Off'}`);
+		_toggleConsolePrints: function () {
+			consolePrintsAreOn = !consolePrintsAreOn;
+			cl(`Console Prints are ${consolePrintsAreOn ? 'On' : 'Off'}`);
 			this._applyConsolePrintsState();
 		},
 
 		_applyConsolePrintsState: function () {
-			localStorage.setItem('consolePrints', +consolePrintsIsOn);
-			window.lcl.flag = consolePrintsIsOn;
-			this._dom.cpButton.text(`Console Prints (${consolePrintsIsOn ? 'On' : 'Off'})`)
+			Toolset.ClientStorage.setVal('consolePrints', +consolePrintsAreOn);
+			window.lcl.flag = consolePrintsAreOn;
+			this._dom.cpButton.text(`Console Prints (${consolePrintsAreOn ? 'On' : 'Off'})`);
 		},
 
 		_clearTemplateCache: function () {
-			localStorage.removeItem('templates');
+			Toolset.ClientStorage.clearVal('templates');
 			EventBus.trigger('dropTemplates');
 			lcl('Templates Cleared');
 		},

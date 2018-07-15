@@ -6,14 +6,13 @@ define([
 	"underscore",
 	"jquery",
 	"Backbone",
-	"Toolset/toolset",
+	"Toolset/Toolset",
 	"EventBus",
 	"Modules/DependencyLoader/DependencyLoader",
 	"text!Modules/TemplateManager/_views1.json"
 ], function (_, $, Backbone, Toolset, EventBus, DependencyLoader, _views1) {
 
-	let useCompression = 1,
-		disableCache = 0,
+	let disableCache = 0,
 		data = {},
 		pendingTemplates = {},
 		promiseCollection = [],
@@ -208,20 +207,14 @@ define([
 
 		_saveToLS: function () {
 			if (!disableCache) {
-				const input = templateLoader.export(),
-					_input_ = useCompression ? LZString.compress(input) : input;
-
-				lcl(`Compression Stats\nBefore: ${input.length}\nAfter: ${_input_.length}\nRatio: ${_input_.length / input.length}`);
-
-				localStorage.setItem('templates', _input_);
+				Toolset.ClientStorage.setVal('templates', templateLoader.export());
 			}
 		},
 
 		_loadFromLS: function () {
 			let result;
 			if (!disableCache) {
-				const storedValue = localStorage.getItem('templates');
-				result = useCompression ? LZString.decompress(storedValue) : storedValue;
+				result = Toolset.ClientStorage.getVal('templates');
 			}
 			return result;
 		}

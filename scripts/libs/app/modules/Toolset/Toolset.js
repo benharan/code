@@ -49,24 +49,26 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "Toolset/ToolsetUIView",
     "Toolset/Tools/math",
     "Toolset/Tools/FinancialData",
     "Toolset/Tools/texts",
     "Toolset/Tools/is",
-    "Toolset/Tools/DeepMap"
-], function (_, $, Backbone, View, MathTool, FinancialData, TextsTool, IsTool, DeepMap) {
+    "Toolset/Tools/DeepMap",
+    "Toolset/Tools/ClientStorage",
+    "Toolset/Tools/ClientSettings"
+], function (_, $, Backbone, MathTool, FinancialData, TextsTool, IsTool, DeepMap, ClientStorage, ClientSettings) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {
-            this._uiView = new View();
 
-            $('body').append(this._uiView.render());
         },
         Math: new MathTool(),
 		FinancialData: new FinancialData(),
         Texts: new TextsTool(),
         is: new IsTool(),
         DeepMap,
+		ClientStorage: new ClientStorage(true, true),
+		ClientSettings: new ClientSettings(),
+		Compression: LZString,
         miscFuncs: {
             p: function (func, context, params) {
                 return params ? func.bind(context, params) : func.bind(context);

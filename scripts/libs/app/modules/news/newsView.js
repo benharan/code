@@ -7,7 +7,7 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "Toolset/toolset",
+    "Toolset/Toolset",
     "text!./news.html",
     "text!./news.css"
 ], function (_, $, Backbone, Displayable, Toolset, html, css) {

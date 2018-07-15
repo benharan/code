@@ -7,7 +7,7 @@ define([
     "jquery",
     "Backbone",
     "Displayable",
-    "Toolset/toolset",
+    "Toolset/Toolset",
     "Modules/topBar/topBarView",
     "Modules/rightContent/rightContentView"
 ], function (_, $, Backbone, Displayable, Toolset, TopBarView, RightContentView) {
