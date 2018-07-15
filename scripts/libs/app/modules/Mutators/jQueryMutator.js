@@ -64,6 +64,9 @@ define([
 	StringFunctionSet = [
 		['is', function (secondValue, caseSensitive) {
 			return !_.isUn(_.find([].concat(secondValue), (val) => match(this, toStr(val), caseSensitive)));
+		}],
+		['isnt', function (secondValue, caseSensitive) {
+			return !toStr(this).is(secondValue, caseSensitive);
 		}]
 	];
 

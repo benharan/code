@@ -7,7 +7,7 @@ requirejs.config({
 	waitSeconds: 200,
     paths: {
         Displayable: "app/modules/Displayable/Displayable",
-        Toolset: "app/modules/toolset",
+        Toolset: "app/modules/Toolset",
 		EventBus: "app/modules/EventBus/EventBus",
 		TemplateManager: "app/modules/TemplateManager/TemplateManager",
         Modules: "app/modules",

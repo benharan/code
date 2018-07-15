@@ -6,7 +6,7 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-	"./portfolioView"
+	"./PortfolioView"
 ], function (_, $, Backbone, View) {
 	return Backbone.ModelI.extend({
 

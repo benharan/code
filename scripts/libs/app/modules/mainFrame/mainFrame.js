@@ -35,7 +35,7 @@ define([
 				'scheme': 'text!Schemes/indicesScheme.json'
 			},
             'news': 'Modules/news/newsView',
-            'portfolio': 'Modules/portfolios/portfolios',
+            'portfolio': 'Modules/Portfolios/Portfolios',
             'equities': {
             	'model': 'Modules/equities/equitiesView',
 				'scheme': 'text!Schemes/equitiesScheme.json'

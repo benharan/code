@@ -27,8 +27,8 @@ define([
 				$result = this._view.render(tabName__$el);
 
 				_.e($result.find('li'), (tabElement, i) => {
-					let $tab = $(tabElement);
-					let tabObj = { name: $tab.data('tabName'), id: i, $tab };
+					let $tab = $(tabElement),
+						tabObj = { name: $tab.data('tabName'), id: i, $tab };
 					this.addTab(tabObj.name, tabObj).render();
 				})
 			} else {
@@ -51,7 +51,7 @@ define([
 
         _markAsSelected: function (tabName) {
             this._tabs.each(tab => {
-                tab[tab.getName() !== tabName ? 'unselect' : 'select']();
+                tab[tab.getName().isnt(tabName) ? 'unselect' : 'select']();
 			});
 		}
     })

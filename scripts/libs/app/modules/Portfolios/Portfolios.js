@@ -8,8 +8,8 @@ define([
     "Backbone",
 	"Modules/Tabs/Tabs",
 	"Modules/Tab/PortfolioTab",
-	"Modules/portfolio/portfolio",
-	"./portfoliosView"
+	"Modules/Portfolio/Portfolio",
+	"./PortfoliosView"
 ], function (_, $, Backbone, Tabs, PortfolioTab, Portfolio, View) {
 	return Backbone.Model.extend({
 

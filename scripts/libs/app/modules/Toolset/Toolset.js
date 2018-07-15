@@ -49,12 +49,12 @@ define([
     "underscore",
     "jquery",
     "Backbone",
-    "Toolset/toolsetUIView",
-    "Toolset/tools/math",
-    "Toolset/tools/FinancialData",
-    "Toolset/tools/texts",
-    "Toolset/tools/is",
-    "Toolset/tools/DeepMap"
+    "Toolset/ToolsetUIView",
+    "Toolset/Tools/math",
+    "Toolset/Tools/FinancialData",
+    "Toolset/Tools/texts",
+    "Toolset/Tools/is",
+    "Toolset/Tools/DeepMap"
 ], function (_, $, Backbone, View, MathTool, FinancialData, TextsTool, IsTool, DeepMap) {
     var Toolset = Backbone.Model.extend({
         initialize: function () {

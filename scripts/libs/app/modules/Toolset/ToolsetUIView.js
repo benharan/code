@@ -8,8 +8,8 @@ define([
 	"Backbone",
 	"Displayable",
 	"EventBus",
-	"text!./toolsetUI.html",
-	"text!./toolsetUI.css"
+	"text!./ToolsetUI.html",
+	"text!./ToolsetUI.css"
 ], function (_, $, Backbone, Displayable, EventBus, html, css) {
 	var consolePrintsIsOn = localStorage.getItem('consolePrints') === '1';
 

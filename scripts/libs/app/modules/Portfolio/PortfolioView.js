@@ -7,8 +7,8 @@ define([
 	"jquery",
 	"Backbone",
 	"Displayable",
-	"text!./portfolio.html",
-	"text!./portfolio.css"
+	"text!./Portfolio.html",
+	"text!./Portfolio.css"
 ], function (_, $, Backbone, Displayable, html, css) {
 	return Displayable.extend({
 
