@@ -75,3 +75,10 @@ table.data-table-style tr.marked {
 .table-wrapper {
     padding: 10px 5px;
 }
+
+.list-wrapper {
+    width: 200px;
+    margin: 10px auto;
+    text-align: center;
+    border: 1px solid white;
+}
