@@ -17,7 +17,8 @@ define([
 		},
 
 		events: {
-			"keyup .search-box-input": "_inputKeyUp"
+			"keyup .search-box-input": "_inputKeyUp",
+			"click list-item": "_toggleItem"
 		},
 
 		initialize: function ($listWrapper, initialList) {

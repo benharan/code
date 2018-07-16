@@ -80,5 +80,12 @@ table.data-table-style tr.marked {
     width: 200px;
     margin: 10px auto;
     text-align: center;
-    border: 1px solid white;
 }
+
+.boxy {
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+

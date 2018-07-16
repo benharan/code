@@ -11,9 +11,9 @@ define([
 	"Modules/Tabs/Tabs",
 	"Modules/Tab/Tab",
 	"Modules/Table/Table",
-	"Modules/SearchableList/SearchableListView",
+	"Modules/MultiselectList/MultiselectListView",
     "text!./Indices.css"
-], function (_, $, Backbone, Displayable, TemplateManager, Tabs, Tab, Table, SearchableList, css) {
+], function (_, $, Backbone, Displayable, TemplateManager, Tabs, Tab, Table, MultiselectListView, css) {
 	const _default_table = 'price',
 		_table_name_to_scheme = {
 			price: 'text!Schemes/MajorIndicesScheme.json',
@@ -47,9 +47,9 @@ define([
 
 			this._initTabs();
 			this._initTables(this._currentTabName || _default_table);
-			this._sList = new SearchableList($('.list-wrapper'))
-			this._sList.render();
-			this._sList.loadListFromDOM();
+
+			this._msList = new MultiselectListView($('.multilist-wrapper'));
+			this._msList.render();
 
 			return this.$el;
 		},
