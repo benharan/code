@@ -13,7 +13,7 @@ define([
 
 		mutate: function (mutatee, mutations, mutateeName) {
 			currentMutateeName = mutateeName;
-			mutations.map(mapping => this._applyFunction(mutatee, ...mapping));
+			mutations.forEach(mapping => this._applyFunction(mutatee, ...mapping));
 		},
 
 		_applyFunction: function(mutatee, fuName, fu) {

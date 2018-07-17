@@ -35,10 +35,26 @@ module.exports = function () {
 		return input.replace(/\<\?\s*(php)?\s*|;?\s*\?\>/g, '');
 	}
 
-	function matchPrint(input) {
+	function cleanISSET(input) {
+		return input.replace(/\s*isset\(([^\)]+)\)\s*/i, '!_.isUn($1) ');
+	}
+
+	function cleanBrackets(input) {
+		return input.replace(/[\{\}]/g, '');
+	}
+
+	function matchVarPrint(input) {
 		let result, [, variableName] = input.match(/^\s*=\$(\w+);?/) || [];
 		if (variableName) {
 			result = input;
+		}
+		return result;
+	}
+
+	function matchTernaryPrint(input) {
+		let result, [, condition, ifTrue, ifFalse] = input.match(/^\s*=(.*)\?(.*):([^;]*);?/) || [];
+		if (condition) {
+			result = `=${cleanISSET(condition)} ? ${cleanBrackets(ifTrue)} : ${cleanBrackets(ifFalse)}`;
 		}
 		return result;
 	}
@@ -54,10 +70,10 @@ module.exports = function () {
 	}
 
 	function matchIteration(input) {
-		let result, [, collection, valueOrKey, , value] = input.match(/^\s*foreach\s*\(\s*\$(\w+)\s+as\s+\$(\w+)\s*(=>\s*\$(\w+)\s*)?\)\s*\{/i) || [];
+		let result, [, collection, valueOrKey, , value] = input.match(/^\s*foreach\s*\(\s*\$([\w\[\]']+)\s+as\s+\$(\w+)\s*(=>\s*\$(\w+)\s*)?\)\s*\{/i) || [];
 
 		if (collection) {
-			result = `_.each($${collection}, function($${!value ? valueOrKey : value}${value ? `, $${valueOrKey}` : ''}) {`;
+			result = `_.e($${collection}, function($${!value ? valueOrKey : value}${value ? `, $${valueOrKey}` : ''}) {`;
 			openedScopesCount++;
 		}
 		return result;
@@ -78,7 +94,8 @@ module.exports = function () {
 		if (openedScopesCount) {
 			yield matchScopeEnd(input);
 		}
-		yield matchPrint(input);
+		yield matchVarPrint(input);
+		yield matchTernaryPrint(input);
 		yield matchInjection(input, resultPayload);
 		yield matchIteration(input);
 	}

@@ -1,0 +1,25 @@
+<table<?=$vars['attributes'];?>>
+<colgroup>
+    <?php foreach ($vars['columns'] as $v) {?>
+    <col class="col-<?=$v['col']?>">
+    <?php } ?>
+</colgroup>
+<thead>
+<tr>
+    <?php foreach ($vars['columns'] as $v) {?>
+    <th class="col-<?=$v['col']?>"><?=$v['name'];?></th>
+    <?php } ?>
+</tr>
+</thead>
+<tbody>
+<?php foreach ($vars['data'] as $row) {?>
+<tr class="<?=$vars['baseClass'];?>-item">
+    <?php foreach ($row as $k => $v) {?>
+    <td class="col-<?=$vars['columns'][$k]['col'];?><?=isset($v['c']) ? " {$v['c']}" : "";?>">
+    <?=$v['val'];?>
+    </td>
+    <?php } ?>
+</tr>
+<?php } ?>
+</tbody>
+</table>
