@@ -24,6 +24,12 @@ define([
 		}
 
     return Backbone.Model.extend({
+		/* ** Warning - Tricky! **
+
+		Dynamically required paths need to match end result in built app
+		So 'Modules/..' should be 'app/modules/..'
+
+		*/
         _sectionToModelMap: {
             'index': 'Modules/mainContent/mainContentView',
             'major-indices': {
