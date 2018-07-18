@@ -20,6 +20,7 @@ module.exports = function (grunt) {
 		}
 
 	require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 
 	grunt.initConfig({
 		babel: {
@@ -38,6 +39,21 @@ module.exports = function (grunt) {
 				output: 'polyfill.js'
 			}
 		}
+
+			,
+			requirejs: {
+				compile: {
+					options: {
+						baseUrl: './',
+						mainConfigFile: 'scripts/libs/app/require_config.js',
+						include: [ 'scripts/app_init.js' ],
+						out: 'optimized.js',
+						done: function(done, output) {
+							console.log(done, output);
+						}
+					}
+				}
+			}
 	});
 
 	grunt.registerTask('Compile-Template', 'Transpile a PHP view into an Underscore.js Template', function () {
