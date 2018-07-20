@@ -304,9 +304,22 @@
             </thead>
 
             <tbody>
+            <? $this->render('JOE') ?>
+            <? $this->render('OJE') ?>
 		    <?php foreach ($vars['data']['rows'] as $row) {?>
+		        <?php for($i=0;$i<$vars['buttons']['shown'];$i++){;?>
+		            <?php foreach ($vars['data']['rows'] as $row) {?>
+                        <li class="button-tabs-item no-mobile"><button class="button-tabs-button<?=isset($vars['buttons']['list'][$i]['class']) ? " {$vars['buttons']['list'][$i]['class']}" : "";?>" type="button" data-id="<?=$vars['buttons']['list'][$i]['data-id'];?>"><?=$vars['buttons']['list'][$i]['name'];?></button></li>
+                    <?php }?>
+                <?php }?>
                 <tr class="<?=$vars['baseClass'];?>-item">
 				    <?php foreach ($row as $k => $v) {?>
+				        <?php for($i=0;$i<$vars['buttons']['shown'];$i++){;?>
+                            <li class="button-tabs-item no-mobile"><button class="button-tabs-button<?=isset($vars['buttons']['list'][$i]['class']) ? " {$vars['buttons']['list'][$i]['class']}" : "";?>" type="button" data-id="<?=$vars['buttons']['list'][$i]['data-id'];?>"><?=$vars['buttons']['list'][$i]['name'];?></button></li>
+                        <?php }?>
+                        <?php for($i=0;$i<$vars['buttons']['shown'];$i++){;?>
+                            <li class="button-tabs-item no-mobile"><button class="button-tabs-button<?=isset($vars['buttons']['list'][$i]['class']) ? " {$vars['buttons']['list'][$i]['class']}" : "";?>" type="button" data-id="<?=$vars['buttons']['list'][$i]['data-id'];?>"><?=$vars['buttons']['list'][$i]['name'];?></button></li>
+                        <?php }?>
                         <td class="col-<?=$vars['columns'][$k]['id'];?><?=isset($v['c']) ? " {$v['c']}" : "";?>">
 						    <?php switch ($vars['columns'][$k]['id']){
 							    case Columns::NAME:

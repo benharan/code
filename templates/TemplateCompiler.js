@@ -94,7 +94,7 @@ module.exports = function (grunt) {
 		let result, [, , nestedTemplateName] = input.match(rE.nestedTemplate) || [];
 		if (nestedTemplateName) {
 			amidstIteration() && throwError('Template Parsing Error', 'Nested Templates detected inside iteration scope, currently not supported');
-			result = `=$nestedData.${nestedTemplateName} `;
+			result = `=$nestedData['${nestedTemplateName}'] `;
 			resultPayload.deps.push(nestedTemplateName);
 		}
 		return result;

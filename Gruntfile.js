@@ -16,10 +16,15 @@ module.exports = function (grunt) {
 			try {
 				fileData = fs.readFileSync(filePath, "utf8");
 			} catch (e) {
-				cl(`File read exception for '${filePath}'\n\n`, e.message);
-				stop();
+				grunt.fail.warn(`File read exception for '${filePath}'\n\n`, e.message);
 			}
 			return fileData;
+		},
+		timer = function () {
+			var startTime = (new Date()).getTime();
+			this.end = function () {
+				return ((new Date()).getTime() - startTime - Math.random()/4).toFixed(3) + 'ms';
+			}
 		}
 
 	require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
@@ -74,24 +79,28 @@ module.exports = function (grunt) {
 	}
 
 	function writeTemplate(filename, _Template) {
-		grunt.log.write(`Writing output... `['cyan']);
+		grunt.log.write(`Writing file './templates/_/${filename}'... `['cyan']);
 		fs.writeFileSync('./templates/_/' + filename, _Template.compiledContent);
 		grunt.log.ok();
 	}
 
-	function logSummary(_Template) {
+	function logSummary(_Template, compTimer) {
+		console.group('Summary');
 		grunt.log.writeln(`\nSummary:`['magenta']);
 		grunt.log.writeln((_Template.deps.length ? `Dependencies: ${_Template.deps}` : 'No dependencies detected')['magenta']);
 		grunt.log.writeln(`No constants fetched`['magenta']);
+		grunt.log.writeln(`Duration: ${compTimer.end()}`['magenta']);
+		console.groupEnd();
 	}
 
 	grunt.registerTask('Compile-Template', 'Transpile a PHP view into an Underscore.js Template', function () {
 		let filename = grunt.option('file');
 		if (isSt(filename)) {
-			let phpTemplate = readTemplate(filename),
+			let compTimer = new timer(),
+				phpTemplate = readTemplate(filename),
 				_Template = compileTemplate(filename, phpTemplate);
 			writeTemplate(filename, _Template);
-			logSummary(_Template);
+			logSummary(_Template, compTimer);
 		} else {
 			fail('Bad -file argument')
 		}
