@@ -21,7 +21,7 @@ define([
             this._view = new View(settings, prerendered);
         },
 
-        render: function (tabName__$el, prerendered) {
+		render: function (tabName__$el, prerendered) {
 			let $result;
         	if (prerendered) {
 				$result = this._view.render(tabName__$el);
@@ -35,9 +35,18 @@ define([
 				let $tabs = this._tabs.reduce($.elementAcc(TabModel => TabModel.render()), null);
 				this._markAsSelected(tabName__$el);
 				$result = this._view.render($tabs);
+				// Hack until server supports
+				this._moveSelectedToEndOfShown($result);
 			}
 			return $result;
         },
+
+		_moveSelectedToEndOfShown: function ($result) {
+			let $selectedLI = $result.find('li.selected');
+			if ($selectedLI.index() > 3) {
+				$result.find('li').eq(3).before($selectedLI);
+			}
+		},
 
         addTab: function (tabName, tabSettings) {
 			return this._tabs.create(tabName, tabSettings);

@@ -28,7 +28,7 @@ define([
 			this._enumerateTabs();
 			this._bindTabClick(this._dom.$outcastTabs);
 			this._initControls();
-			this._switchToSelectedIfOutcast();
+			this._initSortability();
 		},
 
 		_outcastTabs: function ($revealedTabs, $innerWrapper) {
@@ -54,6 +54,7 @@ define([
 				let $outcastTabsUL = $('<ul/>').html(this._dom.$outcastTabs);
 				$moreTabsContainer.html($outcastTabsUL);
 				this._dom.$innerWrapper.append($controls);
+				this._dom.$outcastTabsUL = $outcastTabsUL;
 			}
 
 			this._dom.$moreTabsContainer = $moreTabsContainer;
@@ -67,8 +68,8 @@ define([
 			} else { // Last, no succeeding elem
 				this._dom.$outcastTabs.last().after($subject);
 			}
-		}, 
-		
+		},
+
 		_switchToTab: function ($tabToReveal) {
 			let $lastRevealed = this._dom.$revealedTabs.last();
 
@@ -77,16 +78,15 @@ define([
 			// Reveal this tab
 			this._dom.$revealedTabsUL.append($tabToReveal);
 			// Update References
-			this._dom.$outcastTabs = this._dom.$innerWrapper.find('.more-tabs ul>li');
+			this._updateOutcastTabsDOMRef();
 			this._dom.$revealedTabs = this._dom.$innerWrapper.find('>ul>li');
 
 			this._bindTabClick($tabToReveal, true);
 			this._bindTabClick($lastRevealed, false);
 		},
 
-		_switchToSelectedIfOutcast: function () {
-			let $outcastSelected = this._dom.$outcastTabs.filter('.selected');
-			$outcastSelected.exists() && this._switchToTab($outcastSelected);
+		_updateOutcastTabsDOMRef: function () {
+			this._dom.$outcastTabs = this._dom.$innerWrapper.find('.more-tabs ul>li');
 		},
 
 		_bindTabClick: function ($tabsToBind, unbind) {
@@ -99,14 +99,27 @@ define([
 
 		_initDOMRefs: function ($tabsWrapper) {
 			let $innerWrapper = $tabsWrapper.find('.tabs-inner-wrapper'),
+				$outcastTabsUL = $innerWrapper.find('.more-tabs ul'),
 				$revealedTabsUL = $tabsWrapper.find('ul.main'),
 				$revealedTabs = $revealedTabsUL.find('li'),
 				$outcastTabs = this._outcastTabs($revealedTabs, $innerWrapper);
 
-			this._dom = {$innerWrapper, $revealedTabsUL, $revealedTabs, $outcastTabs};
+			this._dom = {$innerWrapper, $revealedTabsUL, $revealedTabs, $outcastTabsUL, $outcastTabs};
+		},
+
+		_initSortability: function () {
+			this._dom.$outcastTabsUL.sortable({
+				axis: 'y',
+				items : 'li',
+				stop: () => {
+					this._updateOutcastTabsDOMRef();
+					this._enumerateTabs();
+				}
+			});
 		},
 
 		_enumerateTabs: function () {
+			this._dom.$revealedTabs.last().removeData('initial-order');
 			_.e(this._dom.$outcastTabs, (tab, orderId) => $(tab).data('initial-order', orderId + 1));
 		},
 
