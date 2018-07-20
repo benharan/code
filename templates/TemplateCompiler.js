@@ -2,13 +2,40 @@
  * Created by Skeksify on 09/07/2016.
  */
 
-var throwError = function () {
-	console.error(...arguments);
-	throw 'Template Terminated';
-}
+module.exports = function (grunt) {
+	let openedIterationScopes = [];
 
-module.exports = function () {
-	let openedScopesCount = 0;
+	const rE = {
+		scopeEnd: /^\s*}\s*/,
+		oneString: /^\"([^\"]+)\"$/,
+		for: /^\s*for\s*\((.*)\)\s*\{/i,
+		isSet: /\s*isset\(([^\)]+)\)\s*/i,
+		echo: /^(\s*)echo\s+([^;]+)\s*;?\s*$/,
+		ternary: /^\s*=(.*)\?(.*):([^;]*);?/,
+		curlyBracketsIterator: /\{([^\}]+)\}/g,
+		equalsPrint: /^\s*=\s*([\$\w\[\]\'\-]+);?$/,
+		switch: /^\s*=\s*([\$\w\[\]\'\-]+);?$/,
+		phpWrappers: /\<\?\s*(php)?\s*|;?\s*\?\>/g,
+		nestedTemplate: /^\s*\$this\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/i,
+		foreach: /^\s*foreach\s*\(\s*\$([\w\[\]']+)\s+as\s+\$(\w+)\s*(=>\s*\$(\w+)\s*)?\)\s*\{/i,
+	}
+
+	function amidstIteration() {
+		return !!openedIterationScopes.length;
+	}
+
+	function throwError(...args) {
+		// grunt.log.write('\n');
+		args.forEach((arg, i) => {
+			if (i === 2) {
+				grunt.log.writeln(arg['white'])
+			} else {
+				grunt.log.error(arg);
+			}
+		})
+		grunt.fail.warn('\nTerminating Task...\n');
+		throw 'Template Terminated';
+	}
 
 	function StringAccumulator() {
 		var result = [];
@@ -32,19 +59,23 @@ module.exports = function () {
 	}
 
 	function trimWrappers(input) {
-		return input.replace(/\<\?\s*(php)?\s*|;?\s*\?\>/g, '');
+		return input.replace(rE.phpWrappers, '').trim();
 	}
 
 	function cleanISSET(input) {
-		return input.replace(/\s*isset\(([^\)]+)\)\s*/i, '!_.isUn($1) ');
+		return input.replace(rE.isSet, '!_.isUn($1) ');
 	}
 
-	function cleanBrackets(input) {
-		return input.replace(/[\{\}]/g, '');
+	function compileExpression(input) {
+		var result;
+		if ('ANY expression' || input.trim().match(rE.oneString)) {
+			result = '(' + input.replace(rE.curlyBracketsIterator, '" + $1 + "').trim() + ')';
+		}
+		return result || input;
 	}
 
-	function matchVarPrint(input) {
-		let result, [, variableName] = input.match(/^\s*=\$(\w+);?/) || [];
+	function matchEqualsPrint(input) {
+		let result, [, variableName] = input.match(rE.equalsPrint) || [];
 		if (variableName) {
 			result = input;
 		}
@@ -52,52 +83,77 @@ module.exports = function () {
 	}
 
 	function matchTernaryPrint(input) {
-		let result, [, condition, ifTrue, ifFalse] = input.match(/^\s*=(.*)\?(.*):([^;]*);?/) || [];
+		let result, [, condition, ifTrue, ifFalse] = input.match(rE.ternary) || [];
 		if (condition) {
-			result = `=${cleanISSET(condition)} ? ${cleanBrackets(ifTrue)} : ${cleanBrackets(ifFalse)}`;
+			result = `=${cleanISSET(condition)} ? ${compileExpression(ifTrue)} : ${compileExpression(ifFalse)}`;
 		}
 		return result;
 	}
 
-	function matchInjection(input, resultPayload) {
-		let result, [, , nestedTemplateName] = input.match(/^\s*\$this\s*->\s*render(Nested)?\(\s*'([\s\w]+)'\s*\)\s*;?/i) || [];
+	function matchNestedTemplate(input, resultPayload) {
+		let result, [, , nestedTemplateName] = input.match(rE.nestedTemplate) || [];
 		if (nestedTemplateName) {
-			openedScopesCount && throwError('Template Parsing Error', 'Nested Templates detected inside iteration scope, currently not supported');
+			amidstIteration() && throwError('Template Parsing Error', 'Nested Templates detected inside iteration scope, currently not supported');
 			result = `=$nestedData.${nestedTemplateName} `;
 			resultPayload.deps.push(nestedTemplateName);
 		}
 		return result;
 	}
 
+	function matchSwitch(input) {
+		let result;
+
+		if (input.startsWith('switch')) {
+			let inputLines = input.split('\n');
+
+			result = inputLines.map(line => {
+				let [, indentation, expression] = line.match(rE.echo) || [];
+				if (expression) {
+					return `${indentation}print${compileExpression(expression)};`;
+				} else {
+					return line;
+				}
+			}).join('\n');
+
+		}
+		return result;
+	}
+
 	function matchIteration(input) {
-		let result, [, collection, valueOrKey, , value] = input.match(/^\s*foreach\s*\(\s*\$([\w\[\]']+)\s+as\s+\$(\w+)\s*(=>\s*\$(\w+)\s*)?\)\s*\{/i) || [];
+		let result, [, collection, valueOrKey, , value] = input.match(rE.foreach) || [];
 
 		if (collection) {
 			result = `_.e($${collection}, function($${!value ? valueOrKey : value}${value ? `, $${valueOrKey}` : ''}) {`;
-			openedScopesCount++;
+			openedIterationScopes.push(0);
+		} else {
+			let [, forExpressions] = input.match(rE.for) || [];
+			if (forExpressions) {
+				result = `for(var ${forExpressions}){`;
+				openedIterationScopes.push(1);
+			}
 		}
 		return result;
 	}
 
 	function matchScopeEnd(input) {
-		let result, matchResult = input.match(/^\s*}\s*/)
-
+		let result, matchResult = input.match(rE.scopeEnd);
 		if (matchResult) {
-			result = '});';
-			!openedScopesCount && throwError('Template Parsing Error', 'Scope end detected before scope beginning');
-			openedScopesCount--;
+			!amidstIteration() && throwError('Template Parsing Error', 'Scope end detected before scope beginning');
+			result = openedIterationScopes.pop() ? '}' : '});';
 		}
 		return result;
 	}
 
 	function* matchGenerator(input, resultPayload) {
-		if (openedScopesCount) {
+		if (amidstIteration()) {
 			yield matchScopeEnd(input);
 		}
-		yield matchVarPrint(input);
+		yield matchEqualsPrint(input);
 		yield matchTernaryPrint(input);
-		yield matchInjection(input, resultPayload);
 		yield matchIteration(input);
+		yield matchSwitch(input);
+		yield matchNestedTemplate(input, resultPayload);
+		yield matchScopeEnd(input);
 	}
 
 	function chewChunk(input, resultPayload) {
@@ -107,7 +163,7 @@ module.exports = function () {
 			if (matchResult) break;
 		}
 
-		!matchResult && throwError('Template Parsing Error', `Unrecognized Expression '${trimmedInput}'`);
+		!matchResult && throwError('Template Parsing Error', `Unrecognized Expression:`, trimmedInput);
 
 		return `<%${matchResult}%>`;
 	}
@@ -122,7 +178,7 @@ module.exports = function () {
 			resultText.add(chewChunk(templateString.substring(openingIndex, nextEnd), result));
 			lastHandledIndex = closingIndex + 2;
 		});
-		openedScopesCount && throwError('Template Parsing Error', 'Scope opened but never closed');
+		amidstIteration() && throwError('Template Parsing Error', 'Scope opened but never closed');
 		if (nextEnd < totalLength) { // If anything remains after
 			resultText.add(templateString.substr(lastHandledIndex));
 		}

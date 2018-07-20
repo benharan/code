@@ -1,5 +1,7 @@
 .idea/*
 built/*
 node_modules/*
+templates/_/
+templates/_/*
 package-lock.json
 polyfill.js

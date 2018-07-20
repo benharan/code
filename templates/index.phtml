@@ -1,0 +1,339 @@
+
+<section class="table-nav">
+    <div class="start-side">
+        <div class="button-tabs">
+            <ul class="button-tabs-list">
+
+                <?php for($i=0;$i<$vars['buttons']['shown'];$i++){;?>
+                    <li class="button-tabs-item no-mobile"><button class="button-tabs-button<?=isset($vars['buttons']['list'][$i]['class']) ? " {$vars['buttons']['list'][$i]['class']}" : "";?>" type="button" data-id="<?=$vars['buttons']['list'][$i]['data-id'];?>"><?=$vars['buttons']['list'][$i]['name'];?></button></li>
+                <?php }?>
+                <li class="only-mobile">
+                    <div class="design-select">
+                        <select>
+	                        <?php foreach ($vars['buttons']['list'] as $button) {?>
+                                <option data-id="<?=$button['data-id'];?>"><?=$button['name'];?></option>
+	                        <?php } ?>
+                        </select>
+                        <div class="icon-arrow" aria-hidden="true"></div>
+                    </div>
+                </li>
+
+                <li class="button-tabs-item">
+                    <section class="mini-popup">
+                        <button class="select">
+                            <span class="icon-dots" aria-hidden="true" aria-label="more menus"></span>
+                        </button>
+                        <!-- select pop uo - Start -->
+                        <div class="mini-popup-wrapper hide">
+                            <header class="mini-popup-header only-mobile">
+                                <h5 class="common-title">Change View</h5>
+                                <button class="button-icon">
+                                    <span class="icon-close" aria-label="delete this" aria-hidden="true"></span>
+                                </button>
+                            </header>
+                            <div class="mini-popup-content">
+                                <ul class="drop-comp">
+                                    <!-- First 3 tabes -->
+                                    <li class="drop-comp-item not-editible">
+                                        <button class="button-icon drop-comp-drag" aria-label="drag Last value">
+                                            <span class="icon-drag" aria-hidden="true"></span>
+                                        </button>
+                                        <span class="text">Price</span>
+                                    </li>
+                                    <li class="drop-comp-item not-editible">
+                                        <button class="button-icon drop-comp-drag" aria-label="drag Last value">
+                                            <span class="icon-drag" aria-hidden="true"></span>
+                                        </button>
+                                        <span class="text">Performance</span>
+                                    </li>
+                                    <li class="drop-comp-item not-editible">
+                                        <button class="button-icon drop-comp-drag" aria-label="drag Last value">
+                                            <span class="icon-drag" aria-hidden="true"></span>
+                                        </button>
+                                        <span class="text">Technical</span>
+                                    </li>
+
+						            <?php foreach ($vars['buttons']['list'] as $item) { ?>
+                                        <li class="drop-comp-item editible">
+                                            <button class="button-icon drop-comp-drag" aria-label="drag Last value"
+                                                    data-id="<?= $item['data-id']; ?>">
+                                                <span class="icon-drag" aria-hidden="true"></span>
+                                            </button>
+                                            <span class="text"><?= $item['name']; ?></span>
+	                                        <button class="button-icon drop-comp-edit" aria-label="edit">
+		                                        <span class="icon-edit" aria-hidden="true"></span>
+	                                        </button>
+
+                                        </li>
+						            <?php } ?>
+                                </ul>
+                            </div>
+                            <div class="mini-popup-footer">
+                                <button class="common-link-button create-new" aria-label="drag Last value" data-id="<?= $item['data-id']; ?>">
+                                    <span class="icon-add" aria-hidden="true"></span>
+                                    <span class="text">Create New</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- select pop up - END -->
+
+                        <!-- Custom Views- Start -->
+                        <section class="popup custom-views /state-step-2 hide" tabindex="0">
+                            <!--</header>-->
+                            <header class="custom-views-header only-mobile">
+                                <button class="button-icon back-icon">
+	                                <span class="icon-arrow_back" aria-label="back" aria-hidden="true"></span>
+                                </button>
+                                <h3 class="custom-views-header-title">Custom Views</h3>
+	                            <p class="custom-views-summary-line"><span class="highlight">0</span> from <span class="highlight">7</span></p>
+                            </header>
+                            <!--</content>-->
+                            <section class="custom-views-edit">
+                                <!--</table name>-->
+                                <header class="custom-views-name">
+                                    <button class="button-icon custom-views-close">
+	                                    <span class="icon-close no-mobile" aria-label="close this" aria-hidden="true"></span>
+                                    </button>
+                                    <h4 class="common-title" contenteditable="true">Dima Table</h4>
+                                </header>
+                                <!--</column select>-->
+                                <section class="custom-views-select">
+                                    <div class="search">
+                                        <span class="icon-search" aria-hidden="true"></span>
+                                        <input type="search" placeholder="Search Stocks, Currencies" aria-label="Search Columms">
+                                    </div>
+                                    <section class="custom-views-section">
+                                        <h5 class="common-title">Section Title</h5>
+                                        <ul class="checkbox-list">
+                                            <li class="checkbox-item">
+                                                <input id="my1" type="checkbox">
+                                                <label for="my1">Last</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my2" type="checkbox">
+                                                <label for="my2">Open</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my3" type="checkbox">
+                                                <label for="my3">High</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my4" type="checkbox">
+                                                <label for="my4">Low</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my5" type="checkbox">
+                                                <label for="my5">Close</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my6" type="checkbox">
+                                                <label for="my6">Volume</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my7" type="checkbox">
+                                                <label for="my7">Chg</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my8" type="checkbox">
+                                                <label for="my8">SYMBOL</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my9" type="checkbox">
+                                                <label for="my9">Last</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my10" type="checkbox">
+                                                <label for="my10">Open</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my11" type="checkbox">
+                                                <label for="my11">High</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my12" type="checkbox">
+                                                <label for="my12">Low</label>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section class="custom-views-section">
+                                        <h5 class="common-title">Very Nice Section Two</h5>
+                                        <ul class="checkbox-list">
+                                            <li class="checkbox-item">
+                                                <input id="my1-1" type="checkbox">
+                                                <label for="my1-1">Last</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my2-1" type="checkbox">
+                                                <label for="my2-1">Open</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my3-1" type="checkbox">
+                                                <label for="my3-1">High</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my4-1" type="checkbox">
+                                                <label for="my4-1">Low</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my5-1" type="checkbox">
+                                                <label for="my5-1">Close</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my6-1" type="checkbox">
+                                                <label for="my6-1">Volume</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my7-1" type="checkbox">
+                                                <label for="my7-1">Chg</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my8-1" type="checkbox">
+                                                <label for="my8-1">SYMBOL</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my9-1" type="checkbox">
+                                                <label for="my9-1">Last</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my10-1" type="checkbox">
+                                                <label for="my10-1">Open</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my11-1" type="checkbox">
+                                                <label for="my11-1">High</label>
+                                            </li>
+                                            <li class="checkbox-item">
+                                                <input id="my12-1" type="checkbox">
+                                                <label for="my12-1">Low</label>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                </section>
+                                <!--</column order>-->
+                                <div class="custom-views-order /hide">
+                                    <h5 class="common-title">Selected columns</h5>
+                                    <div class="drop-comp type-2">
+                                        <ul class="drop-comp-list">
+                                            <li class="drop-comp-item editible">
+                                                <button class="button-icon drop-comp-drag" aria-label="drag Last value">
+                                                    <span class="icon-drag" aria-hidden="true"></span>
+                                                </button>
+                                                <span class="text">Open</span>
+                                                <button class="button-icon drop-comp-delete">
+                                                    <span class="icon-delete" aria-label="delete this" aria-hidden="true"></span>
+                                                </button>
+                                            </li>
+	                                        <li class="drop-comp-item editible">
+		                                        <button class="button-icon drop-comp-drag" aria-label="drag Last value">
+			                                        <span class="icon-drag" aria-hidden="true"></span>
+		                                        </button>
+		                                        <span class="text">High</span>
+		                                        <button class="button-icon drop-comp-delete">
+			                                        <span class="icon-delete" aria-label="delete this" aria-hidden="true"></span>
+		                                        </button>
+	                                        </li>
+	                                        <li class="drop-comp-item editible">
+		                                        <button class="button-icon drop-comp-drag" aria-label="drag Last value">
+			                                        <span class="icon-drag" aria-hidden="true"></span>
+		                                        </button>
+		                                        <span class="text">Volume</span>
+		                                        <button class="button-icon drop-comp-delete">
+			                                        <span class="icon-delete" aria-label="delete this" aria-hidden="true"></span>
+		                                        </button>
+	                                        </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--</summery>-->
+                            <section class="custom-views-summary">
+	                            <div class="mini-popup hide">
+		                            <button class="common-link-button /hide">
+			                            <span class="icon-trash" aria-hidden="true"></span>
+			                            <span class="text">Delete</span>
+		                            </button>
+		                            <div class="custom-views-alert mini-popup-wrapper top">
+			                            <div class="mini-popup-content">
+			                                <p class="text">Are you sure you want to delete this?</p>
+				                            <div class="buttons-row">
+					                            <button class="common-button-1">Cancle</button>
+					                            <button class="common-button">Delelte</button>
+				                            </div>
+			                            </div>
+		                            </div>
+	                            </div>
+
+                                <button type="reset" class="common-link-button /hide" disabled><!--disabled -->
+	                                <span class="icon-clear" aria-hidden="true"></span>
+	                                <span class="text">Clear</span>
+                                </button>
+	                            <p class="/hide custom-views-summary-line no-mobile"><span class="highlight">0</span> from <span class="highlight">7</span> selected</p>
+                                <button class="save-button common-button no-mobile">Save</button>
+	                            <button class="next-button common-button only-mobile">Next</button>
+	                            <button class="done-button common-button full-line only-mobile">Done</button>
+                            </section>
+                        </section>
+                        <!-- Custom Views- END -->
+                    </section>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="<?=$vars['baseClass'];?>-comp grid-mobile/ custom-view">
+
+    <div class="<?=$vars['baseClass'];?>-scroller">
+
+        <span class="no-desktop no-tablet icon-arrow-start" aria-hidden="true"></span>
+        <span class="no-desktop no-tablet icon-arrow-end" aria-hidden="true"></span>
+
+        <table<?=$vars['attributes'];?>>
+            <colgroup>
+			    <?php foreach ($vars['columns'] as $v) {?>
+                    <col class="col-<?=$v['id']?>">
+			    <?php } ?>
+            </colgroup>
+            <thead>
+            <tr>
+			    <?php foreach ($vars['columns'] as $v) {?>
+                    <th class="col-<?=$v['id']?>"><?=$v['name'];?></th>
+			    <?php } ?>
+            </tr>
+            </thead>
+
+            <tbody>
+		    <?php foreach ($vars['data']['rows'] as $row) {?>
+                <tr class="<?=$vars['baseClass'];?>-item">
+				    <?php foreach ($row as $k => $v) {?>
+                        <td class="col-<?=$vars['columns'][$k]['id'];?><?=isset($v['c']) ? " {$v['c']}" : "";?>">
+						    <?php switch ($vars['columns'][$k]['id']){
+							    case Columns::NAME:
+								    echo "<img class=\"flag\" src=\"/images/flags/{$v[2]}.png\" width=\"16\" height=\"16\" alt=\"{$v[2]}\">\n<a href=\"{$v[1]}\"><span class=\"text\">{$v[0]}</span></a>";
+								    break;
+							    case Columns::TIME:
+								    echo "<time datetime=\"\" class=\"text\">{$v[0]}</time><span class=\"s-exchange\">XxX</span><span class=\"icon-clock\" aria-hidden=\"true\"></span>";
+								    break;
+							    default:
+								    echo $v;
+						    };?>
+                        </td>
+				    <?php } ?>
+                </tr>
+		    <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+<script>
+    $(".select").on("click" , function(){
+        $(this).next(".mini-popup-wrapper").toggleClass("hide");
+    });
+    $(".create-new").on("click" , function(){
+        $(".popup.custom-views").toggleClass("hide");
+    });
+
+</script>
