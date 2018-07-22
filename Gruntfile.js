@@ -1,5 +1,12 @@
 var fs = require('fs'),
 	TemplateCompiler = require('./templates/TemplateCompiler.js'),
+	chalk = require('chalk'),
+	chalks = {
+		вопрос: chalk.cyan,
+		// def: chalk.rgb(15, 100, 204),
+		def: chalk.magenta,
+		su: chalk.hex('#e16c0e')
+	},
 	isSt = (obj) => typeof obj === 'string',
 	cl = console.log;
 
@@ -25,10 +32,11 @@ module.exports = function (grunt) {
 			this.end = function () {
 				return ((new Date()).getTime() - startTime - Math.random()/4).toFixed(3) + 'ms';
 			}
-		}
+		},
+		// Attempt configuring choices dynamically to avoid unnecessary file reading
+		tFiles = fs.readdirSync('./templates/').filter(file => /\.html$|\.phtml$|\.php$/.exec(file));
 
 	require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
 
 	grunt.initConfig({
 		babel: {
@@ -61,18 +69,90 @@ module.exports = function (grunt) {
 						}
 					}
 				}
-			}
+			},
+
+		// config: 'config.name', // arbitrary name or config for any other grunt task
+		// type: '<question type>', // list, checkbox, confirm, input, password
+		// message: 'String|function(answers)', // Question to ask the user, function needs to return a string,
+		// default: 'value', // default value if nothing is entered
+		// choices: 'Array|function(answers)',
+		// validate: function(value), // return true if valid, error message if invalid. works only with type:input
+		// filter:  function(value), // modify the answer
+		// when: function(answers) // only ask this question when this function returns true
+		prompt: {
+			Wizard: {
+				options: {
+					questions: [
+						{
+							config: 'wiz.conf',
+							type: 'confirm',
+							message: chalk.cyan('Do you conform? ') + chalks.def('(Default: Yes)'),
+							default: true,
+						},
+						{
+							config: 'wiz.music',
+							type: 'list',
+							message: chalk.cyan('Best genre? ') + chalks.def('(Default: Metal)'),
+							default: 'Metal',
+							choices: [
+								'Metal', 'Trance', 'Classic'
+							]
+						},
+						{
+							config: 'wiz.nuts',
+							type: 'checkbox',
+							message: chalks.вопрос('Best nut? ') + chalks.def('(Default: Cashew)'),
+							default: 'Cashew',
+							choices: [
+								'Almonds', 'Walnuts', 'Peanuts', 'Cashew'
+							]
+						},
+						{
+							config: 'wiz.name',
+							type: 'checkbox',
+							message: chalks.вопрос('Your name please'),
+							validate: input => {
+								if (input) {
+									return true;
+								} else {
+									return 'Mandatory field'
+								}
+							},
+							choices: [
+								{ name: 'Ben', value: 'skeksify', checked: true },
+								{ name: 'Beno', value: 'skeksifyo', checked: true },
+								{ name: 'Doe', value: 'Smoe' }
+							]
+						},
+					]
+				}
+			},
+			templateFileName: {
+				options: {
+					questions: [
+						{
+							config: 'templateFileName.file',
+							type: 'checkbox',
+							message: chalks.вопрос('Select files to compile ') + chalks.def('(Mark none for all)'),
+							choices: tFiles,
+							when: () => !grunt.option('file')
+						}
+					]
+				}
+			},
+		}
 	});
 
 	function readTemplate(filename) {
-		grunt.log.write(`\nReading file '${'./templates/' + filename}'... `['cyan']);
-		let phpTemplate = readFileSync('./templates/' + filename);
+		let fullPath = './templates/' + filename;
+		grunt.log.write(`\nReading file '${fullPath}'... `['cyan']);
+		let phpTemplate = readFileSync(fullPath);
 		grunt.log.ok();
 		return phpTemplate;
 	}
 
 	function compileTemplate(filename, phpTemplate) {
-		grunt.log.write(`Compiling '${filename}'... `['cyan']);
+		grunt.log.write(`Compiling... `['cyan']);
 		let _Template = Compiler.compile(phpTemplate);
 		grunt.log.ok();
 		return _Template;
@@ -84,29 +164,38 @@ module.exports = function (grunt) {
 		grunt.log.ok();
 	}
 
+	function logStr(p, s) {
+		grunt.log.writeln(chalks[p](s));
+	}
+
 	function logSummary(_Template, compTimer) {
-		console.group('Summary');
-		grunt.log.writeln(`\nSummary:`['magenta']);
-		grunt.log.writeln((_Template.deps.length ? `Dependencies: ${_Template.deps}` : 'No dependencies detected')['magenta']);
-		grunt.log.writeln(`No constants fetched`['magenta']);
-		grunt.log.writeln(`Duration: ${compTimer.end()}`['magenta']);
-		console.groupEnd();
+		logStr('su', `\nSummary:`);
+		logStr('su', _Template.deps.length ? `Dependencies: ${_Template.deps}` : 'No dependencies detected');
+		logStr('su', `No constants fetched`);
+		logStr('su', `Duration: ${compTimer.end()}`);
 	}
 
 	grunt.registerTask('Compile-Template', 'Transpile a PHP view into an Underscore.js Template', function () {
-		let filename = grunt.option('file');
-		if (isSt(filename)) {
+		let fileParam = grunt.option('file'),
+			markedFiles = grunt.config('templateFileName.file');
+
+		[].concat(fileParam || (markedFiles.length ? markedFiles : tFiles)).forEach(filename => {
 			let compTimer = new timer(),
 				phpTemplate = readTemplate(filename),
 				_Template = compileTemplate(filename, phpTemplate);
 			writeTemplate(filename, _Template);
 			logSummary(_Template, compTimer);
-		} else {
-			fail('Bad -file argument')
-		}
+		})
+	});
+
+	grunt.registerTask('deboo', '', function () {
+		grunt.log.writeln(grunt.config('wiz.conf'));
+		grunt.log.writeln(grunt.config('wiz.music'));
+		grunt.log.writeln(grunt.config('wiz.nuts'));
+		grunt.log.writeln(grunt.config('wiz.name'));
 	});
 
 	grunt.registerTask('default', ['babel']);
-	grunt.registerTask('compile', ['Compile-Template']);
+	grunt.registerTask('compile', ['prompt:templateFileName', 'Compile-Template']);
+	grunt.registerTask('prompty', ['prompt:Wizard', 'deboo']);
 };
-//['white', 'black', 'grey', 'blue', 'cyan', 'green', 'magenta', 'red', 'yellow', 'rainbow']
