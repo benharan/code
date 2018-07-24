@@ -6,20 +6,21 @@ define([
     "underscore",
     "jquery",
     "Backbone",
+    "EventBus",
     "Displayable"
-], function (_, $, Backbone, Displayable) {
+], function (_, $, Backbone, EventBus, Displayable) {
     return Displayable.extend({
 
-        events: {
-            "mouseover.lt #searchTextTop": "_al"
-        },
+        events: { },
 
         _markupScheme: {
+            "loggedUser": ".js-logged-username"
         },
 
         initialize: function () {
             Displayable.prototype.initialize.call(this, 'topBar', 'topBar', true);
 
+			EventBus.on('login', this._setLoggedUser.bind(this))
         },
 
         render: function () {
@@ -28,8 +29,8 @@ define([
             return this.$el;
         },
 
-		_al: function () {
-			this.$el.off('mouseover.lt');
+		_setLoggedUser: function (username) {
+			this._dom.loggedUser.text(username);
 		}
     })
 });

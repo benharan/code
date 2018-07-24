@@ -2,6 +2,9 @@
  * Created by Skeksify on 09/07/2016.
  */
 
+window.cl = window.lcl = window.throwError = window.announceWarn = function(){};
+
+// {{ Dev Only Code {{
 window.cl = console.log;
 window.lcl = (...args) => {
     if (window.lcl.flag) {
@@ -16,13 +19,14 @@ window.lcl.customCL = ()=>1;
 console.clear();
 
 function getIfNotProd(fu) {
-	if ('Not production') {
+	if ('Not Production') {
 		return fu;
 	} else {
 		return $.noop;
 	}
 }
 
+// Todo: Extract to 'window' mutator
 window.throwError = getIfNotProd(function (mainLabel) {
 	var i, finalStrArr = ['__ Runtime Error: ' + mainLabel];
 	for (i = 1; i < arguments.length; i++) {
@@ -43,8 +47,7 @@ window.announceWarn = getIfNotProd(function (mainLabel) {
 	console.warn(finalStrArr.join(''));
 })
 
-
-
+// }} Dev Only Code }}
 define([
     "underscore",
     "jquery",
@@ -55,17 +58,20 @@ define([
     "Toolset/Tools/is",
     "Toolset/Tools/DeepMap",
     "Toolset/Tools/ClientStorage",
-    "Toolset/Tools/ClientSettings"
-], function (_, $, Backbone, MathTool, FinancialData, TextsTool, IsTool, DeepMap, ClientStorage, ClientSettings) {
-    var Toolset = Backbone.Model.extend({
+    "Toolset/Tools/ClientSettings",
+	"Modules/Modal/ModalView"
+], function (_, $, Backbone, MathTool, FinancialData, TextsTool, IsTool, DeepMap, ClientStorage, ClientSettings, ModalView) {
+	let modalView = new ModalView(),
+		Toolset = Backbone.Model.extend({
         initialize: function () {
-
+			modalView.render();
         },
         Math: new MathTool(),
 		FinancialData: new FinancialData(),
         Texts: new TextsTool(),
         is: new IsTool(),
         DeepMap,
+		Modal: modalView,
 		ClientStorage: new ClientStorage(true, true),
 		ClientSettings: new ClientSettings(),
 		Compression: LZString,
@@ -78,6 +84,7 @@ define([
             }
         }
     });
+
 
     return new Toolset();
 });

@@ -50,7 +50,7 @@ define([
 
         initialize: function () {
             view = new View();
-			EventBus.on('CompileTemplates', this._renderToHeaders.bind(this, scheme2Obj))
+			EventBus.on('RenderTemplates', this._renderToHeaders.bind(this, scheme2Obj))
         },
 
         render: function () {

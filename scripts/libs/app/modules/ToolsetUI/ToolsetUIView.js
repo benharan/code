@@ -26,10 +26,11 @@ define([
 			"click .console-prints": "_toggleConsolePrints",
 			"click .clear-console": "_clearCustomConsole",
 			"click .clear-template-cache": "_clearTemplateCache",
-			"click .compile-templates": "_compileTemplates",
+			"click .render-templates": "_renderTemplates",
 			"click .load-portfolios": "_loadPortfolios",
 			"click .console-entry": "_toggleEntry",
-			"click .append-more-rows-button2": "_append1k"
+			"click .append-more-rows-button2": "_append1k",
+			"click .login": "_loginFromUI",
 		},
 
 		initialize: function () {
@@ -99,8 +100,8 @@ define([
 			lcl('Templates Cleared');
 		},
 
-		_compileTemplates: function () {
-			EventBus.trigger('CompileTemplates');
+		_renderTemplates: function () {
+			EventBus.trigger('RenderTemplates');
 		},
 
 		_loadPortfolios: function () {
@@ -109,6 +110,10 @@ define([
 
 		_append1k: function () {
 			EventBus.trigger('append1k');
+		},
+
+		_loginFromUI: function () {
+			EventBus.trigger('loginFromUI');
 		}
 	})
 });

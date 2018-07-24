@@ -8,11 +8,9 @@ define([
 	"Toolset/Toolset",
 	"Modules/ToolsetUI/ToolsetUIView",
     "Modules/mainFrame/mainFrame",
-    "Modules/Mutators/underscoreMutator",
-    "Modules/Mutators/jQueryMutator",
-    "Modules/Mutators/backboneMutator",
+    "Modules/User/User",
     "./router"
-], function (_, $, Backbone, LZstring, Toolset, ToolsetUIView, MainFrame, underscoreMutator, jQueryMutator, backboneMutator, Router) {
+], function (_, $, Backbone, LZstring, Toolset, ToolsetUIView, MainFrame, User, Router) {
     var investingApp;
 
     window.InvestingApp.Router = {};
@@ -26,11 +24,11 @@ define([
 
 			$body.append(main_frame.render());
 
-			if ('Not Production') {
-				this._toolsetUIView = new ToolsetUIView();
+			// {{ Dev Only Code {{
+			this._toolsetUIView = new ToolsetUIView();
+			$body.append(this._toolsetUIView.render());
+			// }} Dev Only Code }}
 
-				$body.append(this._toolsetUIView.render());
-            }
             router.on('navigation', function (...params) {
                 main_frame.navigate(...params);
             });

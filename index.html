@@ -21,6 +21,10 @@
 <body>
 
 
+<div data-section="modal" class="modal displayNone">
+    <div class="modal-title-wrapper"><h2></h2></div>
+    <div class="modal-content"></div>
+</div>
 <div data-section="mainFrame" class="wrapper">
     <div class="top-bar">
         <header data-section="topBar">
@@ -106,14 +110,15 @@
             </div>
             <div class="topBarTools">
 			<span id="userAccount" class="topBarUserAvatar js-open-auth-trigger-inside" data-page-type="topBar">
-					<div class="loggedIn inlineblock"><span class="topBarText bold pointer name"><img
-                            src="https://d1-invdn-com.akamaized.net/company_logo/e5a9f79e1526e7ce54eed6301d169b82.jpg"
-                            class="userAvatar middle inlineblock" id="userImg"><span
-                            class="myAccount topBarText">Ben</span></span></div><div id="myAccountHeaderPop"
-                                                                                     class="tooltipPopup bigArrowTopbar noHeader displayNone myAccountSelPopup"
-                                                                                     onmouseover="_myAccountDropDown.render();"
-                                                                                     onmouseout="_myAccountDropDown.render();"
-                                                                                     style="display: none;"><div
+					<div class="loggedIn inlineblock">
+                        <span class="topBarText bold pointer name">
+                            <img src="https://d1-invdn-com.akamaized.net/company_logo/e5a9f79e1526e7ce54eed6301d169b82.jpg" class="userAvatar middle inlineblock" id="userImg">
+                            <span class="myAccount topBarText js-logged-username">
+                                Ben
+                            </span>
+                        </span>
+                    </div>
+                <div id="myAccountHeaderPop" class="tooltipPopup bigArrowTopbar noHeader displayNone myAccountSelPopup" style="display: none;"><div
                     class="content"><ul class="bold "><li style="width:px;"><span
                     class="smallGrayArrow middle"></span><a href="/portfolio" class="arial_12 bold">Portfolio</a></li><li
                     style="width:px;"><span class="smallGrayArrow middle"></span><a href="/members-admin/alert-center"
@@ -137,9 +142,7 @@
                     style="width:px;"><span class="smallGrayEmptyArrow"></span><a href="/members-admin/logout"
                                                                                   class="arial_12 bold">Sign out</a></li></ul></div>
                 <!-- /subMenuOneColumn --></div><!-- /myAccountHeaderPop --><div id="settingsDropDown"
-                                                                                 class="subMenuOneColumnWrap hoverboxWithShadow settingsPopup"
-                                                                                 onmouseover="settingsDropDown.render();"
-                                                                                 onmouseout="settingsDropDown.render();"><div
+                                                                                 class="subMenuOneColumnWrap hoverboxWithShadow settingsPopup"><div
                     class="subMenuOneColumn"><ul class="bold "></ul><div class="dottedBorder">&nbsp;</div><ul
                     class="noBold "></ul></div><!-- /subMenuOneColumn --><span class="arrow">&nbsp;</span></div>
                 <!-- /myAccountHeaderPop -->			</span>

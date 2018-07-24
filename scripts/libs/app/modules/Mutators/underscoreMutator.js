@@ -10,7 +10,9 @@ define([
 ], function (_, $, Backbone, Mutator) {
 
 	const functionSet = [
+		['isE', _.isEmpty],
 		['isntEmpty', obj => !_.isEmpty(obj)],
+		['isntE', _.isntEmpty],
 		['isUn', _.isUndefined],
 		['isSt', _.isString],
 		['isNu', _.isNumber],
