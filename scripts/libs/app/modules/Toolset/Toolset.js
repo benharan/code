@@ -76,6 +76,14 @@ define([
 		ClientSettings: new ClientSettings(),
 		Compression: LZString,
         miscFuncs: {
+        	hash: function djb2Code(str){
+				var hash = 5381, char;
+				for (var i = 0; i < str.length; i++) {
+					char = str.charCodeAt(i);
+					hash = ((hash << 5) + hash) + char; /* hash * 33 + c */
+				}
+				return ''+hash;
+			},
             p: function (func, context, params) {
                 return params ? func.bind(context, params) : func.bind(context);
             },

@@ -11,11 +11,13 @@ define([
     return Displayable.extend({
 
         events: {
+			"click .close-modal": "hide",
+			"click .modal-overlay": "hide"
         },
 
         _markupScheme: {
             "title": ".modal-title-wrapper h2",
-            "content": ".modal-content",
+            "content": ".modal-content"
         },
 
         initialize: function () {

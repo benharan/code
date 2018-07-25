@@ -9,8 +9,9 @@ define([
 	"Modules/ToolsetUI/ToolsetUIView",
     "Modules/mainFrame/mainFrame",
     "Modules/User/User",
+    "Modules/PageState/PageState",
     "./router"
-], function (_, $, Backbone, LZstring, Toolset, ToolsetUIView, MainFrame, User, Router) {
+], function (_, $, Backbone, LZstring, Toolset, ToolsetUIView, MainFrame, User, PageState, Router) {
     var investingApp;
 
     window.InvestingApp.Router = {};

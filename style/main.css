@@ -1,13 +1,11 @@
 body {
     background-color: #1c1c1c;
-    overflow: visible!important;
+    overflow: visible !important;
 }
 
 body,
 H2 A, .popupBigTitle A, .h2LikeTitle A,
-H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .linkTitle A
-
-{
+H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .linkTitle A {
     color: #f3f3f3;
 }
 
@@ -37,13 +35,12 @@ H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .lin
 }
 
 #rightColumn {
-    margin: 0!important;
+    margin: 0 !important;
 }
 
 .displayNone {
-    display: none!important;
+    display: none !important;
 }
-
 
 table.data-table-style {
     border: 1px solid white;
@@ -92,6 +89,27 @@ table.data-table-style tr.marked {
     padding: 4px;
 }
 
+.close-modal {
+    width: 20px;
+    float: right;
+    height: 20px;
+    cursor: pointer;
+    line-height: 20px;
+    text-align: center;
+}
+
+.modal-overlay {
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    opacity: 0.85;
+    cursor: pointer;
+    position: absolute;
+    background-color: #222;
+}
+
 button {
     color: white;
     display: block;
@@ -107,7 +125,7 @@ button:hover {
     border-color: #71ff8d;
 }
 
-button[disabled]{
+button[disabled] {
     cursor: default;
     border-color: white;
     color: #888;
