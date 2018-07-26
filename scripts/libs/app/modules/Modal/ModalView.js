@@ -21,7 +21,7 @@ define([
         },
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this, 'modal', 'modal', true);
+            Displayable.prototype.initialize.call(this, '[data-section="modal"]', 'modal', true);
 
         },
 

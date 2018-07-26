@@ -23,7 +23,7 @@ define([
                 main_frame = new MainFrame(),
                 $body = $(document.body);
 
-			$body.append(main_frame.render());
+			main_frame.render();
 
 			// {{ Dev Only Code {{
 			this._toolsetUIView = new ToolsetUIView();

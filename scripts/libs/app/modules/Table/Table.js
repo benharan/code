@@ -9,21 +9,7 @@ define([
 	"Toolset/Toolset",
 	"./TableView"
 ], function (_, $, Backbone, Toolset, View) {
-
-	function makeComparisonFunction(dir, colName) {
-		if (dir === 0) {
-			return (a, b) => a.originalIndex - b.originalIndex;
-		}
-		if (dir === 1) {
-			return (a, b) => b[colName] - a[colName];
-		}
-		if (dir === 2) {
-			return (a, b) => a[colName] - b[colName];
-		}
-	}
-
-	return Backbone.ModelI.extend({
-
+	let TableClass = Backbone.ModelI.extend({
 		_data: null,
 		_view: null,
 		_columns: null,
@@ -31,8 +17,8 @@ define([
 		_stickyIndices: null,
 		_sortState: { colIndex: -1, dir: 0 }, // 0 - None, 1 - Desc, 2 - Asc
 
-		initialize: function (tableName, settings) {
-			this._initView(tableName, settings);
+		initialize: function ($table, settings) {
+			this._initView($table);
 			this._initColumns();
 			this._loadDataFromRows();
 
@@ -44,8 +30,8 @@ define([
 			this._view.on('markRows', this._markRows.bind(this))
 		},
 
-		_initView: function (tableName, settings) {
-			this._view = new View(tableName, settings.$table);
+		_initView: function ($table) {
+			this._view = new View($table);
 			this._view.on('thClick', this.sort.bind(this));
 			this._view.render();
 		},
@@ -77,6 +63,7 @@ define([
 
 		toggle: function (flag) {
 			this._view.toggle(flag);
+			return this;
 		},
 
 		_loadDataFromRows: function () {
@@ -111,4 +98,18 @@ define([
 			lcl('Rows marked:', _.getByIndices(this._data, rows));
 		}
 	})
+
+	function makeComparisonFunction(dir, colName) {
+		if (dir === 0) {
+			return (a, b) => a.originalIndex - b.originalIndex;
+		}
+		if (dir === 1) {
+			return (a, b) => b[colName] - a[colName];
+		}
+		if (dir === 2) {
+			return (a, b) => a[colName] - b[colName];
+		}
+	}
+
+	return TableClass;
 });

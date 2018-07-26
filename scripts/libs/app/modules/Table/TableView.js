@@ -42,8 +42,8 @@ define([
 
 		events: { },
 
-		initialize: function (tableName, $elem) {
-			Displayable.prototype.initialize.call(this, $elem || tableName, tableName, true);
+		initialize: function ($table) {
+			Displayable.prototype.initialize.call(this, $table, null, true);
 
 			this._markedRows = {};
 			return this;
@@ -89,7 +89,7 @@ define([
 			_.e(this._dom.ths, (th, i) => {
 				let $th = $(th),
 					dataType = $th.data('type'),
-					colName = $th.attr('col-name');
+					colName = $th.attr('col-name') || '';
 
 				if (dataType) {
 					this._columns[colName] = { currentIndex: i, dataType };
@@ -138,7 +138,7 @@ define([
 		_initializeDraggability: function () {
 			this._tableDragger = TableDragger(this.$el[0], {
 				mode: 'column',
-				dragHandler: '.drag-handle'
+				// dragHandler: '.drag-handle'
 			})
 
 			this._tableDragger.on('drop', (old, newI) => {

@@ -1,3 +1,5 @@
+/*
+
 body {
     background-color: #1c1c1c;
     overflow: visible !important;
@@ -8,7 +10,6 @@ H2 A, .popupBigTitle A, .h2LikeTitle A,
 H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .linkTitle A {
     color: #f3f3f3;
 }
-
 .subMenuWrapper LI A, .subMenuWrapper LI.popular {
     border: 0;
 }
@@ -38,9 +39,6 @@ H2 A, .popupBigTitle A, H2 A:hover, .popupBigTitle A:hover, .h2LikeTitle A, .lin
     margin: 0 !important;
 }
 
-.displayNone {
-    display: none !important;
-}
 
 table.data-table-style {
     border: 1px solid white;
@@ -71,6 +69,11 @@ table.data-table-style tr.marked {
 
 .table-wrapper {
     padding: 10px 5px;
+}
+
+*/
+.displayNone {
+    display: none !important;
 }
 
 .modal {

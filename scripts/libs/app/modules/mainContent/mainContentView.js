@@ -43,7 +43,7 @@ define([
 		},
 
         _initMainTable: function () {
-            this._mainTable = new Table('main-table', { stickyIndices: [3] });
+            this._mainTable = new Table('$element?', { stickyIndices: [3] });
 		}
     })
 });

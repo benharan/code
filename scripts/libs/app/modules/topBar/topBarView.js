@@ -14,11 +14,11 @@ define([
         events: { },
 
         _markupScheme: {
-            "loggedUser": ".js-logged-username"
+            "?loggedUser": ".js-logged-username"
         },
 
         initialize: function () {
-            Displayable.prototype.initialize.call(this, 'topBar', 'topBar', true);
+            Displayable.prototype.initialize.call(this, '.main-header', 'topBar', true);
 
 			EventBus.on('login', this._setLoggedUser.bind(this))
         },

@@ -21,9 +21,9 @@ define([
             ul: 'ul'
         },
 
-        initialize: function (settings, prerendered) {
-			if (prerendered) {
-				Displayable.prototype.initialize.call(this, 'tabs-wrapper', css, true);
+        initialize: function (settings) {
+			if (settings.$tabsWrapper) {
+				Displayable.prototype.initialize.call(this, settings.$tabsWrapper, css, true);
 				this._prerendered = true;
 			} else {
 				Displayable.prototype.initialize.call(this, html, css);

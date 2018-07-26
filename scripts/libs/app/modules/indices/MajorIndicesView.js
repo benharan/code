@@ -20,7 +20,7 @@ define([
 		};
 
 	/*
-		Todo:
+		Todo: !!!!!!
 		Extract Tabs+Tables as a module
 		Enhance Collections to support stringy id lookup
 	 */
@@ -33,11 +33,12 @@ define([
 		_tableNameToCID: null,
 		_currentTable: null,
         _markupScheme: {
-			"tableWrapper": ".table-wrapper"
+			"mainTable": "table.common-table",
+			"tabsWrapper": ".button-tabs"
 		},
 
 		initialize: function (currentTabName) {
-            Displayable.prototype.initialize.call(this, 'major-indices', css, true);
+            Displayable.prototype.initialize.call(this, '.main-container .container', css, true);
             this._currentTabName = currentTabName;
 		},
 
@@ -51,32 +52,29 @@ define([
 		},
 
 		_initTabs: function () {
-			this._mainTabs = new Tabs(Tab, {clip: true, scrollability: false}, true);
+			this._mainTabs = new Tabs(Tab, { clip: true, $tabsWrapper: this._dom.tabsWrapper });
 			this._mainTabs.on('tabSelected', this._changeTable.bind(this));
 			this._tableNameToCID = {};
 			this._mainTabs.render(this.$el, true);
 		},
 
 		_addTable: function (tabName, $table) {
-			let tableModel = this._tables.create(tabName, { $table });
+			let tableModel = this._tables.create($table);
 			this._tableNameToCID[tabName] = tableModel.cid;
 			return tableModel;
 		},
 
 		_initTables: function (currentTableName) {
-			const TableCollection = Backbone.Collection.extend({
-				model: Table
-			})
+			const TableCollection = Backbone.Collection.extend({ model: Table })
 			this._tables = new TableCollection();
-			this._currentTable = this._addTable(currentTableName, this._dom.tableWrapper.find('table'));
+			this._currentTable = this._addTable(currentTableName, this._dom.mainTable);
 			this._loadedTables = [ currentTableName ];
 		},
 
 		_changeTable: function (tabName) {
 			this._currentTable.toggle(false);
 			if (_.existsIn(this._loadedTables, tabName)) {
-				this._currentTable = this._tables.get(this._tableNameToCID[tabName]);
-				this._currentTable.toggle(true);
+				this._currentTable = this._tables.get(this._tableNameToCID[tabName]).toggle(true);
 			} else {
 				require([_table_name_to_scheme[tabName]], (scheme) => {
 					let schemeObj = JSON.parse(scheme);

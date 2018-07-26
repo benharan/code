@@ -17,8 +17,8 @@ define([
 
         initialize: function (html__$elem, css, prerendered) {
         	this._rawCSS = css;
-            if (prerendered) { // Server rendered, seek in DOM
-                this.$el = $.is$elem(html__$elem) ? html__$elem : $(`body [data-section="${html__$elem}"]`);
+            if (prerendered) { // Server rendered, wrap or seek in DOM
+                this.$el = $(html__$elem);
 				this.$el.isEmpty() && throwError('Section Wrapper not found', html__$elem);
             } else { // Normal fetching through require, render regularly
 				this._setTemplate(html__$elem);
@@ -65,9 +65,10 @@ define([
             var key, result = {};
 
             for (key in scheme) {
-                result[key] = this.$el.find(scheme[key]);
-                if (!result[key].length) {
-                    throwError('cacheDOM - Element Not Found', key, scheme[key]);
+            	let [, optional, cleanKey] = /^(\?)?(.*)$/.exec(key);
+                result[cleanKey] = this.$el.find(scheme[key]);
+                if (!result[cleanKey].length && !optional) {
+                    throwError('Cache DOM (Markup Scheme) - Element Not Found', key, scheme[key]);
                 }
             }
 

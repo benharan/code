@@ -31,7 +31,7 @@ define([
 
 		*/
         _sectionToModelMap: {
-            'index': 'Modules/mainContent/mainContentView',
+            'index': 'Modules/indices/MajorIndicesView',
             'major-indices': {
 				'model': 'Modules/indices/MajorIndicesView',
 				'scheme': 'text!Schemes/MajorIndicesScheme.json'
@@ -58,12 +58,11 @@ define([
         },
 
         navigate: function (schemeNav, section, p1, p2) {
-        	const modelPath = this._sectionToModelMap[section];
-
-        	// Todo: DESTROY PREVIOUS!
+        	let modelPath = this._sectionToModelMap[section];
 
 			$(document).attr("title", section);
-			if (schemeNav) {
+			if (schemeNav) { // SPA
+        		// Todo: DESTROY PREVIOUS!
 				require([modelPath.model, modelPath.scheme + getCacheParam()], (ModelClass, Scheme) => {
 					let schemeObj = JSON.parse(Scheme);
 					this._renderTemplatesAndInject(schemeObj).then(renderedView => {
@@ -73,11 +72,14 @@ define([
 					})
 				})
 			} else {
+				// Hard navigation, backend should attach
+				// the correct build bundle to be already defined here
+				// Thus, this requiring should be synchronous
 				require([modelPath], function (ModelClass) {
 					let modelInstance = new ModelClass(p1, p2),
 						renderedView = modelInstance.render(p1, p2);
 
-					view.setMainContent(renderedView);
+					// view.setMainContent(renderedView);
 					EventBus.trigger('mainFrameInsertion', renderedView);
 					$(document).attr("title", section);
 				})

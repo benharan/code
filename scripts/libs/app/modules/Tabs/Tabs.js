@@ -12,13 +12,13 @@ define([
 
         _tabs: null, // Tab Collection
 
-        initialize: function (TabConstructor, settings, prerendered) {
+        initialize: function (TabConstructor, settings) {
             const TabCollection = Backbone.Collection.extend({
 				model: TabConstructor
 			});
             this._tabs = new TabCollection();
             this._tabs.on('selected', this._onTabSelected.bind(this))
-            this._view = new View(settings, prerendered);
+            this._view = new View(settings);
         },
 
 		render: function (tabName__$el, prerendered) {
@@ -26,16 +26,16 @@ define([
         	if (prerendered) {
 				$result = this._view.render(tabName__$el);
 
-				_.e($result.find('li'), (tabElement, i) => {
+				_.e($result.find('ul.drop-comp li'), (tabElement, i) => {
 					let $tab = $(tabElement),
-						tabObj = { name: $tab.data('tabName'), id: i, $tab };
+						tabObj = { name: $tab.text().trim(), id: i, $tab };
 					this.addTab(tabObj.name, tabObj).render();
 				})
 			} else {
 				let $tabs = this._tabs.reduce($.elementAcc(TabModel => TabModel.render()), null);
 				this._markAsSelected(tabName__$el);
 				$result = this._view.render($tabs);
-				// Hack until server supports
+				// Hack until server supports in proper tab ordering
 				this._moveSelectedToEndOfShown($result);
 			}
 			return $result;
