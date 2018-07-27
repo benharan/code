@@ -11,8 +11,9 @@ define([
 	"Modules/Tabs/Tabs",
 	"Modules/Tab/Tab",
 	"Modules/Table/Table",
+    "Toolset/Toolset",
     "text!./Indices.css"
-], function (_, $, Backbone, Displayable, TemplateManager, Tabs, Tab, Table, css) {
+], function (_, $, Backbone, Displayable, TemplateManager, Tabs, Tab, Table, Toolset, css) {
 	const _default_table = 'price',
 		_table_name_to_scheme = {
 			price: 'text!Schemes/MajorIndicesScheme.json',
@@ -34,7 +35,8 @@ define([
 		_currentTable: null,
         _markupScheme: {
 			"mainTable": "table.common-table",
-			"tabsWrapper": ".button-tabs"
+			"tabsWrapper": ".button-tabs",
+			"createNewViewPopup": ".custom-views"
 		},
 
 		initialize: function (currentTabName) {
@@ -47,13 +49,14 @@ define([
 
 			this._initTabs();
 			this._initTables(this._currentTabName || _default_table);
-
+			this._createNewView();
 			return this.$el;
 		},
 
 		_initTabs: function () {
 			this._mainTabs = new Tabs(Tab, { clip: true, $tabsWrapper: this._dom.tabsWrapper });
 			// this._mainTabs.on('tabSelected', this._changeTable.bind(this));
+			this._mainTabs.on('createNewView', this._createNewView.bind(this));
 			this._tableNameToCID = {};
 			this._mainTabs.render(this.$el, true);
 		},
@@ -88,6 +91,10 @@ define([
 
 				// window.InvestingApp.Router.navigate(`/indices/major-indices-${tab}`, { trigger: false });
 			}
+		},
+
+		_createNewView: function () {
+			Toolset.Modal.setContent('Create New View', this._dom.createNewViewPopup._show()).show();
 		}
     })
 });

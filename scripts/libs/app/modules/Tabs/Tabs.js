@@ -19,6 +19,7 @@ define([
             this._tabs = new TabCollection();
             this._tabs.on('selected', this._onTabSelected.bind(this))
             this._view = new View(settings);
+            this._view.on('createNewView', () => this.trigger('createNewView'));
         },
 
 		render: function (tabName__$el, prerendered) {

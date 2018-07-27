@@ -102,7 +102,7 @@ button[disabled] {
     left: 50%;
     z-index: 10;
     padding: 15px;
-    position: absolute;
+    position: fixed;
     border-radius: 3px;
     border: 1px solid white;
     background-color: #333333;
@@ -130,7 +130,7 @@ button[disabled] {
     height: 100%;
     opacity: 0.85;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     background-color: #222;
 }
 
@@ -165,4 +165,9 @@ input[type="search"] {
 
 .button-tabs-list>li {
     cursor: pointer;
+}
+
+section, input, button,
+h1, h2, h3, h4, h5, h6 {
+    outline: none;
 }

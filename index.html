@@ -27,7 +27,7 @@
 <body>
 
 
-<div data-section="modal" class="displayNone">
+<div data-section="modal" class="hide">
     <div class="modal-overlay"></div>
     <div class="modal">
         <div class="modal-title-wrapper"><span class="close-modal">X</span><h2></h2></div>
@@ -132,13 +132,10 @@
                             <li class="only-mobile">
                                 <div class="design-select">
                                     <select>
-                                        <option data-id="price">Price</option>
-                                        <option data-id="performance">Performance</option>
-                                        <option data-id="technical">Technical</option>
-                                        <option data-id="1">Technical</option>
-                                        <option data-id="2">nice title 2</option>
-                                        <option data-id="3">item list 4</option>
-                                        <option data-id="4">very nice title 3</option>
+                                        <option data-id="1">Pyromancy</option>
+                                        <option data-id="2">Thaumaturgy</option>
+                                        <option data-id="3">Immolation</option>
+                                        <option data-id="4">Obfuscation</option>
                                     </select>
                                     <div class="icon-arrow" aria-hidden="true"></div>
                                 </div>
@@ -161,100 +158,33 @@
                                         <div class="mini-popup-content">
                                             <ul class="drop-comp">
                                                 <!-- First 3 tabs -->
-                                                <li class="drop-comp-item not-editible">
+                                                <li class="drop-comp-item not-editable">
                                                     <button class="button-icon drop-comp-drag"
                                                             aria-label="drag Last value">
                                                         <span class="icon-drag" aria-hidden="true"></span>
                                                     </button>
-                                                    <span class="text">Price</span>
+                                                    <span class="text">Pyromancy</span>
                                                 </li>
-                                                <li class="drop-comp-item not-editible">
+                                                <li class="drop-comp-item not-editable">
                                                     <button class="button-icon drop-comp-drag"
                                                             aria-label="drag Last value">
                                                         <span class="icon-drag" aria-hidden="true"></span>
                                                     </button>
-                                                    <span class="text">Performance</span>
+                                                    <span class="text">Thaumaturgy</span>
                                                 </li>
-                                                <li class="drop-comp-item not-editible">
+                                                <li class="drop-comp-item not-editable">
                                                     <button class="button-icon drop-comp-drag"
                                                             aria-label="drag Last value">
                                                         <span class="icon-drag" aria-hidden="true"></span>
                                                     </button>
-                                                    <span class="text">Technical</span>
+                                                    <span class="text">Immolation</span>
                                                 </li>
-
-                                                <li class="drop-comp-item editible">
+                                                <li class="drop-comp-item not-editable">
                                                     <button class="button-icon drop-comp-drag"
                                                             aria-label="drag Last value" data-id="price">
                                                         <span class="icon-drag" aria-hidden="true"></span>
                                                     </button>
-                                                    <span class="text">Price</span>
-                                                    <button class="button-icon drop-comp-edit" aria-label="edit">
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                    </button>
-
-                                                </li>
-                                                <li class="drop-comp-item editible">
-                                                    <button class="button-icon drop-comp-drag"
-                                                            aria-label="drag Last value" data-id="performance">
-                                                        <span class="icon-drag" aria-hidden="true"></span>
-                                                    </button>
-                                                    <span class="text">Performance</span>
-                                                    <button class="button-icon drop-comp-edit" aria-label="edit">
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                    </button>
-
-                                                </li>
-                                                <li class="drop-comp-item editible">
-                                                    <button class="button-icon drop-comp-drag"
-                                                            aria-label="drag Last value" data-id="technical">
-                                                        <span class="icon-drag" aria-hidden="true"></span>
-                                                    </button>
-                                                    <span class="text">Technical</span>
-                                                    <button class="button-icon drop-comp-edit" aria-label="edit">
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                    </button>
-
-                                                </li>
-                                                <li class="drop-comp-item editible">
-                                                    <button class="button-icon drop-comp-drag"
-                                                            aria-label="drag Last value" data-id="1">
-                                                        <span class="icon-drag" aria-hidden="true"></span>
-                                                    </button>
-                                                    <span class="text">Technical</span>
-                                                    <button class="button-icon drop-comp-edit" aria-label="edit">
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                    </button>
-
-                                                </li>
-                                                <li class="drop-comp-item editible">
-                                                    <button class="button-icon drop-comp-drag"
-                                                            aria-label="drag Last value" data-id="2">
-                                                        <span class="icon-drag" aria-hidden="true"></span>
-                                                    </button>
-                                                    <span class="text">nice title 2</span>
-                                                    <button class="button-icon drop-comp-edit" aria-label="edit">
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                    </button>
-
-                                                </li>
-                                                <li class="drop-comp-item editible">
-                                                    <button class="button-icon drop-comp-drag"
-                                                            aria-label="drag Last value" data-id="3">
-                                                        <span class="icon-drag" aria-hidden="true"></span>
-                                                    </button>
-                                                    <span class="text">item list 4</span>
-                                                    <button class="button-icon drop-comp-edit" aria-label="edit">
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                    </button>
-
-                                                </li>
-                                                <li class="drop-comp-item editible">
-                                                    <button class="button-icon drop-comp-drag"
-                                                            aria-label="drag Last value" data-id="4">
-                                                        <span class="icon-drag" aria-hidden="true"></span>
-                                                    </button>
-                                                    <span class="text">very nice title 3</span>
+                                                    <span class="text">Obfuscation</span>
                                                     <button class="button-icon drop-comp-edit" aria-label="edit">
                                                         <span class="icon-edit" aria-hidden="true"></span>
                                                     </button>
@@ -273,7 +203,7 @@
                                     <!-- select pop up - END -->
 
                                     <!-- Custom Views- Start -->
-                                    <section class="popup custom-views /state-step-2 hide" tabindex="0">
+                                    <section class="custom-views /state-step-2 hide" tabindex="0">
                                         <!--</header>-->
                                         <header class="custom-views-header only-mobile">
                                             <button class="button-icon back-icon">
@@ -413,7 +343,7 @@
                                                 <h5 class="common-title">Selected columns</h5>
                                                 <div class="drop-comp type-2">
                                                     <ul class="drop-comp-list">
-                                                        <li class="drop-comp-item editible">
+                                                        <li class="drop-comp-item editable">
                                                             <button class="button-icon drop-comp-drag"
                                                                     aria-label="drag Last value">
                                                                 <span class="icon-drag" aria-hidden="true"></span>
@@ -424,7 +354,7 @@
                                                                       aria-hidden="true"></span>
                                                             </button>
                                                         </li>
-                                                        <li class="drop-comp-item editible">
+                                                        <li class="drop-comp-item editable">
                                                             <button class="button-icon drop-comp-drag"
                                                                     aria-label="drag Last value">
                                                                 <span class="icon-drag" aria-hidden="true"></span>
@@ -435,7 +365,7 @@
                                                                       aria-hidden="true"></span>
                                                             </button>
                                                         </li>
-                                                        <li class="drop-comp-item editible">
+                                                        <li class="drop-comp-item editable">
                                                             <button class="button-icon drop-comp-drag"
                                                                     aria-label="drag Last value">
                                                                 <span class="icon-drag" aria-hidden="true"></span>
@@ -1698,12 +1628,12 @@
 
 
             <script>
-				$(".select").on("click", function () {
-					$(this).next(".mini-popup-wrapper").toggleClass("hide");
-				});
-				$(".create-new").on("click", function () {
-					$(".popup.custom-views").toggleClass("hide");
-				});
+				// $(".select").on("click", function () {
+				// 	$(this).next(".mini-popup-wrapper").toggleClass("hide");
+				// });
+				// $(".create-new").on("click", function () {
+				// 	$(".popup.custom-views").toggleClass("hide");
+				// });
 
             </script>
             majorIndices Table...

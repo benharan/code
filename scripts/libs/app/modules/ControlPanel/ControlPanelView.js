@@ -18,8 +18,9 @@ define([
 	/**
 	 * Implement a "Feature Selection" popup to enable
 	 * checking/unchecking of wanted Control Panel features
+	 *
+	 * Todo: Dark Theme!
 	 */
-
 
 	return Displayable.extend({
 

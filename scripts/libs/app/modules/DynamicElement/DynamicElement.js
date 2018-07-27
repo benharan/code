@@ -15,7 +15,8 @@ define([
 		_settings: null,
 		_markupScheme: {},
 
-		/*** Settings API ***
+		/*
+		 * *** Settings API ***
 		 *
 		 * + - Mandatory, ? - Optional (Applicable if supplied), * - Supports Multiple
 		 * {

@@ -86,60 +86,60 @@
  */
 /*variables*/
 /*Light*/
-@font-face {
-    font-family: 'Proxima Nova';
-    src: url(https://assets0.enjoei.com.br/assets/ui/proxima-nova/light-83c8caaaaee1af1b927c1fa53b1d11b8.woff) format("woff");
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap; }
-/*Regular*/
-@font-face {
-    font-family: 'Proxima Nova';
-    src: url(https://assets0.enjoei.com.br/assets/ui/proxima-nova/regular-0904d5269953a5e6784c1a0651a85470.woff) format("woff");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap; }
-/*Semi Bold*/
-@font-face {
-    font-family: 'Proxima Nova';
-    src: url(https://assets3.enjoei.com.br/assets/ui/proxima-nova/semibold-72d91de9bd74d3d8748923dda7a1f35b.woff) format("woff");
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap; }
-/*Bold*/
-@font-face {
-    font-family: 'Proxima Nova';
-    src: url(https://assets2.enjoei.com.br/assets/ui/proxima-nova/bold-035f2f943cdfbf5e76cb18d58427725a.woff) format("woff");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap; }
-/*Extra Bold*/
-@font-face {
-    font-family: 'Proxima Nova';
-    src: url(https://assets2.enjoei.com.br/assets/ui/proxima-nova/extrabold-b51a8e9f8452146d324bed7e5f377216.woff) format("woff");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap; }
-@font-face {
-    font-family: tk-proxima-nova-n7;
-    src: url(https://use.typekit.net/af/5cadd5/00000000000000003b9aefb8/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff2"), url(https://use.typekit.net/af/5cadd5/00000000000000003b9aefb8/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff"), url(https://use.typekit.net/af/5cadd5/00000000000000003b9aefb8/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("opentype");
-    font-weight: 700;
-    font-style: normal; }
-@font-face {
-    font-family: tk-proxima-nova-i7;
-    src: url(https://use.typekit.net/af/d2b9f6/00000000000000003b9aefb9/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff2"), url(https://use.typekit.net/af/d2b9f6/00000000000000003b9aefb9/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff"), url(https://use.typekit.net/af/d2b9f6/00000000000000003b9aefb9/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("opentype");
-    font-weight: 700;
-    font-style: italic; }
-@font-face {
-    font-family: tk-proxima-nova-n4;
-    src: url(https://use.typekit.net/af/6de37e/00000000000000003b9aefc0/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff2"), url(https://use.typekit.net/af/6de37e/00000000000000003b9aefc0/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff"), url(https://use.typekit.net/af/6de37e/00000000000000003b9aefc0/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("opentype");
-    font-weight: 400;
-    font-style: normal; }
-@font-face {
-    font-family: tk-proxima-nova-i4;
-    src: url(https://use.typekit.net/af/3eb46d/00000000000000003b9aefc1/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff2"), url(https://use.typekit.net/af/3eb46d/00000000000000003b9aefc1/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff"), url(https://use.typekit.net/af/3eb46d/00000000000000003b9aefc1/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("opentype");
-    font-weight: 400;
-    font-style: italic; }
+/*@font-face {*/
+    /*font-family: 'Proxima Nova';*/
+    /*src: url(https://assets0.enjoei.com.br/assets/ui/proxima-nova/light-83c8caaaaee1af1b927c1fa53b1d11b8.woff) format("woff");*/
+    /*font-weight: 200;*/
+    /*font-style: normal;*/
+    /*font-display: swap; }*/
+/*!*Regular*!*/
+/*@font-face {*/
+    /*font-family: 'Proxima Nova';*/
+    /*src: url(https://assets0.enjoei.com.br/assets/ui/proxima-nova/regular-0904d5269953a5e6784c1a0651a85470.woff) format("woff");*/
+    /*font-weight: 400;*/
+    /*font-style: normal;*/
+    /*font-display: swap; }*/
+/*!*Semi Bold*!*/
+/*@font-face {*/
+    /*font-family: 'Proxima Nova';*/
+    /*src: url(https://assets3.enjoei.com.br/assets/ui/proxima-nova/semibold-72d91de9bd74d3d8748923dda7a1f35b.woff) format("woff");*/
+    /*font-weight: 600;*/
+    /*font-style: normal;*/
+    /*font-display: swap; }*/
+/*!*Bold*!*/
+/*@font-face {*/
+    /*font-family: 'Proxima Nova';*/
+    /*src: url(https://assets2.enjoei.com.br/assets/ui/proxima-nova/bold-035f2f943cdfbf5e76cb18d58427725a.woff) format("woff");*/
+    /*font-weight: 700;*/
+    /*font-style: normal;*/
+    /*font-display: swap; }*/
+/*!*Extra Bold*!*/
+/*@font-face {*/
+    /*font-family: 'Proxima Nova';*/
+    /*src: url(https://assets2.enjoei.com.br/assets/ui/proxima-nova/extrabold-b51a8e9f8452146d324bed7e5f377216.woff) format("woff");*/
+    /*font-weight: 900;*/
+    /*font-style: normal;*/
+    /*font-display: swap; }*/
+/*@font-face {*/
+    /*font-family: tk-proxima-nova-n7;*/
+    /*src: url(https://use.typekit.net/af/5cadd5/00000000000000003b9aefb8/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff2"), url(https://use.typekit.net/af/5cadd5/00000000000000003b9aefb8/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff"), url(https://use.typekit.net/af/5cadd5/00000000000000003b9aefb8/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("opentype");*/
+    /*font-weight: 700;*/
+    /*font-style: normal; }*/
+/*@font-face {*/
+    /*font-family: tk-proxima-nova-i7;*/
+    /*src: url(https://use.typekit.net/af/d2b9f6/00000000000000003b9aefb9/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff2"), url(https://use.typekit.net/af/d2b9f6/00000000000000003b9aefb9/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff"), url(https://use.typekit.net/af/d2b9f6/00000000000000003b9aefb9/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("opentype");*/
+    /*font-weight: 700;*/
+    /*font-style: italic; }*/
+/*@font-face {*/
+    /*font-family: tk-proxima-nova-n4;*/
+    /*src: url(https://use.typekit.net/af/6de37e/00000000000000003b9aefc0/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff2"), url(https://use.typekit.net/af/6de37e/00000000000000003b9aefc0/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff"), url(https://use.typekit.net/af/6de37e/00000000000000003b9aefc0/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("opentype");*/
+    /*font-weight: 400;*/
+    /*font-style: normal; }*/
+/*@font-face {*/
+    /*font-family: tk-proxima-nova-i4;*/
+    /*src: url(https://use.typekit.net/af/3eb46d/00000000000000003b9aefc1/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff2"), url(https://use.typekit.net/af/3eb46d/00000000000000003b9aefc1/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff"), url(https://use.typekit.net/af/3eb46d/00000000000000003b9aefc1/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("opentype");*/
+    /*font-weight: 400;*/
+    /*font-style: italic; }*/
 /*general*/
 /*Rotate Transform function*/
 /*resets*/
@@ -1065,7 +1065,7 @@ select,
     padding: 6px 10px;
     width: 100%;
     box-sizing: border-box;
-    color: #000; }
+    color: #d6d6d6; }
 [type="text"]:focus,
 [type="number"]:focus,
 [type="password"]:focus,
@@ -1437,7 +1437,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0 8px;
     color: #afbccb;
     border-radius: 4px; }
-.drop-comp-item.editible {
+.drop-comp-item.editable {
     color: #8193ab; }
 .drop-comp-drag, .drop-comp-edit, .drop-comp-delete {
     background-color: transparent;
@@ -1459,7 +1459,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: inherit;
     color: #bac7db; }
 .drop-comp.type-2 .drop-comp-item {
-    color: #464f6c; }
+    color: #8292c8; }
 .drop-comp.type-2 .drop-comp-item:hover {
     background-color: #fff; }
 @media (max-width: 900px) {
@@ -2466,8 +2466,7 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-views-section {
     margin-top: 24px; }
 .custom-views-order {
-    background-color: #f7f8fc;
-    color: #525f7f;
+    color: #95ace6;
     padding: 30px 16px; }
 .custom-views-summary {
     display: flex;
@@ -2529,7 +2528,7 @@ input[type=number]::-webkit-outer-spin-button {
         display: block; } }
 @media (min-width: 901px) {
     .custom-views {
-        width: 620px;
+        width: 642px;
         max-height: 590px; }
     .custom-views-close {
         align-self: flex-end;
@@ -2842,7 +2841,7 @@ select,
     padding: 6px 10px;
     width: 100%;
     box-sizing: border-box;
-    color: #000; }
+    color: #ebebeb; }
 [type="text"]:focus,
 [type="number"]:focus,
 [type="password"]:focus,
@@ -3214,7 +3213,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0 8px;
     color: #afbccb;
     border-radius: 4px; }
-.drop-comp-item.editible {
+.drop-comp-item.editable {
     color: #8193ab; }
 .drop-comp-drag, .drop-comp-edit, .drop-comp-delete {
     background-color: transparent;
@@ -3236,7 +3235,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: inherit;
     color: #bac7db; }
 .drop-comp.type-2 .drop-comp-item {
-    color: #464f6c; }
+    color: #6a89c4; }
 .drop-comp.type-2 .drop-comp-item:hover {
     background-color: #fff; }
 @media (max-width: 900px) {
@@ -4243,8 +4242,7 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-views-section {
     margin-top: 24px; }
 .custom-views-order {
-    background-color: #f7f8fc;
-    color: #525f7f;
+    color: #8498cb;
     padding: 30px 16px; }
 .custom-views-summary {
     display: flex;
@@ -4306,7 +4304,7 @@ input[type=number]::-webkit-outer-spin-button {
         display: block; } }
 @media (min-width: 901px) {
     .custom-views {
-        width: 620px;
+        width: 642px;
         max-height: 590px; }
     .custom-views-close {
         align-self: flex-end;

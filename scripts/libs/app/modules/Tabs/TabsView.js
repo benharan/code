@@ -44,6 +44,7 @@ define([
 				this._initializeTabClipping();
 			}
 
+			this.$el.find('.create-new').on('click', () => this.trigger('createNewView'));
             return this.$el;
         },
 
