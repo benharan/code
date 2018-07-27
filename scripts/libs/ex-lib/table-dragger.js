@@ -2515,7 +2515,7 @@
 					(0, _createClass3.default)(Dragger, [{
 						key: 'onDrag',
 						value: function onDrag() {
-							(0, _util.css)(document.body, { overflow: 'hidden' });
+							//(0, _util.css)(document.body, { overflow: 'hidden' });
 							var barWidth = (0, _util.getScrollBarWidth)();
 							this.dragger.dragging = true;
 							if (barWidth) {

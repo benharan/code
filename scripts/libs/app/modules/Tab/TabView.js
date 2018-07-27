@@ -23,12 +23,8 @@ define([
 		},
 
         initialize: function ($prerenderedTab) {
-            Displayable.prototype.initialize.call(this, $prerenderedTab ? '' : html, !alreadyInjectedCSS ? css : '');
+            Displayable.prototype.initialize.call(this, $prerenderedTab, !alreadyInjectedCSS ? css : '', true);
 			alreadyInjectedCSS = true;
-			if ($prerenderedTab) {
-				this.$el = $prerenderedTab;
-				Displayable.prototype.injectCSS.call(this);
-			}
         },
 
         render: function (settings) {
@@ -43,10 +39,12 @@ define([
 
         select: function () {
 			this.$el.addClass('selected');
+			this.$el.find('button').addClass('selected');
         },
 
 		unselect: function () {
 			this.$el.removeClass('selected');
+			this.$el.find('button').removeClass('selected');
 		}
     })
 });

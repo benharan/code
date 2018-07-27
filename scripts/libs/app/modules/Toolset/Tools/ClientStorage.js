@@ -7,6 +7,7 @@ define([
 	"jquery",
 	"Backbone"
 ], function (_, $, Backbone) {
+	const useKeyCompression = 0;
 
 	return Backbone.Model.extend({
 
@@ -16,27 +17,41 @@ define([
 		},
 
 		setVal: function (key, value, warnIfExists) {
-			let valueToSet = value;
+			let strValue = '' + value,
+				valueToSet = strValue,
+				keyToSet = '' + key;
 
 			if (warnIfExists && !_.isNull(this.getVal(key))) {
 				announceWarn('LocalStorage item already exists', key, this.getVal(key));
 			}
 
 			if (this._useCompression) {
-				valueToSet = LZString.compress('' + value);
-				this._withPrints && lcl(`Compression Stats\nBefore: ${value.length}\nAfter: ${valueToSet.length}\nRatio: ${+(valueToSet.length / value.length).toFixed(8)}`);
+				valueToSet = LZString.compress(strValue);
+				this._withPrints && lcl(`Compression Stats\nBefore: ${strValue.length}\nAfter: ${valueToSet.length}\nRatio: ${+(valueToSet.length / strValue.length).toFixed(8)}`);
 			}
 
-			localStorage.setItem(key, valueToSet);
+			if (useKeyCompression) {
+				keyToSet = LZString.compress(keyToSet);
+			}
+
+			localStorage.setItem(keyToSet, valueToSet);
 		},
 
 		getVal: function (key) {
-			let gotItem = localStorage.getItem(key);
+			let gotItem = localStorage.getItem(useKeyCompression ? LZString.compress(key) : key);
 			return this._useCompression ? LZString.decompress(gotItem) : gotItem;
 		},
 
 		clearVal: function (key) {
 			localStorage.removeItem(key);
+		},
+
+		setObj: function (key, value, warnIfExists) {
+			this.setVal(key, JSON.stringify(value), warnIfExists);
+		},
+
+		getObj: function (key) {
+			return JSON.parse(this.getVal(key) || null);
 		},
 
 		clearAll: function () {

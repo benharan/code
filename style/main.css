@@ -71,6 +71,27 @@ table.data-table-style tr.marked {
     padding: 10px 5px;
 }
 
+button {
+    color: white;
+    display: block;
+    cursor: pointer;
+    background: #333;
+    padding: 5px 21px;
+    margin: 10px auto;
+    border-radius: 4px;
+    border: 1px solid white;
+}
+
+button:hover {
+    border-color: #71ff8d;
+}
+
+button[disabled] {
+    cursor: default;
+    border-color: white;
+    color: #888;
+}
+
 */
 .displayNone {
     display: none !important;
@@ -113,29 +134,35 @@ table.data-table-style tr.marked {
     background-color: #222;
 }
 
-button {
-    color: white;
-    display: block;
-    cursor: pointer;
-    background: #333;
-    padding: 5px 21px;
-    margin: 10px auto;
-    border-radius: 4px;
-    border: 1px solid white;
-}
-
-button:hover {
-    border-color: #71ff8d;
-}
-
-button[disabled] {
-    cursor: default;
-    border-color: white;
-    color: #888;
-}
-
 input[type=text] {
     padding: 2px 4px;
     border-radius: 2px;
     border: 1px black solid;
+}
+
+.common-table {
+    color: #6f93ea;
+}
+
+body, .main-header,
+.mini-popup-footer  {
+    background: #1f1f1f;
+}
+
+input[type="search"] {
+    background: #111;
+}
+
+.mini-popup .create-new,
+.mini-popup-wrapper {
+    background-color: #373737;
+    box-shadow: 0 0 9px 3px #4b4b4b;
+}
+
+.drop-comp-item {
+    cursor: pointer;
+}
+
+.button-tabs-list>li {
+    cursor: pointer;
 }

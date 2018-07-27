@@ -6,12 +6,12 @@ define([
     "Backbone",
 	"External/lz-string",
 	"Toolset/Toolset",
-	"Modules/ToolsetUI/ToolsetUIView",
+	"Modules/ControlPanel/ControlPanelView",
     "Modules/mainFrame/mainFrame",
     "Modules/User/User",
     "Modules/PageState/PageState",
     "./router"
-], function (_, $, Backbone, LZstring, Toolset, ToolsetUIView, MainFrame, User, PageState, Router) {
+], function (_, $, Backbone, LZstring, Toolset, ControlPanelView, MainFrame, User, PageState, Router) {
     var investingApp;
 
     window.InvestingApp.Router = {};
@@ -26,8 +26,9 @@ define([
 			main_frame.render();
 
 			// {{ Dev Only Code {{
-			this._toolsetUIView = new ToolsetUIView();
-			$body.append(this._toolsetUIView.render());
+			this._controlPanelView = new ControlPanelView();
+			$body.append(this._controlPanelView.render());
+			this._controlPanelView.initConsoleResize();
 			// }} Dev Only Code }}
 
             router.on('navigation', function (...params) {

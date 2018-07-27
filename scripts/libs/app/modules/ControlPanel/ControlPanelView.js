@@ -9,10 +9,17 @@ define([
 	"Displayable",
 	"EventBus",
 	"Toolset/Toolset",
-	"text!./ToolsetUI.html",
-	"text!./ToolsetUI.css"
-], function (_, $, Backbone, Displayable, EventBus, Toolset, html, css) {
+	"Modules/DynamicElement/DynamicElement",
+	"text!./ControlPanel.html",
+	"text!./ControlPanel.css"
+], function (_, $, Backbone, Displayable, EventBus, Toolset, DynamicElement, html, css) {
 	var consolePrintsAreOn = Toolset.ClientStorage.getVal('consolePrints') === '1';
+
+	/**
+	 * Implement a "Feature Selection" popup to enable
+	 * checking/unchecking of wanted Control Panel features
+	 */
+
 
 	return Displayable.extend({
 
@@ -22,7 +29,6 @@ define([
 		},
 
 		events: {
-			"click .toolset-ui-toggle": "_toggleUI",
 			"click .console-prints": "_toggleConsolePrints",
 			"click .clear-console": "_clearCustomConsole",
 			"click .clear-template-cache": "_clearTemplateCache",
@@ -41,11 +47,23 @@ define([
 		render: function () {
 			Displayable.prototype.render.call(this, {}, this._markupScheme);
 
-			this._toggleUIElem(this._loadState());
 			this._applyConsolePrintsState();
 			this._initCustomCL();
 
 			return this.$el;
+		},
+
+		initConsoleResize: function () {
+			new DynamicElement({
+				lsKey: 'controlPanel',
+				$element: this.$el,
+				resize: {
+					$resizeBar: this.$el.find('.toolset-resize-area'),
+					boundaries: {
+						height: val => 0 < val && val < 400
+					}
+				}
+			})
 		},
 
 		_initCustomCL: function () {
@@ -59,27 +77,8 @@ define([
 			this._dom.customConsole.empty();
 		},
 
-		_toggleUIElem: function (toOpen) {
-			this.$el.toggleClass('open', toOpen);
-		},
-
-		_toggleUI: function () {
-			this._toggleUIElem(this._saveState(!this.$el.hasClass('open')));
-		},
-
 		_toggleEntry: function (e) {
 			$(e.target).toggleClass('closed');
-		},
-
-		_saveState: function (isOpen) {
-			this._state = isOpen;
-			Toolset.ClientStorage.setVal('toolset-ui-isOpen', +this._state);
-			return this._state;
-		},
-
-		_loadState: function () {
-			this._state = Toolset.ClientStorage.getVal('toolset-ui-isOpen') === '1';
-			return this._state;
 		},
 
 		_toggleConsolePrints: function () {
@@ -114,6 +113,7 @@ define([
 
 		_loginFromUI: function () {
 			EventBus.trigger('loginFromUI');
-		}
+		},
+
 	})
 });

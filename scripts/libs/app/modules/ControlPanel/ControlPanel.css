@@ -1,0 +1,106 @@
+.control-panel-wrapper {
+    /*
+    top: 40px;
+    right: 40px;
+    z-index: 99;
+    width: 300px;
+    border-radius: 4px;
+    border-top: 1px white solid;
+    */
+    left: 0;
+    bottom: -10px;
+    z-index: 99;
+    width: 100%;
+    padding: 10px;
+    position: fixed;
+    text-align: center;
+    background: #222121;
+}
+
+.tabs-inner-wrapper ul {
+    position: relative;
+}
+
+.control-panel-wrapper.open {
+    /*min-height: 300px;*/
+}
+
+.control-panel-wrapper.open .control-panel-cont {
+    display: block;
+}
+
+.control-panel-toggle {
+    position: absolute;
+    left: 15px;
+    top: 13px;
+    cursor: pointer;
+}
+
+.control-panel-wrapper h2 {
+    margin: 0;
+}
+
+.control-panel-wrapper button {
+    color: white;
+    cursor: pointer;
+    background: #333;
+    padding: 5px 21px;
+    margin: 3px auto;
+    padding: 4px 21px;
+    border-radius: 4px;
+    border: 1px solid white;
+}
+
+.control-panel-wrapper button:hover {
+    border-color: #aaffbd;
+}
+
+.control-panel-wrapper button.disabled {
+    cursor: default;
+    border-color: white;
+    color: #000;
+}
+
+.control-panel-wrapper .toolset-resize-area {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    cursor: n-resize;
+    position: absolute;
+    background: -webkit-linear-gradient(top, rgba(10,10,10,1) 0%,rgba(125,185,232,0) 100%);
+}
+.control-panel-wrapper .toolset-resize-area:hover {
+    background: -webkit-linear-gradient(top, rgb(16, 16, 16) 0%,rgba(125,185,232,0) 100%);
+}
+
+.control-panel-cont {
+
+}
+
+h6 {
+    display: inline-block;
+}
+
+.topBar .topBarSearch INPUT {
+    margin-top: 8px;
+}
+
+.console-entry.closed {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.console-entry {
+    margin: 10px 2px;
+}
+/*
+.custom-console {
+    padding-top: 24px;
+}*/
+
+.clear-console {
+    float: right;
+    cursor: pointer;
+}

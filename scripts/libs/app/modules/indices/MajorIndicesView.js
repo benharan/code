@@ -53,7 +53,7 @@ define([
 
 		_initTabs: function () {
 			this._mainTabs = new Tabs(Tab, { clip: true, $tabsWrapper: this._dom.tabsWrapper });
-			this._mainTabs.on('tabSelected', this._changeTable.bind(this));
+			// this._mainTabs.on('tabSelected', this._changeTable.bind(this));
 			this._tableNameToCID = {};
 			this._mainTabs.render(this.$el, true);
 		},

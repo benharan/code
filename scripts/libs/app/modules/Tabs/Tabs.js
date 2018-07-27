@@ -26,7 +26,7 @@ define([
         	if (prerendered) {
 				$result = this._view.render(tabName__$el);
 
-				_.e($result.find('ul.drop-comp li'), (tabElement, i) => {
+				_.e($result.find('.button-tabs-list>li:not(.show-more-tabs, .only-mobile), ul.drop-comp>li'), (tabElement, i) => {
 					let $tab = $(tabElement),
 						tabObj = { name: $tab.text().trim(), id: i, $tab };
 					this.addTab(tabObj.name, tabObj).render();

@@ -7,7 +7,9 @@ define([
 	"underscore",
 	"./Mutator"
 ], function ($, _, Mutator) {
-	const fnFunctionSet = [
+	const
+		hiddenClass = 'hide',
+		fnFunctionSet = [
 		['exists', function () {
 			// return !!$(this).length;
 			return !!this[0]; // Less actions
@@ -15,20 +17,21 @@ define([
 		['isEmpty', function () {
 			return !this[0];
 		}],
+		['isVisible', function () {
+			return $(this).hasClass(hiddenClass);
+		}],
 		['_show', function () {
-			return $(this).removeClass('displayNone');
+			return $(this).removeClass(hiddenClass);
 		}],
 		['_hide', function () {
-			return $(this).addClass('displayNone');
+			return $(this).addClass(hiddenClass);
 		}],
 		['_toggleShow', function (flag) {
-			var action;
 			if (_.isUn(flag)) {
-				action = $(this).hasClass('displayNone') ? '_show' : '_hide';
+				return $(this).toggleClass(hiddenClass);
 			} else {
-				action = flag ? '_show' : '_hide';
+				return $(this)[flag ? '_show' : '_hide']();
 			}
-			return $(this)[action]();
 		}],
 		['isChildOf', function ($ofThis) {
 			var result;
