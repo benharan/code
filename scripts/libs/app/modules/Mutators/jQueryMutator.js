@@ -8,29 +8,50 @@ define([
 	"./Mutator"
 ], function ($, _, Mutator) {
 	const
+		// {{ Dev Only Code {{
+		ideSupporter = {
+			check: ()=>{}, uncheck: ()=>{}, addClass: ()=>{}, removeClass: ()=>{}, toggleClass: ()=>{}, hasClass: ()=>{},
+				_show: ()=>{}, _hide: ()=>{}, _toggleShow: ()=>{}, eq: ()=>{}, attr: ()=>{}, removeData: ()=>{},
+				data: ()=>{}, swapElements: ()=>{},
+				hide: ()=>{}, exit: ()=>{},
+		},
+		// }} Dev Only Code }}
 		hiddenClass = 'hide',
 		fnFunctionSet = [
+		['f', $.fn.find],
 		['exists', function () {
 			// return !!$(this).length;
 			return !!this[0]; // Less actions
+		}],
+		['check', function () {
+			return this.prop('checked', true);
+		}],
+		['uncheck', function () {
+			return this.prop('checked', false);
+		}],
+		['disable', function () {
+			return this.prop('disabled', true).addClass('disabled');
+		}],
+		['enable', function () {
+			return this.prop('disabled', false).removeClass('disabled');
 		}],
 		['isEmpty', function () {
 			return !this[0];
 		}],
 		['isVisible', function () {
-			return $(this).hasClass(hiddenClass);
+			return this.hasClass(hiddenClass);
 		}],
 		['_show', function () {
-			return $(this).removeClass(hiddenClass);
+			return this.removeClass(hiddenClass);
 		}],
 		['_hide', function () {
-			return $(this).addClass(hiddenClass);
+			return this.addClass(hiddenClass);
 		}],
 		['_toggleShow', function (flag) {
 			if (_.isUn(flag)) {
-				return $(this).toggleClass(hiddenClass);
+				return this.toggleClass(hiddenClass);
 			} else {
-				return $(this)[flag ? '_show' : '_hide']();
+				return this[flag ? '_show' : '_hide']();
 			}
 		}],
 		['isChildOf', function ($ofThis) {
@@ -43,7 +64,7 @@ define([
 			return result;
 		}],
 		['swapWith', function ($withThis) {
-			$.swapElements($(this), $withThis);
+			$.swapElements(this, $withThis);
 		}],
 		['', ],
 	],
@@ -63,25 +84,8 @@ define([
 		['is$elem', function ($possibleElem) {
 			return $possibleElem instanceof $;
 		}]
-	],
-	StringFunctionSet = [
-		['is', function (secondValue, caseSensitive) {
-			return !_.isUn(_.find([].concat(secondValue), (val) => match(this, toStr(val), caseSensitive)));
-		}],
-		['isnt', function (secondValue, caseSensitive) {
-			return !toStr(this).is(secondValue, caseSensitive);
-		}]
 	];
-
-	function toStr(str) {
-		return '' + str;
-	}
-
-	function match(val1, val2, caseSensitive) {
-		return caseSensitive ? (toStr(val1) === toStr(val2)) : (toStr(val1).toLowerCase() === toStr(val2).toLowerCase());
-	}
 
 	Mutator.mutate($, functionSet, '$');
 	Mutator.mutate($.fn, fnFunctionSet, '$.fn');
-	Mutator.mutate(String.prototype, StringFunctionSet, 'String.prototype');
 });

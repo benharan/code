@@ -59,7 +59,7 @@ define([
 				lsKey: 'controlPanel',
 				$element: this.$el,
 				resize: {
-					$resizeBar: this.$el.find('.toolset-resize-area'),
+					$resizeBar: this.$el.f('.toolset-resize-area'),
 					boundaries: {
 						height: val => 0 < val && val < 400
 					}
@@ -69,7 +69,7 @@ define([
 
 		_initCustomCL: function () {
 			window.lcl.customCL = (...args) => {
-				const enstringification = args.reduce((acc, arg) => acc + ' | ' + arg);
+				let enstringification = args.join(' | ')
 				this._dom.customConsole.prepend($('<div/>').addClass('console-entry closed').text(enstringification).attr('title', enstringification));
 			}
 		},

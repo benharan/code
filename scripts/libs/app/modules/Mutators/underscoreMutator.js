@@ -8,8 +8,8 @@ define([
     "Backbone",
 	"./Mutator"
 ], function (_, $, Backbone, Mutator) {
-
-	const functionSet = [
+	const
+		functionSet = [
 		['isE', _.isEmpty],
 		['isntEmpty', obj => !_.isEmpty(obj)],
 		['isntE', _.isntEmpty],
@@ -46,7 +46,7 @@ define([
 				if (fillGaps) {
 					result.push(arr.splice(index, 1, undefined)[0]);
 					gaps.push(index);
-				} else { // Quandary! Differentiate between undefined and no param
+				} else { // Splice counts args.length (wisely)
 					result.push(arr.splice(index, 1)[0]);
 				}
 			})

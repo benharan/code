@@ -650,7 +650,7 @@ body {
 /*variables*/
 @font-face {
     font-family: 'investing';
-    src: url("../../fonts/investing/investing.ttf?eae3hq") format("truetype"), url("../../fonts/investing/investing.woff?eae3hq") format("woff"), url("../../fonts/investing/investing.svg?eae3hq#investing") format("svg");
+    /*src: url("../../fonts/investing/investing.ttf?eae3hq") format("truetype"), url("../../fonts/investing/investing.woff?eae3hq") format("woff"), url("../../fonts/investing/investing.svg?eae3hq#investing") format("svg");*/
     font-weight: normal;
     font-style: normal; }
 .icon-source, input[type="checkbox"]:checked:before, .breadcrumbs-item:not(:last-child):after,

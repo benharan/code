@@ -13,12 +13,11 @@ define([
 		_items: null,
 
 		_markupScheme: {
-			"input": ".search-box-input"
+			"input": "input[type=\"search\"]"
 		},
 
 		events: {
-			"keyup .search-box-input": "_inputKeyUp",
-			"click list-item": "_toggleItem"
+			"keyup input[type=\"search\"]": "_applySearch",
 		},
 
 		initialize: function ($listWrapper, initialList) {
@@ -29,6 +28,7 @@ define([
 		render: function () {
 			Displayable.prototype.render.call(this, {}, this._markupScheme);
 
+			this._dom.input.on('search', () => this._applySearch());
 			return this.$el;
 		},
 
@@ -41,20 +41,25 @@ define([
 		},
 
 		loadListFromDOM: function () {
-			_.e(this.$el.find('li'), li => {
+			_.e(this.$el.f('li'), li => {
 				this._items.push({
-					textValue: $(li).text().toLowerCase(),
+					textValue: $(li).text().trim().toLowerCase(),
 					$el: $(li)
 				})
 			})
 		},
 
-		_inputKeyUp: function () {
+		reset: function () {
+			this._dom.input.val('');
+			_.e(this._items, item => item.$el._show());
+		},
+
+		_applySearch: function () {
 			const inputVal = this._dom.input.val().toLowerCase();
 			_.e(this._items, item => {
 				const isContained = ~item.textValue.indexOf(inputVal);
 				item.$el._toggleShow(isContained || !inputVal);
 			})
-		}
+		},
 	})
 });

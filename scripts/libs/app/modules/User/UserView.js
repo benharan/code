@@ -43,7 +43,7 @@ define([
 			if (show) {
 				Toolset.Modal.setContent('Login', this.$el).show();
 			} else {
-				Toolset.Modal.hide();
+				Toolset.Modal.exit();
 			}
 		},
 

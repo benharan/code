@@ -31,10 +31,24 @@ define([
             return this.$el;
         },
 
-		setContent: function (title, $content) {
-			this._dom.title.text(title);
-			this._dom.content.html($content);
+		setup: function (settings) {
+        	if (settings.title && settings.$content) {
+        		this.setContent(settings.title, settings.$content);
+			}
 
+			this._onExit = settings.onExit;
+
+			if (settings.show) {
+        		this.show();
+			}
+		},
+
+		setContent: function (title, $content) {
+        	if (title.isnt(this._lastTitle)) {
+				this._dom.title.text(title);
+				this._dom.content.html($content);
+				this._lastTitle = title;
+			}
 			return this;
 		},
 
@@ -44,8 +58,10 @@ define([
 			return this;
 		},
 
-        hide: function () {
+		exit: function () {
             this.$el._hide();
+
+			this._onExit && this._onExit();
 
 			return this;
 		}

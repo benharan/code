@@ -50,19 +50,24 @@ define([
 
 			this._initTabs();
 			this._initTables(this._currentTabName || _default_table);
-
-			this._createNewView();
-
-			this._msList = new MultiselectListView($('.multilist-wrapper'));
-			this._msList.render();
+			this._initMultilist();
 
 			return this.$el;
+		},
+
+		_initMultilist: function () {
+			this._msList = new MultiselectListView($('.custom-views'), {maxItems: 8});
+			this._msList.render();
+			this._msList.on('done', (list) => {
+				lcl('Granted list is:', list);
+				Toolset.Modal.exit();
+			})
 		},
 
 		_initTabs: function () {
 			this._mainTabs = new Tabs(Tab, { clip: true, $tabsWrapper: this._dom.tabsWrapper });
 			// this._mainTabs.on('tabSelected', this._changeTable.bind(this));
-			this._mainTabs.on('createNewView', this._createNewView.bind(this));
+			this._mainTabs.on('createNewView', this._openCreateView.bind(this));
 			this._tableNameToCID = {};
 			this._mainTabs.render(this.$el, true);
 		},
@@ -99,8 +104,13 @@ define([
 			}
 		},
 
-		_createNewView: function () {
-			Toolset.Modal.setContent('Create New View', this._dom.createNewViewPopup._show()).show();
-		}
+		_openCreateView: function () {
+			Toolset.Modal.setup({
+				title: 'Create New View',
+				$content: this._dom.createNewViewPopup._show(),
+				onExit: () => this._msList.reset(),
+				show: true,
+			});
+		},
     })
 });
