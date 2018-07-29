@@ -74,7 +74,7 @@ define([
 		},
 
 		_initSortability: function () {
-			this._dom.selectedWrapper.sortable({ axis: 'y', items: 'li' });
+			this._dom.selectedWrapper.sortable({ axis: 'y', items: 'li', cancel: '' });
 		},
 
 		_initSearchableList: function ($listWrapper) {

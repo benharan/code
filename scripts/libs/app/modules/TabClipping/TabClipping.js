@@ -63,11 +63,11 @@ define([
 		},
 
 		_outcastTab: function ($subject) {
-			let $succeedingTab = this._dom.$outcastTabs.eq($subject.data('initial-order') || 0);
+			let $succeedingTab = this._dom.$outcastTabsUL.f('li').eq($subject.data('initial-order') || 0);
 			if ($succeedingTab.exists()) {
 				$succeedingTab.before($subject);
 			} else { // Last, no succeeding elem
-				this._dom.$outcastTabs.last().after($subject);
+				this._dom.$outcastTabsUL.append($subject);
 			}
 		},
 
@@ -80,10 +80,14 @@ define([
 			this._outcastTab($lastRevealed);
 			// Update References
 			this._updateOutcastTabsDOMRef();
-			this._dom.$revealedTabs = this._getRevealedTabs(this._dom.$revealedTabsUL);
+			this._updateRevealedTabsDOMRef();
 
 			this._bindTabClick($tabToReveal, true);
 			this._bindTabClick($lastRevealed, false);
+		},
+
+		_updateRevealedTabsDOMRef: function () {
+			this._dom.$revealedTabs = this._getRevealedTabs(this._dom.$revealedTabsUL);
 		},
 
 		_updateOutcastTabsDOMRef: function () {
@@ -113,9 +117,18 @@ define([
 		},
 
 		_initSortability: function () {
+			this._dom.$revealedTabsUL.sortable({
+				axis: 'x',
+				items : 'li',
+				cancel: '', // So <button>s could be handles (45 minutes burnt ^^)
+				stop: () => {
+					this._updateRevealedTabsDOMRef();
+				}
+			});
 			this._dom.$outcastTabsUL.sortable({
 				axis: 'y',
 				items : 'li',
+				cancel: '',
 				stop: () => {
 					this._updateOutcastTabsDOMRef();
 					this._enumerateTabs();
@@ -125,7 +138,7 @@ define([
 
 		_enumerateTabs: function () {
 			this._dom.$revealedTabs.last().removeData('initial-order');
-			_.e(this._dom.$outcastTabs, (tab, orderId) => $(tab).data('initial-order', orderId + 1));
+			_.e(this._dom.$outcastTabs, (tab, orderId) => $(tab).data('initial-order', orderId));
 		},
 
 		_getControls: function () {

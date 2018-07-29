@@ -6,7 +6,7 @@ define([
     "Backbone",
 	"External/lz-string",
 	"Toolset/Toolset",
-	"Modules/ControlPanel/ControlPanelView",
+	"try!Modules/ControlPanel/ControlPanelView",
     "Modules/mainFrame/mainFrame",
     "Modules/User/User",
     "Modules/PageState/PageState",

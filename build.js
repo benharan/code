@@ -51,10 +51,11 @@
 					"app/investing",
 					"app/modules/mainContent/mainContentView",
 					"app/modules/indices/MajorIndicesView"
-				]
+				],
+				exclude: [ "Modules/ControlPanel/ControlPanelView" ]
 			}, {
 				name: "app/modules/Portfolios/Portfolios",
-				exclude: [ 'app_init' ]
+				exclude: [ "app_init" ]
 			}
 		]
 	})

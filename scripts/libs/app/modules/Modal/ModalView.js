@@ -11,8 +11,8 @@ define([
     return Displayable.extend({
 
         events: {
-			"click .close-modal": "hide",
-			"click .modal-overlay": "hide"
+			"click .close-modal": "exit",
+			"click .modal-overlay": "exit"
         },
 
         _markupScheme: {
@@ -38,9 +38,7 @@ define([
 
 			this._onExit = settings.onExit;
 
-			if (settings.show) {
-        		this.show();
-			}
+			settings.show && this.show();
 		},
 
 		setContent: function (title, $content) {
