@@ -8,6 +8,9 @@ define([
 	"Backbone",
 	"EventBus"
 ], function (_, $, Backbone, EventBus) {
+	const _revealed_tab_classes = 'button-tabs-item no-mobile',
+		_outcast_tab_classes = 'drop-comp-item not-editable';
+
 	return Backbone.Model.extend({
 
 		_prerendered: null,
@@ -21,6 +24,10 @@ define([
 				EventBus.onceAttachedToDOM($tabsWrapper, this._initializeClippedTabs.bind(this, $tabsWrapper));
 			}
 
+		},
+
+		closeDialog: function () {
+			this._dom.$moreTabsContainer._hide();
 		},
 
 		_initializeClippedTabs: function ($tabsWrapper) {
@@ -62,28 +69,32 @@ define([
 			$moreTabsContainer.on('click', e => e.stopPropagation());
 		},
 
-		_outcastTab: function ($subject) {
-			let $succeedingTab = this._dom.$outcastTabsUL.f('li').eq($subject.data('initial-order') || 0);
-			if ($succeedingTab.exists()) {
-				$succeedingTab.before($subject);
-			} else { // Last, no succeeding elem
-				this._dom.$outcastTabsUL.append($subject);
-			}
-		},
-
 		_switchToTab: function ($tabToReveal) {
 			let $lastRevealed = this._dom.$revealedTabs.last();
 
-			// Reveal this tab
-			$lastRevealed.before($tabToReveal);
-			// Outcast last revealed
-			this._outcastTab($lastRevealed);
-			// Update References
+			this._revealTab($tabToReveal, $lastRevealed);
+			this._outcastTab($lastRevealed); // Note the var name change according to context
+
 			this._updateOutcastTabsDOMRef();
 			this._updateRevealedTabsDOMRef();
 
 			this._bindTabClick($tabToReveal, true);
 			this._bindTabClick($lastRevealed, false);
+		},
+
+		_outcastTab: function ($tabToOutcast) {
+			let $succeedingTab = this._dom.$outcastTabsUL.f('li').eq($tabToOutcast.data('initial-order') || 0);
+			$tabToOutcast.addClass(_outcast_tab_classes).removeClass(_revealed_tab_classes);
+			if ($succeedingTab.exists()) {
+				$succeedingTab.before($tabToOutcast);
+			} else { // Last, no succeeding elem
+				this._dom.$outcastTabsUL.append($tabToOutcast);
+			}
+		},
+
+		_revealTab: function ($tabToReveal, $lastRevealed) {
+			$tabToReveal.addClass(_revealed_tab_classes).removeClass(_outcast_tab_classes);
+			$lastRevealed.before($tabToReveal);
 		},
 
 		_updateRevealedTabsDOMRef: function () {
@@ -149,10 +160,6 @@ define([
 				$result = $('<div class="clip-controls"><span class="show-more">...</span><div class="more-tabs displayNone"></div></div>');
 			}
 			return $result;
-		},
-
-		closeDialog: function () {
-			this._dom.$moreTabsContainer._hide();
 		},
 
 		_tabClick: function (e) {
