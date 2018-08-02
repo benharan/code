@@ -9,6 +9,9 @@ define([
 	"./Mutator"
 ], function (_, $, Backbone, Mutator) {
 	const
+		ideSupporter = {
+			tryRun: () => { },
+		},
 		functionSet = [
 		['isE', _.isEmpty],
 		['isntEmpty', obj => !_.isEmpty(obj)],
@@ -17,6 +20,9 @@ define([
 		['isSt', _.isString],
 		['isNu', _.isNumber],
 		['e', _.each],
+		['tryRun', function (fu, ...params) {
+			return _.isFunction(fu) && fu(...params);
+		}],
 		['bindSet', function (set, context) {
 			return set.map(fu => fu.bind(context));
 		}],
@@ -70,6 +76,9 @@ define([
 		}],
 		['existsIn', function (arr, value) {
 			return _.indexOf(arr, value) > -1;
+		}],
+		['valueOr', function (value, alternative) {
+			return !_.isUn(value) ? value : alternative;
 		}]
 	]
 

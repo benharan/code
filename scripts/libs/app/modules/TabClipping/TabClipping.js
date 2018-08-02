@@ -6,8 +6,9 @@ define([
 	"underscore",
 	"jquery",
 	"Backbone",
-	"EventBus"
-], function (_, $, Backbone, EventBus) {
+	"EventBus",
+	"Modules/SortableList/SortableList"
+], function (_, $, Backbone, EventBus, SortableList) {
 	const _revealed_tab_classes = 'button-tabs-item no-mobile',
 		_outcast_tab_classes = 'drop-comp-item not-editable';
 
@@ -76,7 +77,7 @@ define([
 			this._outcastTab($lastRevealed); // Note the var name change according to context
 
 			this._updateOutcastTabsDOMRef();
-			this._updateRevealedTabsDOMRef();
+			this.updateRevealedTabsDOMRef();
 
 			this._bindTabClick($tabToReveal, true);
 			this._bindTabClick($lastRevealed, false);
@@ -97,7 +98,7 @@ define([
 			$lastRevealed.before($tabToReveal);
 		},
 
-		_updateRevealedTabsDOMRef: function () {
+		updateRevealedTabsDOMRef: function () {
 			this._dom.$revealedTabs = this._getRevealedTabs(this._dom.$revealedTabsUL);
 		},
 
@@ -128,23 +129,31 @@ define([
 		},
 
 		_initSortability: function () {
-			this._dom.$revealedTabsUL.sortable({
-				axis: 'x',
-				items : 'li',
-				cancel: '', // So <button>s could be handles (45 minutes burnt ^^)
-				stop: () => {
-					this._updateRevealedTabsDOMRef();
-				}
-			});
-			this._dom.$outcastTabsUL.sortable({
-				axis: 'y',
-				items : 'li',
-				cancel: '',
-				stop: () => {
+			// this._dom.$revealedTabsUL.sortable({
+			// 	axis: 'x',
+			// 	items : 'li',
+			// 	cancel: '', // So <button>s could be handles (45 minutes burnt ^^)
+			// 	stop: () => {
+			// 		this.updateRevealedTabsDOMRef();
+			// 	}
+			// });
+			// this._dom.$outcastTabsUL.sortable({
+			// 	axis: 'y',
+			// 	items : 'li',
+			// 	cancel: '',
+			// 	stop: () => {
+			// 		this._updateOutcastTabsDOMRef();
+			// 		this._enumerateTabs();
+			// 	}
+			// });
+
+			new SortableList(this._dom.$outcastTabsUL[0], {
+				hoverStyleHack: true,
+				onEndHandler: () => {
 					this._updateOutcastTabsDOMRef();
 					this._enumerateTabs();
 				}
-			});
+			})
 		},
 
 		_enumerateTabs: function () {

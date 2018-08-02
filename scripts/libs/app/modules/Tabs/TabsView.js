@@ -9,9 +9,10 @@ define([
     "Displayable",
 	"Modules/TabScrollability/TabScrollability",
 	"Modules/TabClipping/TabClipping",
+	"Modules/SortableList/SortableList",
     "text!./Tabs.html",
     "text!./Tabs.css"
-], function (_, $, Backbone, Displayable, TabScrollability, TabClipping, html, css) {
+], function (_, $, Backbone, Displayable, TabScrollability, TabClipping, SortableList, html, css) {
     return Displayable.extend({
 
         _settings: null,
@@ -44,6 +45,8 @@ define([
 				this._initializeTabClipping();
 			}
 
+			this._initializeTabSortability();
+
 			this.$el.find('.create-new').on('click', () => this.trigger('createNewView'));
             return this.$el;
         },
@@ -55,6 +58,18 @@ define([
 				this._tabClipper = new TabClipping(this.$el);
 			}
 			this.$el.addClass('clip');
+		},
+
+		_initializeTabSortability: function () {
+			const _list_length = this._dom.ul.f('li').length + 1;
+
+			new SortableList(this._dom.ul[0], {
+				filter: '.show-more-tabs',
+				itemIndexBoundary: _list_length,
+				onEndHandler: () => {
+					this._tabClipper.updateRevealedTabsDOMRef();
+				}
+			})
 		},
 
 		_initializeTabScrollability: function () {

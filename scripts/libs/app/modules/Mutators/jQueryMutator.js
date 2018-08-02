@@ -12,13 +12,15 @@ define([
 		ideSupporter = {
 			check: ()=>{}, uncheck: ()=>{}, addClass: ()=>{}, removeClass: ()=>{}, toggleClass: ()=>{}, hasClass: ()=>{},
 				_show: ()=>{}, _hide: ()=>{}, _toggleShow: ()=>{}, eq: ()=>{}, attr: ()=>{}, removeData: ()=>{},
-				data: ()=>{}, swapElements: ()=>{},
+				data: ()=>{}, swapElements: ()=>{}, aCl: ()=>{}, rCl: ()=>{},
 				hide: ()=>{}, exit: ()=>{},
 		},
 		// }} Dev Only Code }}
 		hiddenClass = 'hide',
 		fnFunctionSet = [
 		['f', $.fn.find],
+		['aCl', $.fn.addClass],
+		['rCl', $.fn.removeClass],
 		['exists', function () {
 			// return !!$(this).length;
 			return !!this[0]; // Less actions
