@@ -20,7 +20,7 @@ define([
 						(originalEvent.clientX === lastX && originalEvent.clientY === lastY) // Mouse moved
 						|| (~boundary && Sortable.utils.index(event.related, 'li') === boundary) // Within boundary
 						|| (now - lastTime < 100) // Throttling
-						|| !originalEvent.fromElement // Lucky strike
+						|| !originalEvent.fromElement // Lucky strike >> Uh oh! bad for mobile, needs more hacking
 					) {
 						return false;
 					}

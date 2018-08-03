@@ -2748,6 +2748,7 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: none;
     padding: 0 10px; }
 .button-tabs-list {
+    max-height: 38px;
     display: inline-flex;
     border: solid 1px #e3eaf2;
     border-radius: 4px;
