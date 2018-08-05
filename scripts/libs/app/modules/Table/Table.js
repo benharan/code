@@ -20,7 +20,7 @@ define([
 		initialize: function ($table, settings) {
 			this._initView($table);
 			this._initColumns();
-			this._loadDataFromRows();
+			this._loadDataFromDOM();
 
 			if (settings.stickyIndices) {
 				this._stickyIndices = settings.stickyIndices;
@@ -30,17 +30,11 @@ define([
 			this._view.on('markRows', this._markRows.bind(this))
 		},
 
-		_initView: function ($table) {
-			this._view = new View($table);
-			this._view.on('thClick', this.sort.bind(this));
-			this._view.render();
-		},
-
 		render: function () { },
 
 		refresh: function () {
 			this._view.render();
-			this._loadDataFromRows();
+			this._loadDataFromDOM();
 		},
 
 		sort: function (colIndex) {
@@ -66,7 +60,13 @@ define([
 			return this;
 		},
 
-		_loadDataFromRows: function () {
+		_initView: function (tableName, settings) {
+			this._view = new View(tableName, settings.$table);
+			this._view.on('thClick', this.sort.bind(this));
+			this._view.render();
+		},
+
+		_loadDataFromDOM: function () {
 			let value;
 			this._data = [];
 
@@ -100,15 +100,11 @@ define([
 	})
 
 	function makeComparisonFunction(dir, colName) {
-		if (dir === 0) {
-			return (a, b) => a.originalIndex - b.originalIndex;
-		}
-		if (dir === 1) {
-			return (a, b) => b[colName] - a[colName];
-		}
-		if (dir === 2) {
-			return (a, b) => a[colName] - b[colName];
-		}
+		return [
+			(a, b) => a.originalIndex - b.originalIndex,
+			(a, b) => b[colName] - a[colName],
+			(a, b) => a[colName] - b[colName]
+		][dir];
 	}
 
 	return TableClass;

@@ -46,7 +46,6 @@ define([
 			Displayable.prototype.initialize.call(this, $table, null, true);
 
 			this._markedRows = {};
-			return this;
 		},
 
 		render: function () {

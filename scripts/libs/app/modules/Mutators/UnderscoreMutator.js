@@ -46,7 +46,7 @@ define([
 		['extractByIndices', function (arr, indices) {
 			let result = [],
 				gaps = [], offset = 0,
-				fillGaps = arr.length > 1; // Need to fill gaps to maintain indices for multiple removals
+				fillGaps = indices.length > 1; // Need to fill gaps to maintain indices for multiple removals
 
 			_.e(indices, index => {
 				if (fillGaps) {
