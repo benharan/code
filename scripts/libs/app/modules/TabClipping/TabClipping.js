@@ -115,7 +115,7 @@ define([
 		},
 
 		_getRevealedTabs: function ($revealedTabsUL) {
-			return $revealedTabsUL.find('>li:not(.show-more-tabs, .only-mobile)');
+			return $revealedTabsUL.find('>li:not(.hide, .show-more-tabs, .only-mobile)');
 		},
 
 		_initDOMRefs: function ($tabsWrapper) {

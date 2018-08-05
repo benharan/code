@@ -62,7 +62,7 @@ define([
 				$newSet = [];
 
 			this._currentOrder = newOrder;
-			_.e(newOrder, index => $newSet.push($trs.eq(index)));
+			_.e(newOrder, index => $newSet.push($trs.eq(index)[0]));
 
 			$trs.detach(); // Used to retain bindings, try to avoid for faster rendering
 			this._dom.tbody.html($newSet);
@@ -79,7 +79,7 @@ define([
 		setTHSortState: function (newSortState) {
 			this._dom.ths.find('i').remove();
 			if (newSortState.dir) {
-				this._dom.ths.eq(newSortState.colIndex).append($('<i/>').text(newSortState.dir === 1 ? 'V' : '/\\'));
+				this._dom.ths.eq(newSortState.colIndex).append($('<i/>').text(newSortState.dir === 1 ? '\\/' : '/\\'));
 			}
 		},
 
@@ -138,7 +138,7 @@ define([
 		_initializeDraggability: function () {
 			this._tableDragger = TableDragger(this.$el[0], {
 				mode: 'column',
-				// dragHandler: '.drag-handle'
+				dragHandler: '.drag-handle'
 			})
 
 			this._tableDragger.on('drop', (old, newI) => {

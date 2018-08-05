@@ -13,7 +13,7 @@ define([
 			check: ()=>{}, uncheck: ()=>{}, addClass: ()=>{}, removeClass: ()=>{}, toggleClass: ()=>{}, hasClass: ()=>{},
 				_show: ()=>{}, _hide: ()=>{}, _toggleShow: ()=>{}, eq: ()=>{}, attr: ()=>{}, removeData: ()=>{},
 				data: ()=>{}, swapElements: ()=>{}, aCl: ()=>{}, rCl: ()=>{},
-				hide: ()=>{}, exit: ()=>{},
+				hide: ()=>{}, exit: ()=>{}, toggleCheck: ()=>{},
 		},
 		// }} Dev Only Code }}
 		hiddenClass = 'hide',
@@ -28,8 +28,14 @@ define([
 		['check', function () {
 			return this.prop('checked', true);
 		}],
+		['isChecked', function () {
+			return this.prop('checked');
+		}],
 		['uncheck', function () {
 			return this.prop('checked', false);
+		}],
+		['toggleCheck', function (flag) {
+			return this.prop('checked', !!flag);
 		}],
 		['disable', function () {
 			return this.prop('disabled', true).addClass('disabled');

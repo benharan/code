@@ -17,6 +17,11 @@ define([
     window.InvestingApp.Router = {};
     window.InvestingApp.root = '/';
 
+    if (localStorage.getItem('break-on-start') === '1') {
+		localStorage.removeItem('break-on-start');
+    	debugger;
+	}
+
     investingApp = Backbone.Model.extend({
         init: function () {
             let router = new Router(),

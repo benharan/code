@@ -1,24 +1,43 @@
 <div class="control-panel-wrapper">
+    <div class="feature-selection hide">
+        <label><input type="checkbox" data-feature-name="console">Console</label>
+        <label><input type="checkbox" data-feature-name="debugDelay">Delayed Debug</label>
+        <label><input type="checkbox" data-feature-name="templateTools">Template Tools</label>
+        <label><input type="checkbox" data-feature-name="login">Login</label>
+        <label><input type="checkbox" data-feature-name="tableTools">Table Tools</label>
+
+    </div>
     <div class="toolset-resize-area" draggable="true"></div>
-    <span class="clear-console">Clear console</span>
+    <span class="clear-console" setting-group="console">Clear Console</span>
+    <span class="select-features">Select Features</span>
     <h2>
         Client Control Panel
     </h2>
     <div class="control-panel-cont">
-        <div>
+        <div class="settings-group" setting-group="console">
             <button class="console-prints">Console Prints (On)</button>
+        </div>
+        <div class="settings-group" setting-group="login">
             <button class="login">Login</button>
         </div>
-        <div class="hide">
+        <div class="settings-group" setting-group="debugDelay">
+            <button class="debug-delay">Debug in: </button>
+            <button class="debug-delay-stop hide">Stop</button>
+            <input type="text" class="debug-delay-input" value="2500">
+        </div>
+        <div class="settings-group" setting-group="templateTools">
             <button class="render-templates">Render Custom Template</button>
             <button class="clear-template-cache">Clear Template Cache</button>
             <button class="load-portfolios">Load portfolios</button>
+        </div>
+
+        <div class="settings-group" setting-group="tableTools">
             <button class="append-more-rows-button2">Append 1k to Table</button>
             <button class="append-more-rows-button">Append 5k to Table</button>
         </div>
 
         <div class="clear"></div>
 
-        <div class="custom-console"></div>
+        <div setting-group="console" class="custom-console"></div>
     </div>
 </div>

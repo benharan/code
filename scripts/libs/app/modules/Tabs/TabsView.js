@@ -19,7 +19,7 @@ define([
         _tabClipper: null,
 
         _markupScheme: {
-            ul: 'ul'
+            ul: '>ul'
         },
 
         initialize: function (settings) {
@@ -61,11 +61,9 @@ define([
 		},
 
 		_initializeTabSortability: function () {
-			const _list_length = this._dom.ul.f('li').length + 1;
-
 			new SortableList(this._dom.ul[0], {
 				filter: '.show-more-tabs',
-				itemIndexBoundary: _list_length,
+				itemIndexBoundary: 4,
 				onEndHandler: () => {
 					this._tabClipper.updateRevealedTabsDOMRef();
 				}

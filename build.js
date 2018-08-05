@@ -2,7 +2,8 @@
 	const filesToCleanse = [
 		"Toolset/Toolset",
 		"app/investing",
-		"Modules/Mutators/jQueryMutator"
+		"Modules/Mutators/GeneralMutator",
+		"Modules/Mutators/jQueryMutator",
 	];
 
 	function adjustLibPath(result) {

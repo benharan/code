@@ -2,7 +2,8 @@
  * Created by Skeksify on 09/07/2016.
  */
 
-window.cl = window.lcl = window.throwError = window.announceWarn = function(){};
+window.cl = window.lcl = function(){ };
+// window.throwError = window.announceWarn = function(){ debugger; };
 
 // {{ Dev Only Code {{
 window.cl = console.log;
@@ -17,14 +18,6 @@ window.lcl.flag = localStorage.getItem('consolePrints') === '1';
 window.lcl.customCL = ()=>1;
 
 console.clear();
-
-function getIfNotProd(fu) {
-	if ('Not Production') {
-		return fu;
-	} else {
-		return $.noop;
-	}
-}
 // }} Dev Only Code }}
 
 define([
@@ -55,7 +48,7 @@ define([
 		ClientSettings: new ClientSettings(),
 		Compression: LZString,
         miscFuncs: {
-        	hash: function djb2Code(str){
+        	hash: function (str){
 				var hash = 5381, char;
 				for (var i = 0; i < str.length; i++) {
 					char = str.charCodeAt(i);

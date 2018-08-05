@@ -109,7 +109,6 @@ define([
 				title: 'Create New View',
 				$content: this._dom.createNewViewPopup._show(),
 				onExit: () => this._msList.reset(),
-				show: true,
 			});
 		},
     })

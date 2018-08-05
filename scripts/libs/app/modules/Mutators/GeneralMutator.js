@@ -7,13 +7,22 @@ define([
 	"underscore",
 	"./Mutator"
 ], function ($, _, Mutator) {
-	function makeTosser(type) {
-		return (mainLabel, ...args) => {
-			let output = [`__ Runtime ${type}: ${mainLabel}`].concat(args.join(', ')).join('');
-			if (type === 'Error') {
-				throw new Error(output);
-			} else {
-				console.warn(output)
+	let isDev = false,
+		makeTosser = () => $.noop;
+
+	// {{ Dev Only Code {{
+	isDev = true;
+	// }} Dev Only Code }}
+
+	if (isDev || (localStorage.getItem('throwExceptions') === '1' && !localStorage.removeItem('throwExceptions'))) {
+		makeTosser = function (type) {
+			return (mainLabel, ...args) => {
+				let output = [`__ Runtime ${type}: ${mainLabel}`].concat(args.join(', ')).join(' ');
+				if (type === 'Error') {
+					throw new Error(output);
+				} else {
+					console.warn(output)
+				}
 			}
 		}
 	}

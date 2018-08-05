@@ -10,14 +10,22 @@ define([
 ], function (_, $, Backbone, Displayable) {
     return Displayable.extend({
 
+		_onOk: null,
+		_onExit: null,
+
         events: {
 			"click .close-modal": "exit",
-			"click .modal-overlay": "exit"
+			"click .modal-overlay": "exit",
+			"click .modal-button-cancel": "exit",
+			"click .modal-button-ok": "_buttonOk",
         },
 
         _markupScheme: {
-            "title": ".modal-title-wrapper h2",
-            "content": ".modal-content"
+            "title": ".modal-title-wrapper h1",
+            "content": ".modal-content",
+			"modalButtons": ".modal-buttons",
+			"modalButtonOk": ".modal-button-ok",
+			"modalButtonCancel": ".modal-button-cancel",
         },
 
         initialize: function () {
@@ -36,9 +44,12 @@ define([
         		this.setContent(settings.title, settings.$content);
 			}
 
+			this._dom.modalButtons._toggleShow(settings.type && settings.type.is('okCancel'));
+
+			this._onOk = settings.onOk;
 			this._onExit = settings.onExit;
 
-			settings.show && this.show();
+			settings.show !== false && this.show();
 		},
 
 		setContent: function (title, $content) {
@@ -59,9 +70,15 @@ define([
 		exit: function () {
             this.$el._hide();
 
-			this._onExit && this._onExit();
+			_.tryRun(this._onExit);
 
 			return this;
+		},
+
+		_buttonOk: function () {
+			_.tryRun(this._onOk);
+
+			return this.exit();
 		}
     })
 });

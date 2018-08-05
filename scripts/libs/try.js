@@ -5,6 +5,7 @@ define("try", [], {
 			},
 			onLoadFailure = function (err) {
 				var optionalModuleId = err.requireModules && err.requireModules[0];
+				announceWarn(`'try!ed Module Exception\n`, err);
 				requirejs.undef(optionalModuleId);
 				define(optionalModuleId, [], function(){ return null; });
 				parentRequire([optionalModuleId], onLoadSuccess);

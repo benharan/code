@@ -1526,15 +1526,15 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.25s; }
 .common-table tr th:hover {
     /*hover column*/ }
-.common-table tr th:hover::after {
-    background-color: rgba(247, 248, 252, 0.4);
-    content: '\00a0';
-    height: 10000px;
-    left: 0;
-    position: absolute;
-    top: -5000px;
-    width: 100%;
-    z-index: -1; }
+/*.common-table tr th:hover::after {*/
+    /*background-color: rgba(247, 248, 252, 0.4);*/
+    /*content: '\00a0';*/
+    /*height: 10000px;*/
+    /*left: 0;*/
+    /*position: absolute;*/
+    /*top: -5000px;*/
+    /*width: 100%;*/
+    /*z-index: -1; }*/
 .common-table tr th:hover .button-icon {
     opacity: 1; }
 .common-table tr th:not(:first-child) {
@@ -2929,7 +2929,9 @@ input[type="checkbox"],
 input[type="radio"] {
     display: inline-block;
     margin-right: 8px;
-    vertical-align: middle; }
+    vertical-align: middle;
+    cursor: pointer;
+}
 input[type="checkbox"] ~ label,
 input[type="radio"] ~ label {
     display: inline;
@@ -3310,6 +3312,9 @@ input[type=number]::-webkit-outer-spin-button {
     top: -5000px;
     width: 100%;
     z-index: -1; }
+.gu-mirror .common-table tr th:hover::after {
+    display: none;
+}
 .common-table tr th:hover .button-icon {
     opacity: 1; }
 .common-table tr th:not(:first-child) {

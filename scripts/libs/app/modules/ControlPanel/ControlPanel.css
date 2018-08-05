@@ -9,12 +9,14 @@
     */
     left: 0;
     bottom: -10px;
-    z-index: 99;
+    z-index: 8;
     width: 100%;
     padding: 10px;
     position: fixed;
     text-align: center;
     background: #222121;
+    font-family: Verdana;
+    font-size: 12px;
 }
 
 .tabs-inner-wrapper ul {
@@ -75,7 +77,7 @@
 }
 
 .control-panel-cont {
-
+    height: calc(100% - 18px);
 }
 
 h6 {
@@ -95,12 +97,65 @@ h6 {
 .console-entry {
     margin: 10px 2px;
 }
-/*
+
 .custom-console {
-    padding-top: 24px;
-}*/
+    overflow: auto;
+    height: calc(100% - 32px);
+}
+
+.select-features:hover,
+.clear-console:hover {
+    color: #fff;
+}
+.select-features,
+.clear-console {
+    position: absolute;
+    line-height: 20px;
+    padding: 3px;
+    cursor: pointer;
+    top: 5px;
+    z-index: 2;
+}
 
 .clear-console {
-    float: right;
+    right: 5px;
+}
+
+.select-features {
+    left: 5px;
+}
+
+.debug-delay-stop {
+    width: 103px;
+}
+
+input[type=text].debug-delay-input {
+    width: 80px;
+    height: 24px;
+    margin: 0 6px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background: #1e1e1e;
+    color: white;
+    font-family: verdana;
+    font-size: 12px;
+    text-align: center;
+}
+
+.feature-selection {
+    min-height: 100px;
+    min-width: 360px;
+    padding: 10px;
+}
+.feature-selection label:hover {
+    color: white;
+}
+.feature-selection label {
+    margin: 7px;
     cursor: pointer;
+    display: list-item;
+}
+
+.settings-group {
+    display: inline-block;
 }
