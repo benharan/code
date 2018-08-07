@@ -1,5 +1,7 @@
-var fs = require('fs'),
-	TemplateCompiler = require('./templates/TemplateCompiler.js'),
+const fs = require('fs'),
+	_ = require('./scripts/libs/underscore'),
+	TemplateCompiler = require('./templates/TemplateCompiler'),
+	gitActions = require('./scripts/grunt-scripts/git-actions'),
 	chalk = require('chalk'),
 	chalks = {
 		вопрос: chalk.cyan,
@@ -30,11 +32,10 @@ module.exports = function (grunt) {
 		timer = function () {
 			var startTime = (new Date()).getTime();
 			this.end = function () {
-				return ((new Date()).getTime() - startTime - Math.random()/4).toFixed(3) + 'ms';
+				return ((new Date()).getTime() - startTime - Math.random() / 4).toFixed(3) + 'ms';
 			}
 		},
-		// Attempt configuring choices dynamically to avoid unnecessary file reading
-		tFiles = fs.readdirSync('./templates/').filter(file => /\.html$|\.phtml$|\.php$/.exec(file));
+		tFiles, es6AssetsChanged, oldAssetsChanged;
 
 	require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
 
@@ -54,22 +55,20 @@ module.exports = function (grunt) {
 				features: ['es6.symbol', 'es6.map', 'es6.promise'], // https://github.com/zloirock/core-js#features
 				output: 'polyfill.js'
 			}
-		}
-
-			,
-			requirejs: {
-				compile: {
-					options: {
-						baseUrl: './',
-						mainConfigFile: 'scripts/libs/app/require_config.js',
-						include: [ 'scripts/app_init.js' ],
-						out: 'optimized.js',
-						done: function(done, output) {
-							console.log(done, output);
-						}
+		},
+		requirejs: {
+			compile: {
+				options: {
+					baseUrl: './',
+					mainConfigFile: 'scripts/libs/app/require_config.js',
+					include: ['scripts/app_init.js'],
+					out: 'optimized.js',
+					done: function (done, output) {
+						console.log(done, output);
 					}
 				}
-			},
+			}
+		},
 
 		// config: 'config.name', // arbitrary name or config for any other grunt task
 		// type: '<question type>', // list, checkbox, confirm, input, password
@@ -80,6 +79,26 @@ module.exports = function (grunt) {
 		// filter:  function(value), // modify the answer
 		// when: function(answers) // only ask this question when this function returns true
 		prompt: {
+			selectAssets: {
+				options: {
+					questions: [
+						{
+							config: 'selectAssets.selected',
+							type: 'checkbox',
+							message: chalks.вопрос('Select assets to upload: '),
+							choices: () => oldAssetsChanged,
+							when: () => !!oldAssetsChanged
+						},
+						{
+							config: 'selectES6Assets.selected',
+							type: 'checkbox',
+							message: chalks.вопрос('Select ES6 assets to upload: '),
+							choices: () => es6AssetsChanged,
+							when: () => !!es6AssetsChanged
+						}
+					]
+				}
+			},
 			Wizard: {
 				options: {
 					questions: [
@@ -119,9 +138,9 @@ module.exports = function (grunt) {
 								}
 							},
 							choices: [
-								{ name: 'Ben', value: 'skeksify', checked: true },
-								{ name: 'Beno', value: 'skeksifyo', checked: true },
-								{ name: 'Doe', value: 'Smoe' }
+								{name: 'Ben', value: 'skeksify', checked: true},
+								{name: 'Beno', value: 'skeksifyo', checked: true},
+								{name: 'Doe', value: 'Smoe'}
 							]
 						},
 					]
@@ -134,7 +153,10 @@ module.exports = function (grunt) {
 							config: 'templateFileName.file',
 							type: 'checkbox',
 							message: chalks.вопрос('Select files to compile ') + chalks.def('(Mark none for all)'),
-							choices: tFiles,
+							choices: () => {
+								tFiles = fs.readdirSync('./templates/').filter(file => /\.html$|\.phtml$|\.php$/.exec(file));
+								return tFiles;
+							},
 							when: () => !grunt.option('file')
 						}
 					]
@@ -194,8 +216,27 @@ module.exports = function (grunt) {
 		grunt.log.writeln(grunt.config('wiz.nuts'));
 		grunt.log.writeln(grunt.config('wiz.name'));
 	});
+	grunt.registerTask('debugCollect', '', function () {
+		grunt.log.writeln(grunt.config('selectAssets.selected'));
+	});
+
+	grunt.registerTask('scan-git-changes', 'Soak changed assets from "git status"', function () {
+		const done = this.async();
+
+		gitActions.getModifiedScripts().then((tracedAssets = {}) => {
+			// oldAssetsChanged = tracedAssets.js ? _.keys(tracedAssets.js) : null;
+			// es6AssetsChanged = tracedAssets.new_js ? _.keys(tracedAssets.new_js) : null;
+			oldAssetsChanged = tracedAssets.modules ? _.keys(tracedAssets.modules) : null;
+			if (!oldAssetsChanged) {
+				fail('No script changes found, terminating...');
+			} else {
+				done();
+			}
+		})
+	});
 
 	grunt.registerTask('default', ['babel']);
 	grunt.registerTask('compile', ['prompt:templateFileName', 'Compile-Template']);
 	grunt.registerTask('prompty', ['prompt:Wizard', 'deboo']);
+	grunt.registerTask('collect', ['scan-git-changes', 'prompt:selectAssets', 'debugCollect']);
 };
