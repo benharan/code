@@ -14,7 +14,7 @@ window.lcl = (...args) => {
     }
 }
 
-window.lcl.flag = localStorage.getItem('consolePrints') === '1';
+window.lcl.flag = ~["1", "⌐"].indexOf(localStorage.getItem('consolePrints'));
 window.lcl.customCL = ()=>1;
 
 console.clear();

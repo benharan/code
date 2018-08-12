@@ -60,8 +60,8 @@ define([
 			return this;
 		},
 
-		_initView: function (tableName, settings) {
-			this._view = new View(tableName, settings.$table);
+		_initView: function ($table, settings) {
+			this._view = new View($table, settings);
 			this._view.on('thClick', this.sort.bind(this));
 			this._view.render();
 		},

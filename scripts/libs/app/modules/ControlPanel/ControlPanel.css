@@ -8,7 +8,7 @@
     border-top: 1px white solid;
     */
     left: 0;
-    bottom: -10px;
+    bottom: 0px;
     z-index: 8;
     width: 100%;
     padding: 10px;
@@ -17,6 +17,10 @@
     background: #222121;
     font-family: Verdana;
     font-size: 12px;
+}
+
+.lock-screen-touch-scroll {
+    overflow: hidden;
 }
 
 .tabs-inner-wrapper ul {

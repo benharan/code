@@ -9,6 +9,7 @@ define([
 ], function (_, $, Backbone) {
 	const useKeyCompression = 0;
 
+	// Todo: Verify localStorage availability, fallback?
 	return Backbone.Model.extend({
 
 		initialize: function (useCompression, withPrints) {

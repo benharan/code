@@ -9,6 +9,9 @@ define([
         },
         capitalizeWord: function (word) {
             return word.substr(0, 1).toUpperCase() + word.substr(1);
+        },
+        capitalizeWords: function (sentence) {
+            return sentence.split(' ').map(this.capitalizeWord).join(' ');
         }
     });
 });
