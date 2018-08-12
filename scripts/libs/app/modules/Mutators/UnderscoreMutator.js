@@ -14,8 +14,7 @@ define([
 		},
 		functionSet = [
 		['isE', _.isEmpty],
-		['isntEmpty', obj => !_.isEmpty(obj)],
-		['isntE', _.isntEmpty],
+		[['isntEmpty', 'isntE'], obj => !_.isEmpty(obj)],
 		['isUn', _.isUndefined],
 		['isSt', _.isString],
 		['isNu', _.isNumber],
@@ -45,23 +44,9 @@ define([
 		}],
 		['extractByIndices', function (arr, indices) {
 			let result = [],
-				gaps = [], offset = 0,
-				fillGaps = indices.length > 1; // Need to fill gaps to maintain indices for multiple removals
+				offset = 0;
 
-			_.e(indices, index => {
-				if (fillGaps) {
-					result.push(arr.splice(index, 1, undefined)[0]);
-					gaps.push(index);
-				} else { // Splice counts args.length (wisely)
-					result.push(arr.splice(index, 1)[0]);
-				}
-			})
-
-			if (fillGaps) {
-				_.e(gaps, gapIndex => {
-					arr.splice(gapIndex - (offset++), 1);
-				})
-			}
+			_.e(indices, index => result.push(arr.splice(index - offset++, 1)[0]));
 
 			return result;
 		}],
@@ -79,8 +64,14 @@ define([
 		}],
 		['valueOr', function (value, alternative) {
 			return !_.isUn(value) ? value : alternative;
+		}],
+		['seekInObj', function (obj, path) {
+			return _.reduce(path.split('.'), (acc, step) => acc && acc[step], obj)
 		}]
 	]
 
 	Mutator.mutate(_, functionSet, 'Underscore');
 });
+
+
+

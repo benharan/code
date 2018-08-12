@@ -16,14 +16,16 @@ define([
 			mutations.forEach(mapping => this._applyFunction(mutatee, ...mapping));
 		},
 
-		_applyFunction: function(mutatee, fuName, fu) {
-			if (fuName) {
-				if (mutatee[fuName]) {
-					throwError(`${currentMutateeName} Mutation Exception`, `Function '${fuName}' already exists`);
-				} else {
-					mutatee[fuName] = fu;
+		_applyFunction: function(mutatee, fuNames, fu) {
+			[].concat(fuNames).forEach((fuName) => {
+				if (fuName) {
+					if (mutatee[fuName]) {
+						(window.throwError || console.error)(`${currentMutateeName} Mutation Exception`, `Function '${fuName}' already exists`);
+					} else {
+						mutatee[fuName] = fu;
+					}
 				}
-			}
+			})
 		}
 	});
 

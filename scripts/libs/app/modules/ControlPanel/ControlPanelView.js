@@ -83,7 +83,13 @@ define([
 		_initCustomCL: function () {
 			window.lcl.customCL = (...args) => {
 				let enstringification = args.join(' | ')
-				this._dom.customConsole.prepend($('<div/>').addClass('console-entry closed').text(enstringification).attr('title', enstringification));
+				this._dom.customConsole.prepend($('<div/>').setup({
+					addClass: 'console-entry closed',
+					text: enstringification,
+					attr: ['title', enstringification]
+				}));
+
+				// this._dom.customConsole.prepend($('<div/>').addClass('console-entry closed').text(enstringification).attr('title', enstringification));
 			}
 		},
 

@@ -9,6 +9,10 @@ define([
 	"Toolset/Toolset",
 	"Displayable"
 ], function (_, $, Backbone, Toolset, Displayable) {
+	function getClientY(e) {
+		return !_.isUn(e.originalEvent.clientY) ? e.originalEvent.clientY : _.seekInObj(e, 'originalEvent.touches.0.clientY');
+	}
+
 	return Displayable.extend({
 
 		_state: null,
@@ -62,19 +66,17 @@ define([
 					if (this._settings.lsKey) {
 						Toolset.ClientStorage.setObj(this._settings.lsKey, this._state);
 					}
-					window.preventTouchScrollFlag = false;
 					$(document.body).rCl('lock-screen-touch-scroll');
 				};
 
 			rSettings.$resizeBar.on('dragstart touchstart', e => {
 				startingHeight = this.$el.height();
-				startY = e.originalEvent.clientY || e.originalEvent.touches[0].clientY;
-				window.preventTouchScrollFlag = true;
+				startY = getClientY(e);
 				$(document.body).aCl('lock-screen-touch-scroll');
 			})
 
 			rSettings.$resizeBar.on('drag touchmove', _.throttle(e => {
-				let offset = startY - (e.originalEvent.clientY || e.originalEvent.touches[0].clientY),
+				let offset = startY - getClientY(e),
 					result = startingHeight + offset + 20;
 
 				if (lastResult !== result && (!heightBoundary || heightBoundary(result))) {

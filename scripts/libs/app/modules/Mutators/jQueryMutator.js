@@ -74,7 +74,9 @@ define([
 		['swapWith', function ($withThis) {
 			$.swapElements(this, $withThis);
 		}],
-		['', ],
+		[['setup', 'config', 'apply'], function (actionSet) {
+			_.e(actionSet, (params, action) => this[action](...[].concat(params)));
+		}]
 	],
 	functionSet = [
 		['elementAcc', function (action) {
